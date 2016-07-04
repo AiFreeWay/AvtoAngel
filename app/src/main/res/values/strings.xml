@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Авто ангел</string>
+    <string name="get">Получить</string>
+    <string name="input_code">Ваш код</string>
+    <string name="ac_login_description">Мы выслали код подтверждения на ваш телефон</string>
+    <string name="enter">Войти</string>
 </resources>
