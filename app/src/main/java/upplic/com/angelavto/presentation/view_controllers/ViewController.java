@@ -1,4 +1,4 @@
-package upplic.com.angelavto.presentation.di.view_controllers;
+package upplic.com.angelavto.presentation.view_controllers;
 
 
 public abstract class ViewController<V> {

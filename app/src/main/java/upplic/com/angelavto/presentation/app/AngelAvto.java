@@ -1,11 +1,12 @@
-package upplic.com.angelavto.presentation.di.app;
+package upplic.com.angelavto.presentation.app;
 
 
 import android.app.Application;
 
-import upplic.com.angelavto.presentation.di.di.components.ApplicationComponent;
-import upplic.com.angelavto.presentation.di.di.components.DaggerApplicationComponent;
-import upplic.com.angelavto.presentation.di.di.modules.ApplicationModule;
+import upplic.com.angelavto.presentation.di.components.ApplicationComponent;
+import upplic.com.angelavto.presentation.di.components.DaggerApplicationComponent;
+import upplic.com.angelavto.presentation.di.modules.ApplicationModule;
+
 
 public class AngelAvto extends Application {
 

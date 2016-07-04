@@ -1,11 +1,11 @@
-package upplic.com.angelavto.presentation.di.di.modules;
+package upplic.com.angelavto.presentation.di.modules;
 
 
 import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import upplic.com.angelavto.presentation.di.app.AngelAvto;
+import upplic.com.angelavto.presentation.app.AngelAvto;
 
 @Module
 public class ApplicationModule {

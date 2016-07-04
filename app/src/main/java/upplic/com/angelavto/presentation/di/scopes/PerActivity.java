@@ -1,4 +1,4 @@
-package upplic.com.angelavto.presentation.di.di.scopes;
+package upplic.com.angelavto.presentation.di.scopes;
 
 
 import java.lang.annotation.Retention;

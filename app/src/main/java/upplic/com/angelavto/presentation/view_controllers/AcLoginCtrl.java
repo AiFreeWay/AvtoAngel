@@ -1,10 +1,10 @@
-package upplic.com.angelavto.presentation.di.view_controllers;
+package upplic.com.angelavto.presentation.view_controllers;
 
 
 import android.content.Intent;
 
-import upplic.com.angelavto.presentation.di.views.activities.LoginActivity;
-import upplic.com.angelavto.presentation.di.views.activities.MainActivity;
+import upplic.com.angelavto.presentation.views.activities.LoginActivity;
+import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 public class AcLoginCtrl extends ViewController<LoginActivity> {
 

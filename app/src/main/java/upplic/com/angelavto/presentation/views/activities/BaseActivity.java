@@ -1,14 +1,14 @@
-package upplic.com.angelavto.presentation.di.views.activities;
+package upplic.com.angelavto.presentation.views.activities;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import upplic.com.angelavto.presentation.di.app.AngelAvto;
-import upplic.com.angelavto.presentation.di.di.components.ActivityComponent;
-import upplic.com.angelavto.presentation.di.di.components.DaggerActivityComponent;
-import upplic.com.angelavto.presentation.di.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.presentation.di.components.ActivityComponent;
+import upplic.com.angelavto.presentation.di.components.DaggerActivityComponent;
+import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 
 public abstract class BaseActivity<VC> extends AppCompatActivity {
 

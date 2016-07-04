@@ -1,7 +1,7 @@
-package upplic.com.angelavto.presentation.di.view_controllers;
+package upplic.com.angelavto.presentation.view_controllers;
 
 
-import upplic.com.angelavto.presentation.di.views.activities.MainActivity;
+import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 public class AcMainCtrl extends ViewController<MainActivity> {
 

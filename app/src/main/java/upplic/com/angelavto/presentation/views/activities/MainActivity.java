@@ -1,4 +1,4 @@
-package upplic.com.angelavto.presentation.di.views.activities;
+package upplic.com.angelavto.presentation.views.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,16 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
 
-import com.balysv.materialmenu.MaterialMenuBase;
 import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.presentation.di.utils.material_menu_drawer.DrawerListener;
-import upplic.com.angelavto.presentation.di.utils.material_menu_drawer.MaterialMenuBaseSupport;
-import upplic.com.angelavto.presentation.di.utils.material_menu_drawer.MaterialMenuDrawer;
-import upplic.com.angelavto.presentation.di.view_controllers.AcMainCtrl;
+import upplic.com.angelavto.presentation.utils.DrawerListener;
+import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
 public class MainActivity extends BaseActivity<AcMainCtrl> {
 
@@ -26,8 +24,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     @BindView(R.id.ac_main_dl_menu)
     DrawerLayout mDlMenu;
 
-    private MaterialMenuBaseSupport mMenuDrawer;
-    private DrawerListener mDrawerListener;
+    private MaterialMenuIconToolbar mMenuDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +38,14 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        try {
-            mDrawerListener.setDrawerOpened(mDlMenu.isDrawerOpen(Gravity.LEFT));
-            mMenuDrawer.syncState(savedInstanceState);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mMenuDrawer.syncState(savedInstanceState);
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMenuDrawer.onSaveInstanceState(outState);
     }
 
     @Override
@@ -58,8 +57,22 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     private void initToolbar() {
         setSupportActionBar(mToolbar);
-        mMenuDrawer = new MaterialMenuDrawer(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN, mToolbar);
-        mDrawerListener = new DrawerListener(mMenuDrawer);
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+        mToolbar.setNavigationOnClickListener(v -> driveMenu());
+        mMenuDrawer = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+            @Override
+            public int getToolbarViewId() {
+                return R.id.ac_main_toolbar;
+            }
+        };
+        mMenuDrawer.setState(MaterialMenuDrawable.IconState.ARROW);
+        mDlMenu.addDrawerListener(new DrawerListener(mMenuDrawer));
+    }
+
+    private void driveMenu() {
+        if (mDlMenu.isDrawerOpen(Gravity.LEFT))
+            mDlMenu.closeDrawer(Gravity.LEFT);
+        else
+            mDlMenu.openDrawer(Gravity.LEFT);
     }
 }
