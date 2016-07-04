@@ -4,4 +4,5 @@
     <string name="input_code">Ваш код</string>
     <string name="ac_login_description">Мы выслали код подтверждения на ваш телефон</string>
     <string name="enter">Войти</string>
+    <string name="repeated">Повторный запрос кода через</string>
 </resources>
