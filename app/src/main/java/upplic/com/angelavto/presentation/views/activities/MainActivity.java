@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.widget.FrameLayout;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -23,6 +24,8 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     Toolbar mToolbar;
     @BindView(R.id.ac_main_dl_menu)
     DrawerLayout mDlMenu;
+    @BindView(R.id.ac_main_fl_fragments)
+    FrameLayout mFlFragmentsBody;
 
     private MaterialMenuIconToolbar mMenuDrawer;
 
@@ -33,6 +36,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         ButterKnife.bind(this);
         initToolbar();
         mViewController = new AcMainCtrl(this);
+        mViewController.start();
     }
 
     @Override
@@ -53,6 +57,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         if (keyCode == KeyEvent.KEYCODE_BACK)
             mViewController.popBack();
         return true;
+    }
+
+    public int getFragmentsBodyResId() {
+        return R.id.ac_main_fl_fragments;
     }
 
     private void initToolbar() {
