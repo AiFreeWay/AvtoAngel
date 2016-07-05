@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.adapters.MultyExListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.MultyListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
@@ -34,10 +36,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     @BindView(R.id.ac_main_fl_fragments)
     FrameLayout mFlFragmentsBody;
     @BindView(R.id.ac_main_lv_menu)
-    ListView mLvMenu;
+    ExpandableListView mElvMenu;
 
     private MaterialMenuIconToolbar mMenuDrawer;
-    private MultyListViewAdapter<AppMenuItem> mAdapter;
+    private MultyExListViewAdapter<AppMenuItem, AppMenuItem> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         ButterKnife.bind(this);
         initToolbar();
         mViewController = new AcMainCtrl(this);
-        mAdapter = new MultyListViewAdapter<AppMenuItem>(new AppMenuBinder(mViewController));
-        mLvMenu.setAdapter(mAdapter);
-        mLvMenu.addHeaderView(getHeaderView());
-        mLvMenu.addFooterView(getFooterView());
+        mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));
+        mElvMenu.setAdapter(mAdapter);
+        mElvMenu.addHeaderView(getHeaderView());
+        mElvMenu.addFooterView(getFooterView());
         mViewController.start();
     }
 
@@ -99,7 +101,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     }
 
     public ListView getLvMenu() {
-        return mLvMenu;
+        return mElvMenu;
     }
 
     public void loadData(List<AppMenuItem> menu) {
@@ -107,10 +109,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     }
 
     private View getHeaderView() {
-        return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_header, mLvMenu, false);
+        return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_header, mElvMenu, false);
     }
 
     private View getFooterView() {
-        return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_footer, mLvMenu, false);
+        return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_footer, mElvMenu, false);
     }
 }

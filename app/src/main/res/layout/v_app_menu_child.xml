@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:orientation="horizontal"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp">
+    android:background="@color/grideperlevy"
+    android:paddingRight="30dp"
+    android:paddingLeft="30dp">
 
-    <ImageView
-        android:id="@+id/v_app_menu_iv_icon"
+    <ImageView android:id="@+id/v_app_menu_iv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
         android:layout_gravity="center_vertical" />
 
-    <TextView
-        android:id="@+id/v_app_menu_tv_title"
+    <TextView android:id="@+id/v_app_menu_tv_title"
+        android:paddingLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_toEndOf="@+id/v_app_menu_iv_icon"
-        android:layout_toRightOf="@+id/v_app_menu_iv_icon"
         android:fontFamily="sans-serif-light"
-        android:paddingLeft="15dp"
         android:textColor="@color/marengo"
-        android:textSize="17sp" />
+        android:textSize="17sp"/>
 
     <ImageView
         android:id="@+id/v_app_menu_iv_indicator"
@@ -38,5 +28,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
+        android:visibility="invisible"
         android:src="@drawable/ic_arrow" />
-</RelativeLayout>
+</LinearLayout>

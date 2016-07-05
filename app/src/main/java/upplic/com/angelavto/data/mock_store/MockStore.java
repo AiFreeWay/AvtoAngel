@@ -12,9 +12,9 @@ public class MockStore {
 
     public MockStore() {
         mProducts = new LinkedList<Product>();
-        mProducts.add(new Product());
-        mProducts.add(new Product());
-        mProducts.add(new Product());
+        mProducts.add(new Product("Тип №1", "Харакстеристики", "1700 руб.", ""));
+        mProducts.add(new Product("Тип №1", "Харакстеристики", "1700 руб.", ""));
+        mProducts.add(new Product("Тип №1", "Харакстеристики", "1700 руб.", ""));
     }
 
     public List<Product> getProducts() {

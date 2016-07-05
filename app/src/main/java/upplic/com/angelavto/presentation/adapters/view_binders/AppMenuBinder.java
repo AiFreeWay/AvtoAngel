@@ -15,16 +15,18 @@ import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
 
-public class AppMenuBinder implements AbstractBinder<AppMenuItem> {
-
-    private AcMainCtrl mViewController;
-    private ListView mParent;
-    private LayoutInflater mLayoutInflater;
+public class AppMenuBinder implements AbstractExpannableBinder<AppMenuItem, AppMenuItem> {
 
     @BindView(R.id.v_app_menu_iv_icon)
     ImageView mIvIcon;
     @BindView(R.id.v_app_menu_tv_title)
     TextView mTvTitle;
+    @BindView(R.id.v_app_menu_iv_indicator)
+    ImageView mIvIndicator;
+
+    private AcMainCtrl mViewController;
+    private ListView mParent;
+    private LayoutInflater mLayoutInflater;
 
     public AppMenuBinder(AcMainCtrl controller) {
         mViewController = controller;
@@ -36,6 +38,20 @@ public class AppMenuBinder implements AbstractBinder<AppMenuItem> {
     public View bind(View view, AppMenuItem data) {
         if (view == null)
             view = mLayoutInflater.inflate(R.layout.v_app_menu, mParent, false);
+        ButterKnife.bind(this, view);
+        mIvIcon.setImageDrawable(getDrawable(data.getDrawable()));
+        mTvTitle.setText(data.getTitle());
+        if (data.getExpannableList().size() > 0)
+            mIvIndicator.setVisibility(View.VISIBLE);
+        else
+            mIvIndicator.setVisibility(View.INVISIBLE);
+        return view;
+    }
+
+    @Override
+    public View bindChild(View view, AppMenuItem data) {
+        if (view == null)
+            view = mLayoutInflater.inflate(R.layout.v_app_menu_child, mParent, false);
         ButterKnife.bind(this, view);
         mIvIcon.setImageDrawable(getDrawable(data.getDrawable()));
         mTvTitle.setText(data.getTitle());

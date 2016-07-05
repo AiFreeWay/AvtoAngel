@@ -17,7 +17,11 @@ public class AppMenuFactory {
     }
 
     private void generateItems() {
-        mMenu.add(new AppMenuItem("Автомобили", R.drawable.ic_auto));
+        ArrayList<AppMenuItem> autos = new ArrayList<AppMenuItem>();
+        autos.add(new AppMenuItem("Тесла", R.drawable.ic_lock_green));
+        autos.add(new AppMenuItem("Москвич", R.drawable.ic_lock_green));
+        autos.add(new AppMenuItem("Мазда", R.drawable.ic_lock_red));
+        mMenu.add(new AppMenuItem("Автомобили", R.drawable.ic_auto, autos));
         mMenu.add(new AppMenuItem("Купить трекер", R.drawable.ic_shop));
         mMenu.add(new AppMenuItem("О программе", R.drawable.ic_about));
         mMenu.add(new AppMenuItem("Выйти", R.drawable.ic_exit));
