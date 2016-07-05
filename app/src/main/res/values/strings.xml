@@ -6,4 +6,6 @@
     <string name="enter">Войти</string>
     <string name="repeated">Повторный запрос кода через</string>
     <string name="ok">Ok</string>
+    <string name="shop_header">Вы можете приобрести необходимое оборудование в нашем онлайн-магазине</string>
+    <string name="got_to_shop">Перейти в магазин</string>
 </resources>

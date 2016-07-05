@@ -9,5 +9,9 @@ public abstract class ViewController<V> {
         mRootView = view;
     }
 
+    public V getRootView() {
+        return mRootView;
+    }
+
     public abstract void start();
 }

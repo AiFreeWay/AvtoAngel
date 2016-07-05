@@ -5,6 +5,7 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import upplic.com.angelavto.domain.repositories.Repository;
 import upplic.com.angelavto.presentation.di.modules.ApplicationModule;
 
 @Singleton
@@ -12,4 +13,5 @@ import upplic.com.angelavto.presentation.di.modules.ApplicationModule;
 public interface ApplicationComponent {
 
     Context provideContext();
+    Repository provideRepository();
 }
