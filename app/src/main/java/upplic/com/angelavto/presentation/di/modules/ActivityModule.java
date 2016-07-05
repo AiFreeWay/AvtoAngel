@@ -10,6 +10,7 @@ import dagger.Provides;
 import upplic.com.angelavto.domain.executors.GetProducts;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Product;
+import upplic.com.angelavto.presentation.utils.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.utils.FragmentsFactory;
 import upplic.com.angelavto.presentation.views.activities.BaseActivity;
@@ -21,10 +22,12 @@ public class ActivityModule {
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
+    private AppMenuFactory mAppMenuFactory;
 
     public ActivityModule(BaseActivity activity) {
         mRouterBilder = new FragmentRouter.RouterBilder(activity.getSupportFragmentManager());
         mFragmentsFactory = new FragmentsFactory();
+        mAppMenuFactory = new AppMenuFactory();
     }
 
     @Provides
@@ -35,6 +38,11 @@ public class ActivityModule {
     @Provides
     public FragmentsFactory provideFragmentsFactory() {
         return mFragmentsFactory;
+    }
+
+    @Provides
+    public AppMenuFactory provideAppMenuFactory() {
+        return mAppMenuFactory;
     }
 
     @Provides

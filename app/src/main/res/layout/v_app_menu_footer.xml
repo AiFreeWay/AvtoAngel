@@ -2,21 +2,21 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/grideperlevy"
+    android:background="@color/white"
     android:paddingBottom="20dp"
-    android:paddingLeft="40dp"
-    android:paddingRight="40dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
     android:paddingTop="20dp">
 
     <Button
-        android:id="@+id/v_shop_footer_btn_open_shop"
+        android:id="@+id/v_app_menu_footer_btn_open_shop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_get_code"
-        android:gravity="center"
-        android:text="@string/got_to_shop"
-        android:textColor="@color/grideperlevy"
+        android:background="@drawable/selector_enter"
         android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/add_car"
         android:textAllCaps="false"
+        android:textColor="@color/grideperlevy"
         android:textSize="15sp" />
 </FrameLayout>

@@ -25,13 +25,9 @@
             android:layout_width="279dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="#fff"
+            android:background="@color/white"
             android:choiceMode="singleChoice"
-            android:divider="@color/very_pale_blue"
-            android:dividerHeight="1dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="14dp"
-            android:paddingRight="14dp"
-            android:paddingTop="10dp" />
+            android:dividerHeight="0dp"
+            android:divider="@color/white" />
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

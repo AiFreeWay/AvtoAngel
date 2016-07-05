@@ -8,20 +8,20 @@ import upplic.com.angelavto.presentation.views.fragments.ShopFragment;
 
 public class FragmentsFactory {
 
-    private ArrayList<BaseFragment> mFragmentsLIst;
+    private ArrayList<BaseFragment> mFragmentsList;
 
     public FragmentsFactory() {
-        mFragmentsLIst = new ArrayList<BaseFragment>();
+        mFragmentsList = new ArrayList<BaseFragment>();
         generateFragments();
     }
 
     private void generateFragments() {
-        mFragmentsLIst.add(Fragments.SHOP.id, new ShopFragment());
+        mFragmentsList.add(Fragments.SHOP.id, new ShopFragment());
 
     }
 
     public BaseFragment getFragment(Fragments fragmentIndefinder) {
-        return mFragmentsLIst.get(fragmentIndefinder.id);
+        return mFragmentsList.get(fragmentIndefinder.id);
     }
 
     public enum Fragments {

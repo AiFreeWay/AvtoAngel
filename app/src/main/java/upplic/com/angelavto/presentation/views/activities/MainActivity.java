@@ -7,14 +7,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.adapters.MultyListViewAdapter;
+import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
+import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
@@ -26,8 +33,11 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     DrawerLayout mDlMenu;
     @BindView(R.id.ac_main_fl_fragments)
     FrameLayout mFlFragmentsBody;
+    @BindView(R.id.ac_main_lv_menu)
+    ListView mLvMenu;
 
     private MaterialMenuIconToolbar mMenuDrawer;
+    private MultyListViewAdapter<AppMenuItem> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         ButterKnife.bind(this);
         initToolbar();
         mViewController = new AcMainCtrl(this);
+        mAdapter = new MultyListViewAdapter<AppMenuItem>(new AppMenuBinder(mViewController));
+        mLvMenu.setAdapter(mAdapter);
+        mLvMenu.addHeaderView(getHeaderView());
+        mLvMenu.addFooterView(getFooterView());
         mViewController.start();
     }
 
@@ -82,5 +96,21 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
             mDlMenu.closeDrawer(Gravity.LEFT);
         else
             mDlMenu.openDrawer(Gravity.LEFT);
+    }
+
+    public ListView getLvMenu() {
+        return mLvMenu;
+    }
+
+    public void loadData(List<AppMenuItem> menu) {
+        mAdapter.loadData(menu);
+    }
+
+    private View getHeaderView() {
+        return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_header, mLvMenu, false);
+    }
+
+    private View getFooterView() {
+        return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_footer, mLvMenu, false);
     }
 }
