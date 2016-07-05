@@ -16,4 +16,7 @@
     <color name="very_pale_blue">#cbcccd</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
+
+    <color name="green_blue">#26353d</color>
+    <color name="sea_green">#257861</color>
 </resources>
