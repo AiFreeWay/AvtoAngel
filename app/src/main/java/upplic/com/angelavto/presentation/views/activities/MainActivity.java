@@ -80,21 +80,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         return R.id.ac_main_fl_fragments;
     }
 
-    private void initToolbar() {
-        setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-        mToolbar.setNavigationOnClickListener(v -> driveMenu());
-        mMenuDrawer = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
-            @Override
-            public int getToolbarViewId() {
-                return R.id.ac_main_toolbar;
-            }
-        };
-        mMenuDrawer.setState(MaterialMenuDrawable.IconState.ARROW);
-        mDlMenu.addDrawerListener(new DrawerListener(mMenuDrawer));
-    }
-
-    private void driveMenu() {
+    public void driveMenu() {
         if (mDlMenu.isDrawerOpen(Gravity.LEFT))
             mDlMenu.closeDrawer(Gravity.LEFT);
         else
@@ -107,6 +93,20 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     public void loadData(List<AppMenuItem> menu) {
         mAdapter.loadData(menu);
+    }
+
+    private void initToolbar() {
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+        mToolbar.setNavigationOnClickListener(v -> driveMenu());
+        mMenuDrawer = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+            @Override
+            public int getToolbarViewId() {
+                return R.id.ac_main_toolbar;
+            }
+        };
+        mMenuDrawer.setState(MaterialMenuDrawable.IconState.ARROW);
+        mDlMenu.addDrawerListener(new DrawerListener(mMenuDrawer));
     }
 
     private View getHeaderView() {

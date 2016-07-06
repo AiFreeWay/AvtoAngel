@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Car;
@@ -22,6 +23,11 @@ import upplic.com.angelavto.presentation.utils.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.utils.FragmentsFactory;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
+import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
+import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
+import upplic.com.angelavto.presentation.wrappers.ActionHundleMemento;
+import upplic.com.angelavto.presentation.wrappers.FragmentHandleMemento;
+
 
 public class AcMainCtrl extends ViewController<MainActivity> {
 
@@ -57,6 +63,32 @@ public class AcMainCtrl extends ViewController<MainActivity> {
             mRootView.finish();
     }
 
+    public void hundleClick(AppMenuItem data) {
+        AbstractHundleMemento hundleMemento = data.getAppMenuHundler();
+        if (hundleMemento != null && FragmentHandleMemento.class.isInstance(hundleMemento)) {
+            FragmentHandleMemento fragmentHandleMemento = (FragmentHandleMemento) hundleMemento;
+            hundleFragment(fragmentHandleMemento);
+        } else if (hundleMemento != null && ActionHundleMemento.class.isInstance(hundleMemento)) {
+            ActionHundleMemento actionHandleMemento = (ActionHundleMemento) hundleMemento;
+            hundleAction(actionHandleMemento);
+        }
+        mRootView.driveMenu();
+    }
+
+    private void hundleFragment(FragmentHandleMemento fragmentHandleMemento) {
+        BaseFragment fragment = mFragmentsFactory.getFragment(fragmentHandleMemento.getHundleObject());
+        if (fragmentHandleMemento.getFragmentArgs() != null)
+            fragment.setArguments(fragmentHandleMemento.getFragmentArgs());
+        mRouter.show(fragment);
+    }
+
+    private void hundleAction(ActionHundleMemento actionHandleMemento) {
+        Action0 action = actionHandleMemento.getHundleObject();
+        if (action != null)
+            action.call();
+    }
+
+
     private void getData() {
         mGetCars.execute()
                 .subscribeOn(Schedulers.newThread())
@@ -71,6 +103,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         menues.get(AppMenuFactory.MenuItems.AVTO.id).setInsertedMenu(carsAsMenuItems);
         return menues;
     }
+
 
     public LayoutInflater getLayoutInflater() {
         return  mLayoutInflater;

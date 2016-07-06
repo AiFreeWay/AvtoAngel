@@ -28,8 +28,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public List<Product> getProducts() throws Exception {
-        throw new Exception("wad");
-        //return mMockStore.getProducts();
+         return mMockStore.getProducts();
     }
 
     @Override

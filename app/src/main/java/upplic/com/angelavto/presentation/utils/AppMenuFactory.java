@@ -6,6 +6,9 @@ import java.util.List;
 
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
+import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
+import upplic.com.angelavto.presentation.wrappers.ActionHundleMemento;
+import upplic.com.angelavto.presentation.wrappers.FragmentHandleMemento;
 
 public class AppMenuFactory {
 
@@ -17,10 +20,10 @@ public class AppMenuFactory {
     }
 
     private void generateItems() {
-        mMenu.add(MenuItems.AVTO.id, new AppMenuItem("Автомобили", R.drawable.ic_auto));
-        mMenu.add(MenuItems.SHOP.id, new AppMenuItem("Купить трекер", R.drawable.ic_shop));
-        mMenu.add(MenuItems.ABOUT.id, new AppMenuItem("О программе", R.drawable.ic_about));
-        mMenu.add(MenuItems.EXIT.id, new AppMenuItem("Выйти", R.drawable.ic_exit));
+        mMenu.add(MenuItems.AVTO.id, new AppMenuItem("Автомобили", R.drawable.ic_auto, null));
+        mMenu.add(MenuItems.SHOP.id, new AppMenuItem("Купить трекер", R.drawable.ic_shop, new FragmentHandleMemento(FragmentsFactory.Fragments.SHOP)));
+        mMenu.add(MenuItems.ABOUT.id, new AppMenuItem("О программе", R.drawable.ic_about, new ActionHundleMemento(null)));
+        mMenu.add(MenuItems.EXIT.id, new AppMenuItem("Выйти", R.drawable.ic_exit, new ActionHundleMemento(null)));
     }
 
     public List<AppMenuItem> getMenu() {

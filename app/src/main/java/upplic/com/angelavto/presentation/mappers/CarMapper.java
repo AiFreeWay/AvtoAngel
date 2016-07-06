@@ -1,12 +1,17 @@
 package upplic.com.angelavto.presentation.mappers;
 
 
+import android.os.Bundle;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
+import upplic.com.angelavto.presentation.utils.FragmentsFactory;
+import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
+import upplic.com.angelavto.presentation.wrappers.FragmentHandleMemento;
 
 public class CarMapper {
 
@@ -23,6 +28,9 @@ public class CarMapper {
             drawable = R.drawable.ic_lock_green;
         else
             drawable = R.drawable.ic_lock_red;
-        return new AppMenuItem(car.getTitle(), drawable);
+
+        Bundle args = new Bundle();
+        args.putInt(AvtoFragment.CAR_ID, car.getId());
+        return new AppMenuItem(car.getTitle(), drawable, new FragmentHandleMemento(FragmentsFactory.Fragments.AVTO, args));
     }
 }
