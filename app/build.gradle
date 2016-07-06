@@ -42,6 +42,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'io.reactivex:rxjava:1.1.5'
 
+    //Design
+    compile 'com.github.rey5137:material:1.2.4'
+
     //DB
     compile files('libs/ormlite-android-4.48.jar')
     compile files('libs/ormlite-core-4.48.jar')

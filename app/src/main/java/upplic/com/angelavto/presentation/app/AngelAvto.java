@@ -10,6 +10,8 @@ import upplic.com.angelavto.presentation.di.modules.ApplicationModule;
 
 public class AngelAvto extends Application {
 
+    public static final String UNIVERSAL_ERROR_TAG = "++++";
+
     private ApplicationComponent mAppComponent;
 
     @Override

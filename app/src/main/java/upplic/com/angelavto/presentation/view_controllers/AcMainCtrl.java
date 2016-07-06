@@ -2,10 +2,22 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 
-import javax.inject.Inject;
+import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.mappers.CarMapper;
+import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.utils.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.utils.FragmentsFactory;
@@ -19,9 +31,12 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     FragmentsFactory mFragmentsFactory;
     @Inject
     AppMenuFactory mAppMenuFactory;
+    @Inject @Named(ActivityModule.GET_CARS)
+    Interactor0<List<Car>> mGetCars;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
+    private List<AppMenuItem> mMenu;
 
     public AcMainCtrl(MainActivity view) {
         super(view);
@@ -33,13 +48,28 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     @Override
     public void start() {
-        mRootView.loadData(mAppMenuFactory.getMenu());
-        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.SHOP));
+        mMenu = mAppMenuFactory.getMenu();
+        getData();
     }
 
     public void popBack() {
         if (!mRouter.back())
             mRootView.finish();
+    }
+
+    private void getData() {
+        mGetCars.execute()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(cars -> { mRootView.loadData(joinCarsAndMenuItems(mMenu, cars));
+                            mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.SHOP));},
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start "+e.toString()));
+    }
+
+    private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars) {
+        List<AppMenuItem> carsAsMenuItems = CarMapper.mapCars(cars);
+        menues.get(AppMenuFactory.MenuItems.AVTO.id).setInsertedMenu(carsAsMenuItems);
+        return menues;
     }
 
     public LayoutInflater getLayoutInflater() {

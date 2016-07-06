@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListView android:id="@+id/fmt_shop_lv_products"
         android:layout_width="match_parent"
@@ -9,6 +10,29 @@
         android:layout_above="@+id/include"
         android:divider="@color/grideperlevy"
         android:dividerHeight="10dp"/>
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/fmt_shop_pv_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:pv_circular="false"
+        app:pv_autostart="false"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+
+    <TextView
+        android:id="@+id/fmt_shop_tv_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/cant_load_data"
+        android:textAlignment="center"
+        android:textColor="@color/gray_box"
+        android:textSize="26sp"
+        android:visibility="invisible" />
 
     <include layout="@layout/v_shop_footer"
         android:layout_width="match_parent"

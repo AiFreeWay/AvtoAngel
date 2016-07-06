@@ -3,10 +3,14 @@ package upplic.com.angelavto.presentation.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.rey.material.widget.ProgressView;
 
 import java.util.List;
 
@@ -22,6 +26,10 @@ public class ShopFragment extends BaseFragment<FmtShopCtrl> {
 
     @BindView(R.id.fmt_shop_lv_products)
     ListView mLvProducts;
+    @BindView(R.id.fmt_shop_tv_error)
+    TextView mTvError;
+    @BindView(R.id.fmt_shop_pv_progress)
+    ProgressView mPvProgress;
 
     private MultyListViewAdapter<Product> mAdapter;
 
@@ -43,6 +51,12 @@ public class ShopFragment extends BaseFragment<FmtShopCtrl> {
         mViewController.start();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getBaseActivity().getSupportActionBar().setTitle(R.string.buy_beacon);
+    }
+
     public ListView getLvProducts() {
         return mLvProducts;
     }
@@ -53,5 +67,19 @@ public class ShopFragment extends BaseFragment<FmtShopCtrl> {
 
     private View getHeaderView() {
         return mViewController.getLayoutInflater().inflate(R.layout.v_shop_header, mLvProducts, false);
+    }
+
+    public void showStartLoad() {
+        mTvError.setVisibility(View.INVISIBLE);
+        mPvProgress.start();
+    }
+
+    public void showSuccesLoad() {
+        mPvProgress.stop();
+    }
+
+    public void showDeniedLoad() {
+        mTvError.setVisibility(View.VISIBLE);
+        mPvProgress.stop();
     }
 }

@@ -44,6 +44,7 @@ public class ProductBinder implements AbstractBinder<Product> {
         mTvTitle.setText(data.getTitle());
         mTvSubtitle.setText(data.getSubtitle());
         mTvDescription.setText(data.getDescription());
+        view.setOnClickListener(v -> mViewController.hundleProductItemClick(data));
         return view;
     }
 }

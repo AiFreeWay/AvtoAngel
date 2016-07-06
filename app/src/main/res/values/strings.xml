@@ -9,4 +9,6 @@
     <string name="shop_header">Вы можете приобрести необходимое оборудование в нашем онлайн-магазине</string>
     <string name="got_to_shop">Перейти в магазин</string>
     <string name="add_car">Добавить автомобиль</string>
+    <string name="buy_beacon">Покупка маяка</string>
+    <string name="cant_load_data">Не удалось загрузить данные</string>
 </resources>
