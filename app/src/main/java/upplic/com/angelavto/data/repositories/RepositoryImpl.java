@@ -40,4 +40,9 @@ public class RepositoryImpl implements Repository {
     public void createOrUdateCar(Car car) throws Exception {
         mCarSubject.onNext(mMockStore.updateCars(car));
     }
+
+    @Override
+    public Car getCarById(int id) throws Exception {
+        return null;
+    }
 }

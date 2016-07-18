@@ -13,4 +13,5 @@ public interface Repository {
     List<Product> getProducts() throws Exception;
     ReplaySubject<List<Car>> getCars();
     void createOrUdateCar(Car car) throws Exception;
+    Car getCarById(int id) throws Exception;
 }

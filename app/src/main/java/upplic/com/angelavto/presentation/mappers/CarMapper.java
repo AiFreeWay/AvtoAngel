@@ -11,6 +11,7 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.utils.FragmentsFactory;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
+import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
 import upplic.com.angelavto.presentation.wrappers.FragmentHandleMemento;
 
 public class CarMapper {
@@ -31,6 +32,6 @@ public class CarMapper {
 
         Bundle args = new Bundle();
         args.putInt(AvtoFragment.CAR_ID, car.getId());
-        return new AppMenuItem(car.getTitle(), drawable, new FragmentHandleMemento(FragmentsFactory.Fragments.AVTO, args));
+        return new AppMenuItem(car.getTitle(), drawable, new FragmentHandleMemento(FragmentsFactory.Fragments.AVTO, args, AbstractHundleMemento.MenuHandlers.FRAGMENT));
     }
 }

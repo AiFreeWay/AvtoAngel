@@ -50,4 +50,8 @@ public class MockStore {
             mCars.add(car);
         return mCars;
     }
+
+    public Car getCarById(int id) throws Exception {
+        return mCars.get(id);
+    }
 }

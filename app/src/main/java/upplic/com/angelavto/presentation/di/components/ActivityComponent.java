@@ -5,6 +5,7 @@ import dagger.Component;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.di.scopes.PerActivity;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
+import upplic.com.angelavto.presentation.view_controllers.FmtAvtoCtrl;
 import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
 import upplic.com.angelavto.presentation.view_controllers.FmtShopCtrl;
 
@@ -16,4 +17,5 @@ public interface ActivityComponent {
     void inject(AcMainCtrl viewController);
     void inject(FmtShopCtrl viewController);
     void inject(FmtCreateCarCtrl viewController);
+    void inject(FmtAvtoCtrl viewController);
 }

@@ -65,10 +65,10 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     public void hundleClick(AppMenuItem data) {
         AbstractHundleMemento hundleMemento = data.getAppMenuHundler();
-        if (hundleMemento != null && FragmentHandleMemento.class.isInstance(hundleMemento)) {
+        if (hundleMemento != null && hundleMemento.mHundlerType == AbstractHundleMemento.MenuHandlers.FRAGMENT) {
             FragmentHandleMemento fragmentHandleMemento = (FragmentHandleMemento) hundleMemento;
             hundleFragment(fragmentHandleMemento);
-        } else if (hundleMemento != null && ActionHundleMemento.class.isInstance(hundleMemento)) {
+        } else if (hundleMemento != null && hundleMemento.mHundlerType == AbstractHundleMemento.MenuHandlers.ACTION) {
             ActionHundleMemento actionHandleMemento = (ActionHundleMemento) hundleMemento;
             hundleAction(actionHandleMemento);
         }
@@ -95,7 +95,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cars -> { mRootView.loadData(joinCarsAndMenuItems(mMenu, cars));
                             mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.SHOP));},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start "+e.toString()));
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
     }
 
     private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars) {

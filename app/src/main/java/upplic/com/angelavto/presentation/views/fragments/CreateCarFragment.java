@@ -27,4 +27,10 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         mViewController = new FmtCreateCarCtrl(this);
         mViewController.start();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getBaseActivity().getSupportActionBar().setTitle(R.string.add_car);
+    }
 }

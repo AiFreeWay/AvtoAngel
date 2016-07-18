@@ -15,5 +15,5 @@
     <string name="add_car_to_garage">Добавить автомобиль в гараж</string>
     <string name="car_title">Название</string>
     <string name="phone">Сим-карта в маяке</string>
-    <string name="create">Создать</string>
+    <string name="add">Добавить</string>
 </resources>

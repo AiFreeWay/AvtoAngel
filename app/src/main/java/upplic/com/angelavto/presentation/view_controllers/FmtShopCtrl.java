@@ -46,7 +46,7 @@ public class FmtShopCtrl extends ViewController<ShopFragment> {
                 .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(products -> {mRootView.loadData(products);
                     mRootView.showSuccesLoad();},
-                        e -> { Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtShopCtrl: start "+e.toString());
+                        e -> { Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtShopCtrl: start error"+e.toString());
                         mRootView.showDeniedLoad();});
     }
 

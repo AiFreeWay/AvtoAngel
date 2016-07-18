@@ -9,12 +9,12 @@ public class FragmentHandleMemento extends AbstractHundleMemento<FragmentsFactor
 
     private Bundle fragmentArgs;
 
-    public FragmentHandleMemento(FragmentsFactory.Fragments hundleObject) {
-        this.hundleObject = hundleObject;
+    public FragmentHandleMemento(FragmentsFactory.Fragments hundleObject , MenuHandlers hundlerType) {
+        super(hundleObject, hundlerType);
     }
 
-    public FragmentHandleMemento(FragmentsFactory.Fragments hundleObject, Bundle fragmentArgs) {
-        this.hundleObject = hundleObject;
+    public FragmentHandleMemento(FragmentsFactory.Fragments hundleObject, Bundle fragmentArgs, MenuHandlers hundlerType) {
+        super(hundleObject, hundlerType);
         this.fragmentArgs = fragmentArgs;
     }
 

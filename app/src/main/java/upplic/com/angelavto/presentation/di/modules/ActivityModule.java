@@ -8,10 +8,12 @@ import javax.inject.Named;
 import dagger.Module;
 import dagger.Provides;
 import upplic.com.angelavto.domain.executors.CreateOrUpdateCars;
+import upplic.com.angelavto.domain.executors.GetCarById;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetProducts;
 import upplic.com.angelavto.domain.interactors.Interactor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Product;
 import upplic.com.angelavto.presentation.utils.AppMenuFactory;
@@ -25,6 +27,7 @@ public class ActivityModule {
     public static final String GET_PRODUCTS = "getproducts";
     public static final String GET_CARS = "getcars";
     public static final String CREATE_OR_UPDATE_CARS = "createorupdatecars";
+    public static final String GET_CAR_BY_ID = "getcarbyid";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -67,5 +70,11 @@ public class ActivityModule {
     @Named(CREATE_OR_UPDATE_CARS)
     public Interactor<Car> provideCreateOrUpdateCars(CreateOrUpdateCars createOrUpdateCars) {
         return createOrUpdateCars;
+    }
+
+    @Provides
+    @Named(GET_CAR_BY_ID)
+    public Interactor1<Car, Integer> provideGetCarById(GetCarById getCarById) {
+        return getCarById;
     }
 }
