@@ -12,4 +12,17 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="login_dialog" parent="Material.App.Dialog.Simple.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="CarCreateEditText" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/green_jungle_krayola</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/green_jungle_krayola</item>
+        <item name="colorControlNormal">@color/green_jungle_krayola</item>
+        <item name="colorControlActivated">@color/green_jungle_krayola</item>
+    </style>
 </resources>

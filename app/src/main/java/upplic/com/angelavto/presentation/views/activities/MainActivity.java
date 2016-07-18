@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -26,6 +27,7 @@ import upplic.com.angelavto.presentation.adapters.MultyListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
+import upplic.com.angelavto.presentation.utils.FragmentsFactory;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
 public class MainActivity extends BaseActivity<AcMainCtrl> {
@@ -52,7 +54,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));
         mElvMenu.setAdapter(mAdapter);
         mElvMenu.addHeaderView(getHeaderView());
-        mElvMenu.addFooterView(getFooterView());
+        mElvMenu.addFooterView(getFooterView(), null, true);
         mViewController.start();
     }
 
@@ -114,6 +116,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     }
 
     private View getFooterView() {
-        return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_footer, mElvMenu, false);
+        View footer = mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_footer, mElvMenu, false);
+        Button createCar = (Button) footer.findViewById(R.id.v_app_menu_footer_btn_open_shop);
+        createCar.setOnClickListener(v -> { mViewController.showFragmet(FragmentsFactory.Fragments.CRAETE_CAR);
+            driveMenu();});
+        return footer;
     }
 }

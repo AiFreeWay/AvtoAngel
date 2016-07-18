@@ -11,4 +11,9 @@
     <string name="add_car">Добавить автомобиль</string>
     <string name="buy_beacon">Покупка маяка</string>
     <string name="cant_load_data">Не удалось загрузить данные</string>
+    <string name="need_input_code">Нужно ввести код!</string>
+    <string name="add_car_to_garage">Добавить автомобиль в гараж</string>
+    <string name="car_title">Название</string>
+    <string name="phone">Сим-карта в маяке</string>
+    <string name="create">Создать</string>
 </resources>

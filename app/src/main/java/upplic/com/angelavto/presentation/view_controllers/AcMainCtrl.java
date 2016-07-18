@@ -55,7 +55,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     @Override
     public void start() {
         mMenu = mAppMenuFactory.getMenu();
-        getData();
+        checkCarsCount();
     }
 
     public void popBack() {
@@ -89,7 +89,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
 
-    private void getData() {
+    private void checkCarsCount() {
         mGetCars.execute()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -107,5 +107,9 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     public LayoutInflater getLayoutInflater() {
         return  mLayoutInflater;
+    }
+
+    public void showFragmet(FragmentsFactory.Fragments fragmentIndifinder) {
+        mRouter.show(mFragmentsFactory.getFragment(fragmentIndifinder));
     }
 }
