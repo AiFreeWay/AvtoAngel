@@ -2,6 +2,8 @@ package upplic.com.angelavto.presentation.app;
 
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import upplic.com.angelavto.presentation.di.components.ApplicationComponent;
 import upplic.com.angelavto.presentation.di.components.DaggerApplicationComponent;
@@ -20,6 +22,12 @@ public class AngelAvto extends Application {
         mAppComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        MultiDex.install(this);
     }
 
     public ApplicationComponent getAppComponent() {

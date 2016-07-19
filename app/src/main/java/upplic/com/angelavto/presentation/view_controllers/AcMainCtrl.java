@@ -65,7 +65,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
             mRootView.finish();
     }
 
-    public void hundleClick(AppMenuItem data) {
+    public void hundleAppMenuClick(AppMenuItem data) {
         AbstractHundleMemento hundleMemento = data.getAppMenuHundler();
         if (hundleMemento != null && hundleMemento.mHundlerType == AbstractHundleMemento.MenuHandlers.FRAGMENT) {
             FragmentHandleMemento fragmentHandleMemento = (FragmentHandleMemento) hundleMemento;

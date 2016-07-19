@@ -7,11 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.di.components.ActivityComponent;
 import upplic.com.angelavto.presentation.view_controllers.FmtMapCtrl;
+import upplic.com.angelavto.presentation.views.activities.BaseActivity;
 
-public class MapFragemnt extends BaseFragment<FmtMapCtrl> {
+public class MapFragemnt extends SupportMapFragment {
+
+    private FmtMapCtrl mViewController;
 
     @Nullable
     @Override
@@ -26,5 +32,9 @@ public class MapFragemnt extends BaseFragment<FmtMapCtrl> {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtMapCtrl(this);
         mViewController.start();
+    }
+
+    public ActivityComponent getActivityComponent() {
+        return ((BaseActivity) getActivity()).getActivityComponent();
     }
 }
