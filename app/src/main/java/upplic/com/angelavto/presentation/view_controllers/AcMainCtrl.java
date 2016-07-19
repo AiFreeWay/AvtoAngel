@@ -2,6 +2,7 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -26,6 +27,7 @@ import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
 import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
 import upplic.com.angelavto.presentation.wrappers.ActionHundleMemento;
+import upplic.com.angelavto.presentation.wrappers.ActivityHandleMemento;
 import upplic.com.angelavto.presentation.wrappers.FragmentHandleMemento;
 
 
@@ -71,6 +73,9 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         } else if (hundleMemento != null && hundleMemento.mHundlerType == AbstractHundleMemento.MenuHandlers.ACTION) {
             ActionHundleMemento actionHandleMemento = (ActionHundleMemento) hundleMemento;
             hundleAction(actionHandleMemento);
+        } else if (hundleMemento != null && hundleMemento.mHundlerType == AbstractHundleMemento.MenuHandlers.ACTIVITY) {
+            ActivityHandleMemento activityHandleMemento = (ActivityHandleMemento) hundleMemento;
+            hundleActivity(activityHandleMemento);
         }
         mRootView.driveMenu();
     }
@@ -88,6 +93,12 @@ public class AcMainCtrl extends ViewController<MainActivity> {
             action.call();
     }
 
+    private void hundleActivity(ActivityHandleMemento activityHandleMemento) {
+        Intent intent = activityHandleMemento.getHundleObject();
+        if (intent != null)
+            mRootView.startActivity(intent);
+    }
+
 
     private void checkCarsCount() {
         mGetCars.execute()
@@ -99,7 +110,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars) {
-        List<AppMenuItem> carsAsMenuItems = CarMapper.mapCars(cars);
+        List<AppMenuItem> carsAsMenuItems = CarMapper.mapCars(mRootView, cars);
         menues.get(AppMenuFactory.MenuItems.AVTO.id).setInsertedMenu(carsAsMenuItems);
         return menues;
     }

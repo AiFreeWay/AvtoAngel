@@ -43,6 +43,6 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Car getCarById(int id) throws Exception {
-        return null;
+        return mMockStore.getCarById(id);
     }
 }

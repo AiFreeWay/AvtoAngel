@@ -36,7 +36,7 @@ public class ActivityModule {
     public ActivityModule(BaseActivity activity) {
         mRouterBilder = new FragmentRouter.RouterBilder(activity.getSupportFragmentManager());
         mFragmentsFactory = new FragmentsFactory();
-        mAppMenuFactory = new AppMenuFactory();
+        mAppMenuFactory = new AppMenuFactory(activity);
     }
 
     @Provides

@@ -25,7 +25,8 @@ public abstract class AbstractHundleMemento<T> {
 
     public enum MenuHandlers {
         ACTION(0),
-        FRAGMENT(1);
+        FRAGMENT(1),
+        ACTIVITY(2);
         public int id;
 
         MenuHandlers(int id) {

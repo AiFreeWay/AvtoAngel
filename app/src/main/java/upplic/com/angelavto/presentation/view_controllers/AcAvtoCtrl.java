@@ -7,22 +7,20 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
-import upplic.com.angelavto.presentation.utils.FragmentsFactory;
-import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
+import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
 
 
-public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
+public class AcAvtoCtrl extends ViewController<AvtoActivity> {
 
     @Inject
     @Named(ActivityModule.GET_CAR_BY_ID)
     Interactor1<Car, Integer> mGetCars;
 
-    public FmtAvtoCtrl(AvtoFragment view) {
+    public AcAvtoCtrl(AvtoActivity view) {
         super(view);
         mRootView.getActivityComponent()
                 .inject(this);
@@ -34,9 +32,8 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(car -> {
-                    mRootView.getBaseActivity()
-                        .getSupportActionBar()
+                    mRootView.getSupportActionBar()
                         .setTitle(car.getTitle());},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: start error "+e.toString()));
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcAvtoCtrl: start error "+e.toString()));
     }
 }

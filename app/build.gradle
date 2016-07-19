@@ -45,6 +45,7 @@ dependencies {
 
     //Design
     compile 'com.github.rey5137:material:1.2.4'
+    compile 'com.vicmikhailau:MaskedEditText:1.1.0'
 
     //DB
     compile files('libs/ormlite-android-4.48.jar')

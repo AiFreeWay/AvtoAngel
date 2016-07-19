@@ -20,13 +20,9 @@ public class AcLoginCtrl extends ViewController<LoginActivity> {
     }
 
     public void startMainActivity() {
-        if (mRootView.getCode().isEmpty())
-            mRootView.showNeutralDialog(R.string.need_input_code);
-        else {
-            Intent intent = new Intent(mRootView, MainActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mRootView.startActivity(intent);
-        }
+        Intent intent = new Intent(mRootView, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mRootView.startActivity(intent);
     }
 }

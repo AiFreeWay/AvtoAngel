@@ -29,34 +29,50 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
     Button mBtnEnter;
 
     private Dialog mDialog;
+    private Dialog mDialogInputNumber;
+    private String mNumber;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_login);
         ButterKnife.bind(this);
-        appendPhoneNumber();
         mDialog = new Dialog(this, R.style.login_dialog)
                 .neutralAction(R.string.ok)
                 .neutralActionClickListener(v -> mDialog.dismiss())
                 .cancelable(true);
+
+        mDialogInputNumber = new Dialog(this, R.style.login_dialog)
+                .title(R.string.ac_login_input_phone)
+                .positiveAction(R.string.input)
+                .positiveActionClickListener(v -> addNumber())
+                .contentView(R.layout.v_input_phone_dialog)
+                .cancelable(true);
         mViewController = new AcLoginCtrl(this);
         mBtnEnter.setOnClickListener(v -> mViewController.startMainActivity());
-    }
-
-    private void appendPhoneNumber() {
-        int greenColor = ContextCompat.getColor(this, R.color.green_jungle_krayola);
-        SpannableString phone = new SpannableString(" +7 (999) 964-07-66");
-        phone.setSpan(new ForegroundColorSpan(greenColor), 0 ,phone.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        mTvDescription.append(phone);
-    }
-
-    public String getCode() {
-        return mEtCode.getText().toString();
+        mTvDescription.setOnClickListener(v -> mDialogInputNumber.show());
     }
 
     public void showNeutralDialog(@StringRes int resId) {
         mDialog.title(resId)
                 .show();
+    }
+
+    private void addNumber() {
+        EditText etInputPhone = (EditText) mDialogInputNumber.findViewById(R.id.v_input_phone_dialog_et_number);
+        String number = etInputPhone.getText().toString();
+        if (!number.isEmpty()) {
+            appendPhoneNumber(number);
+            mNumber = number;
+            mDialogInputNumber.dismiss();
+        }
+    }
+
+    private void appendPhoneNumber(String phoneNumber) {
+        int greenColor = ContextCompat.getColor(this, R.color.green_jungle_krayola);
+        SpannableString phone = new SpannableString(" "+phoneNumber);
+        phone.setSpan(new ForegroundColorSpan(greenColor), 0 ,phone.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        mTvDescription.setText(R.string.ac_login_description);
+        mTvDescription.append(phone);
     }
 }

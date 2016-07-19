@@ -43,14 +43,14 @@ public class FragmentRouter {
         Fragment lastFragment = mFragmentManager.findFragmentById(mViewId);
         if (lastFragment == null)
             return false;
-        boolean isDifferentArguments = isDifferentArguments(fragment, lastFragment);
-        return lastFragment.getClass().isInstance(fragment) && !isDifferentArguments;
+        boolean isSameArguments = isSameArguments(fragment, lastFragment);
+        return lastFragment.getClass().isInstance(fragment) && isSameArguments;
     }
 
-    private boolean isDifferentArguments(Fragment fragment1, Fragment fragment2) {
+    private boolean isSameArguments(Fragment fragment1, Fragment fragment2) {
         int arguments1HashCode = fragment1.getArguments().hashCode();
         int arguments2HashCode = fragment2.getArguments().hashCode();
-        return arguments1HashCode != arguments2HashCode;
+        return arguments1HashCode == arguments2HashCode;
     }
 
     public static class RouterBilder {

@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
 import upplic.com.angelavto.presentation.views.fragments.CreateCarFragment;
 import upplic.com.angelavto.presentation.views.fragments.ShopFragment;
@@ -27,15 +26,12 @@ public class FragmentsFactory {
     }
 
     public BaseFragment getFragment(Fragments fragmentIndefinder) {
-        if (fragmentIndefinder == Fragments.AVTO)
-            return addBundle(new AvtoFragment());
         return mFragmentsList.get(fragmentIndefinder.id);
     }
 
     public enum Fragments {
         SHOP(0),
-        CRAETE_CAR(1),
-        AVTO(2);
+        CRAETE_CAR(1);
 
         public int id;
         Fragments(int id) {
