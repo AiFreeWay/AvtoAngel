@@ -1,9 +1,7 @@
-package upplic.com.angelavto.presentation.utils;
+package upplic.com.angelavto.presentation.factories;
 
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 
 import com.rey.material.app.Dialog;
 

@@ -27,6 +27,8 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
     EditText mEtCode;
     @BindView(R.id.ac_login_btn_enter)
     Button mBtnEnter;
+    @BindView(R.id.ac_login_btn_get_code)
+    Button mBtnGetCode;
 
     private Dialog mDialog;
     private Dialog mDialogInputNumber;
@@ -51,6 +53,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         mViewController = new AcLoginCtrl(this);
         mBtnEnter.setOnClickListener(v -> mViewController.startMainActivity());
         mTvDescription.setOnClickListener(v -> mDialogInputNumber.show());
+        mBtnGetCode.setOnClickListener(v -> getCode());
     }
 
     public void showNeutralDialog(@StringRes int resId) {
@@ -62,17 +65,22 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         EditText etInputPhone = (EditText) mDialogInputNumber.findViewById(R.id.v_input_phone_dialog_et_number);
         String number = etInputPhone.getText().toString();
         if (!number.isEmpty()) {
-            appendPhoneNumber(number);
+            appendPhoneNumber(R.string.phone_number, number);
             mNumber = number;
             mDialogInputNumber.dismiss();
         }
     }
 
-    private void appendPhoneNumber(String phoneNumber) {
+    private void getCode() {
+        if (mNumber != null && !mNumber.isEmpty())
+            appendPhoneNumber(R.string.ac_login_description, mNumber);
+    }
+
+    private void appendPhoneNumber(@StringRes int testRes,  String phoneNumber) {
         int greenColor = ContextCompat.getColor(this, R.color.green_jungle_krayola);
         SpannableString phone = new SpannableString(" "+phoneNumber);
         phone.setSpan(new ForegroundColorSpan(greenColor), 0 ,phone.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        mTvDescription.setText(R.string.ac_login_description);
+        mTvDescription.setText(testRes);
         mTvDescription.append(phone);
     }
 }

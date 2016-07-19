@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,11 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.presentation.adapters.MultyExListViewAdapter;
-import upplic.com.angelavto.presentation.adapters.MultyListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
-import upplic.com.angelavto.presentation.utils.FragmentsFactory;
+import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
 public class MainActivity extends BaseActivity<AcMainCtrl> {

@@ -11,6 +11,7 @@ import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
 import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
 
 
@@ -19,11 +20,18 @@ public class AcAvtoCtrl extends ViewController<AvtoActivity> {
     @Inject
     @Named(ActivityModule.GET_CAR_BY_ID)
     Interactor1<Car, Integer> mGetCars;
+    @Inject
+    AvtoViewPagerFactory.Builder mFactoryBuilder;
+
+    private AvtoViewPagerFactory mFactory;
 
     public AcAvtoCtrl(AvtoActivity view) {
         super(view);
         mRootView.getActivityComponent()
                 .inject(this);
+        mFactory = mFactoryBuilder.build(mRootView.getTlTabs());
+        mRootView.loadData(mFactory.getTabs(), mFactory.getFragments());
+
     }
 
     @Override

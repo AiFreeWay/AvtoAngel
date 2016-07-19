@@ -3,7 +3,7 @@ package upplic.com.angelavto.presentation.wrappers;
 
 import android.os.Bundle;
 
-import upplic.com.angelavto.presentation.utils.FragmentsFactory;
+import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 
 public class FragmentHandleMemento extends AbstractHundleMemento<FragmentsFactory.Fragments> {
 
