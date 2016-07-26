@@ -1,28 +1,25 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
+import javax.inject.Inject;
 
-import android.content.Intent;
-
-import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.factories.LoginViewPagerFactory;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
-import upplic.com.angelavto.presentation.views.activities.MainActivity;
+
 
 public class AcLoginCtrl extends ViewController<LoginActivity> {
 
+    @Inject
+    LoginViewPagerFactory mFactory;
 
     public AcLoginCtrl(LoginActivity view) {
         super(view);
+        mRootView.getActivityComponent()
+                .inject(this);
+        mRootView.loadData(mFactory.getFragments());
     }
 
     @Override
     public void start() {
 
-    }
-
-    public void startMainActivity() {
-        Intent intent = new Intent(mRootView, MainActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mRootView.startActivity(intent);
     }
 }

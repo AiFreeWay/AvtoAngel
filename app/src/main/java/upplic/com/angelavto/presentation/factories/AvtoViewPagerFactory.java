@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
-import upplic.com.angelavto.presentation.views.fragments.MapFragemnt;
+import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
 public class AvtoViewPagerFactory {
     private List<TabLayout.Tab> mTabs;
@@ -36,7 +36,7 @@ public class AvtoViewPagerFactory {
 
     private void geeenrateFragments() {
         mFragments.add(0, new AvtoDriveFragment());
-        mFragments.add(1, new MapFragemnt());
+        mFragments.add(1, new MapFragement());
     }
 
     public static class Builder {

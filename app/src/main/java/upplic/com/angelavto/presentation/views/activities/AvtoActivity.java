@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.presentation.adapters.ViewPagerAdapter;
+import upplic.com.angelavto.presentation.adapters.ViewPagerTabsAdapter;
 import upplic.com.angelavto.presentation.view_controllers.AcAvtoCtrl;
 
 public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
@@ -33,7 +33,7 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
     TabLayout mTlTabs;
 
     private int mCarId;
-    private ViewPagerAdapter mAdapter;
+    private ViewPagerTabsAdapter mAdapter;
     private MaterialMenuIconToolbar mMenuDrawer;
 
     @Override
@@ -43,7 +43,7 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
         ButterKnife.bind(this);
         mCarId = getIntent().getIntExtra(CAR_ID, -1);
         initToolbar();
-        mAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mTlTabs, mVpBody);
+        mAdapter = new ViewPagerTabsAdapter(getSupportFragmentManager(), mTlTabs, mVpBody);
         mVpBody.setAdapter(mAdapter);
         mViewController = new AcAvtoCtrl(this);
         mViewController.start();

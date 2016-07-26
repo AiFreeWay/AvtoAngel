@@ -6,23 +6,22 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.google.android.gms.maps.SupportMapFragment;
-
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.presentation.di.components.ActivityComponent;
-import upplic.com.angelavto.presentation.view_controllers.FmtMapCtrl;
-import upplic.com.angelavto.presentation.views.activities.BaseActivity;
+import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
-public class MapFragemnt extends SupportMapFragment {
+public class InputPhoneFragment extends BaseFragment {
 
-    private FmtMapCtrl mViewController;
+    @BindView(R.id.ddd)
+    TextView ddd;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fmt_map, container, false);
+        View view = inflater.inflate(R.layout.input_phone_fragment, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -30,11 +29,8 @@ public class MapFragemnt extends SupportMapFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewController = new FmtMapCtrl(this);
-        mViewController.start();
-    }
-
-    public ActivityComponent getActivityComponent() {
-        return ((BaseActivity) getActivity()).getActivityComponent();
+        ddd.setOnClickListener(v -> {
+            ((LoginActivity) getBaseActivity()).goToGetCodeSlide();
+        });
     }
 }

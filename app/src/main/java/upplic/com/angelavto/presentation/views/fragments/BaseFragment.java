@@ -1,9 +1,5 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
-
-
-
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 
 import upplic.com.angelavto.presentation.di.components.ActivityComponent;

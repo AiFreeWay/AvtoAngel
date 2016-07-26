@@ -1,11 +1,11 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
 
-import upplic.com.angelavto.presentation.views.fragments.MapFragemnt;
+import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
-public class FmtMapCtrl extends ViewController<MapFragemnt> {
+public class FmtMapCtrl extends ViewController<MapFragement> {
 
-    public FmtMapCtrl(MapFragemnt view) {
+    public FmtMapCtrl(MapFragement view) {
         super(view);
     }
 

@@ -18,6 +18,7 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Product;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
+import upplic.com.angelavto.presentation.factories.LoginViewPagerFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.views.activities.BaseActivity;
@@ -34,12 +35,14 @@ public class ActivityModule {
     private FragmentsFactory mFragmentsFactory;
     private AppMenuFactory mAppMenuFactory;
     private AvtoViewPagerFactory.Builder mAvtoViewPagerFactoryBuilder;
+    private LoginViewPagerFactory mLoginViewPagerFactory;
 
     public ActivityModule(BaseActivity activity) {
         mRouterBilder = new FragmentRouter.RouterBilder(activity.getSupportFragmentManager());
         mFragmentsFactory = new FragmentsFactory();
         mAppMenuFactory = new AppMenuFactory(activity);
         mAvtoViewPagerFactoryBuilder = new AvtoViewPagerFactory.Builder();
+        mLoginViewPagerFactory = new LoginViewPagerFactory();
     }
 
     @Provides
@@ -60,6 +63,11 @@ public class ActivityModule {
     @Provides
     public AvtoViewPagerFactory.Builder provideAvtoViewPagerFactoryBuilder() {
         return mAvtoViewPagerFactoryBuilder;
+    }
+
+    @Provides
+    public LoginViewPagerFactory provideLoginViewPagerFactory() {
+        return mLoginViewPagerFactory;
     }
 
     @Provides

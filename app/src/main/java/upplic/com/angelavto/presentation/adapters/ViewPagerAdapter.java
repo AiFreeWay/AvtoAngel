@@ -1,45 +1,20 @@
 package upplic.com.angelavto.presentation.adapters;
 
 
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 
 import java.util.Collections;
 import java.util.List;
 
+
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    private List<? extends Fragment> mFragments = Collections.emptyList();
 
-    private List<TabLayout.Tab> mTabs = Collections.emptyList();
-    private List<Fragment> mFragments = Collections.emptyList();
-    private TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            mViewPager.setCurrentItem(tab.getPosition());
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-    };
-
-    public ViewPagerAdapter(FragmentManager fragmentManager, TabLayout tabLayout, ViewPager viewPager) {
+    public ViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        mTabLayout = tabLayout;
-        mViewPager = viewPager;
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        mTabLayout.setOnTabSelectedListener(tabSelectedListener);
     }
 
     @Override
@@ -49,14 +24,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return mTabs.size();
+        return mFragments.size();
     }
 
-    public void loadData(List<TabLayout.Tab> tabs, List<Fragment> fragments) {
-        mTabs = tabs;
+    public void loadData(List<? extends Fragment> fragments) {
         mFragments = fragments;
-        for (TabLayout.Tab tab : tabs)
-            mTabLayout.addTab(tab);
         notifyDataSetChanged();
     }
 }

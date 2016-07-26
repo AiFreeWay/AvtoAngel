@@ -2,9 +2,9 @@
     <string name="app_name">Авто ангел</string>
     <string name="get">Получить</string>
     <string name="input_code">Ваш код</string>
-    <string name="ac_login_description_select_phone">Ввести номер телефона</string>
-    <string name="ac_login_input_phone">Введите номер</string>
-    <string name="ac_login_description">Мы выслали код подтверждения на ваш телефон</string>
+    <string name="fmt_login_description_select_phone">Ввести номер телефона</string>
+    <string name="fmt_login_input_phone">Введите номер</string>
+    <string name="fmt_login_description">Мы выслали код подтверждения на ваш телефон</string>
     <string name="phone_number">Номер телефона</string>
     <string name="enter">Войти</string>
     <string name="repeated">Повторный запрос кода через</string>
