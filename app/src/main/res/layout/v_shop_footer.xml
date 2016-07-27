@@ -12,7 +12,7 @@
         android:id="@+id/v_shop_footer_btn_open_shop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_get_code"
+        android:background="@drawable/selector_marengo_button"
         android:gravity="center"
         android:text="@string/got_to_shop"
         android:textColor="@color/grideperlevy"

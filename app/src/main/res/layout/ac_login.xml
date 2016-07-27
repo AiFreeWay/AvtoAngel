@@ -6,7 +6,7 @@
     android:background="@color/grideperlevy">
 
     <ImageView
-        android:id="@+id/fmt_login_im_logo"
+        android:id="@+id/fmt_login_im_livering"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

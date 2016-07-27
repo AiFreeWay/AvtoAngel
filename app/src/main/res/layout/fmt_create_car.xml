@@ -84,7 +84,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/selector_get_code"
+        android:background="@drawable/selector_marengo_button"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="@string/add"
