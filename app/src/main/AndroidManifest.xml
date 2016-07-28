@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="upplic.com.angelavto"
-    android:installLocation="preferExternal">
+    package="upplic.com.angelavto">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".presentation.app.AngelAvto"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name=".presentation.app.AngelAvto"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -17,7 +16,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".presentation.views.activities.LoginActivity"
+        <activity
+            android:name=".presentation.views.activities.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,10 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.views.activities.MainActivity"
+        <activity
+            android:name=".presentation.views.activities.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.views.activities.AvtoActivity"
+        <activity
+            android:name=".presentation.views.activities.AvtoActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
     </application>

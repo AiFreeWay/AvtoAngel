@@ -25,4 +25,8 @@
         <item name="colorControlNormal">@color/green_jungle_krayola</item>
         <item name="colorControlActivated">@color/green_jungle_krayola</item>
     </style>
+
+    <style name="LightCircularProgressDrawable" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/white</item>
+    </style>
 </resources>

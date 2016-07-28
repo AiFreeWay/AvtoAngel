@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="23dp"
@@ -48,6 +49,19 @@
         android:textColor="@color/grideperlevy"
         android:textSize="17sp" />
 
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/fmt_get_code_pv_progress"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignEnd="@+id/fmt_login_btn_get_code"
+        android:layout_alignRight="@+id/fmt_login_btn_get_code"
+        android:layout_alignTop="@+id/fmt_login_btn_get_code"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="8dp"
+        app:pv_autostart="false"
+        app:pv_circular="true"
+        app:pv_progressStyle="@style/LightCircularProgressDrawable" />
+
     <TextView
         android:id="@+id/fmt_login_tv_description"
         style="@style/AcLoginDescription"
@@ -78,8 +92,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/button_green_disabled"
-        android:editable="false"
+        android:background="@drawable/selector_green_button"
         android:fontFamily="sans-serif-light"
         android:text="@string/enter"
         android:textAllCaps="false"

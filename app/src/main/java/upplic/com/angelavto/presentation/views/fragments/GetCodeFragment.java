@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rey.material.widget.ProgressView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -36,7 +36,7 @@ import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
 public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
 
-    private final int INTERVAL_LENGTH = 64;
+    private final int INTERVAL_LENGTH = 45;
     private final Calendar CALENDAR = new GregorianCalendar();
 
     @BindView(R.id.fmt_login_tv_description)
@@ -49,12 +49,15 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     Button mBtnEnter;
     @BindView(R.id.fmt_login_btn_get_code)
     Button mBtnGetCode;
+    @BindView(R.id.fmt_get_code_pv_progress)
+    ProgressView mProgress;
 
     private LoginActivity mActivity;
-    private Drawable mDrawableOnButtonEnabled;
-    private Drawable mDrawableOnButtonDisabled;
-    private int mColorOnButtonEnabled;
-    private int mColorOnButtonDisabled;
+    private Drawable mDrawableOnButtonEnterEnabled;
+    private Drawable mDrawableOnButtonEnterDisabled;
+    private int mColorGrideperlevy;
+    private int mColorSilverGrey;
+    private int mColorMarengo;
     private Observable<Long> mTimer = Observable.interval(1, TimeUnit.SECONDS);
     private Subscription mTimerSubscription;
     private SimpleDateFormat mTimeFormatter = new SimpleDateFormat("mm:ss");
@@ -72,10 +75,11 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         super.onActivityCreated(savedInstanceState);
         mActivity = (LoginActivity) getBaseActivity();
 
-        mDrawableOnButtonEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_green_button);
-        mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
-        mColorOnButtonEnabled = ContextCompat.getColor(getContext(), R.color.grideperlevy);
-        mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
+        mDrawableOnButtonEnterEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_green_button);
+        mDrawableOnButtonEnterDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
+        mColorGrideperlevy = ContextCompat.getColor(getContext(), R.color.grideperlevy);
+        mColorSilverGrey = ContextCompat.getColor(getContext(), R.color.silver_gray);
+        mColorMarengo = ContextCompat.getColor(getContext(), R.color.marengo);
 
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
         mViewController = new FmtGetCodeCtrl(this);
@@ -87,7 +91,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     public void onResume() {
         super.onResume();
         mActivity.enableViewPageChange();
-        disabledButton();
+        disabledButtonEnter();
     }
 
     @Override
@@ -95,19 +99,22 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         super.onStop();
         if (mTimerSubscription != null)
             mTimerSubscription.unsubscribe();
-        mTvDescription.setText("");
-        mTvPepeatedResponse.setText("");
     }
 
     private void doOnSendCode() {
         mTimerSubscription = mTimer
-                .doOnUnsubscribe(() -> mBtnGetCode.setEnabled(true))
+                .doOnUnsubscribe(() -> {
+                    enabledButtonGetCode();
+                    mProgress.stop();
+                    mTvDescription.setText("");
+                    mTvPepeatedResponse.setText("");})
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onChangeInterval);
         appendColorText(R.string.fmt_login_description, mActivity.getNubmer(), mTvDescription);
-        mBtnGetCode.setEnabled(false);
-        enabledButton();
+        disabledButtonGetCode();
+        enabledButtonEnter();
+        mProgress.start();
     }
 
     private void onChangeInterval(Long time) {
@@ -137,15 +144,25 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         textView.append(phone);
     }
 
-    private void enabledButton() {
+    private void enabledButtonEnter() {
         mBtnEnter.setEnabled(true);
-        mBtnEnter.setBackground(mDrawableOnButtonEnabled);
-        mBtnEnter.setTextColor(mColorOnButtonEnabled);
+        mBtnEnter.setBackground(mDrawableOnButtonEnterEnabled);
+        mBtnEnter.setTextColor(mColorGrideperlevy);
     }
 
-    private void disabledButton() {
+    private void disabledButtonEnter() {
         mBtnEnter.setEnabled(false);
-        mBtnEnter.setBackground(mDrawableOnButtonDisabled);
-        mBtnEnter.setTextColor(mColorOnButtonDisabled);
+        mBtnEnter.setBackground(mDrawableOnButtonEnterDisabled);
+        mBtnEnter.setTextColor(mColorSilverGrey);
+    }
+
+    private void enabledButtonGetCode() {
+        mBtnGetCode.setEnabled(true);
+        mBtnGetCode.setTextColor(mColorGrideperlevy);
+    }
+
+    private void disabledButtonGetCode() {
+        mBtnGetCode.setEnabled(false);
+        mBtnGetCode.setTextColor(mColorMarengo);
     }
 }
