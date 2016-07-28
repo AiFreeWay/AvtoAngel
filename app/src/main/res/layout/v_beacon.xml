@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <ImageView
-        android:id="@+id/v_menu_im_image"
+        android:id="@+id/v_beacon_im_image"
         android:layout_width="115dp"
         android:layout_height="115dp"
         android:layout_alignParentLeft="true"
@@ -17,33 +17,33 @@
         android:src="@drawable/logo"/>
 
     <TextView
-        android:id="@+id/v_menu_tv_title"
+        android:id="@+id/v_beacon_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/v_menu_im_image"
-        android:layout_toRightOf="@+id/v_menu_im_image"
+        android:layout_toEndOf="@+id/v_beacon_im_image"
+        android:layout_toRightOf="@+id/v_beacon_im_image"
         android:layout_marginTop="15dp"
         android:textSize="17sp"
         android:textColor="@color/slate_gray"/>
 
     <TextView
-        android:id="@+id/v_menu_tv_subtitle"
+        android:id="@+id/v_beacon_tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/v_menu_tv_title"
-        android:layout_toEndOf="@+id/v_menu_im_image"
-        android:layout_toRightOf="@+id/v_menu_im_image"
+        android:layout_below="@+id/v_beacon_tv_title"
+        android:layout_toEndOf="@+id/v_beacon_im_image"
+        android:layout_toRightOf="@+id/v_beacon_im_image"
         android:layout_marginTop="7dp"
         android:textColor="@color/silver_gray"/>
 
     <TextView
-        android:id="@+id/v_menu_tv_description"
+        android:id="@+id/v_beacon_tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/v_menu_tv_subtitle"
-        android:layout_toEndOf="@+id/v_menu_im_image"
-        android:layout_toRightOf="@+id/v_menu_im_image"
+        android:layout_below="@+id/v_beacon_tv_subtitle"
+        android:layout_toEndOf="@+id/v_beacon_im_image"
+        android:layout_toRightOf="@+id/v_beacon_im_image"
         android:fontFamily="sans-serif-medium"
         android:layout_marginTop="7dp"
         android:textStyle="bold"

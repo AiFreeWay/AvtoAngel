@@ -10,12 +10,12 @@ import dagger.Provides;
 import upplic.com.angelavto.domain.executors.CreateOrUpdateCars;
 import upplic.com.angelavto.domain.executors.GetCarById;
 import upplic.com.angelavto.domain.executors.GetCars;
-import upplic.com.angelavto.domain.executors.GetProducts;
+import upplic.com.angelavto.domain.executors.GetBeacons;
 import upplic.com.angelavto.domain.interactors.Interactor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.domain.models.Product;
+import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
 import upplic.com.angelavto.presentation.factories.LoginViewPagerFactory;
@@ -26,7 +26,7 @@ import upplic.com.angelavto.presentation.views.activities.BaseActivity;
 @Module
 public class ActivityModule {
 
-    public static final String GET_PRODUCTS = "getproducts";
+    public static final String GET_BEACONS = "getbeacons";
     public static final String GET_CARS = "getcars";
     public static final String CREATE_OR_UPDATE_CARS = "createorupdatecars";
     public static final String GET_CAR_BY_ID = "getcarbyid";
@@ -71,9 +71,9 @@ public class ActivityModule {
     }
 
     @Provides
-    @Named(GET_PRODUCTS)
-    public Interactor0<List<Product>> provideGetProducts(GetProducts getProducts) {
-        return getProducts;
+    @Named(GET_BEACONS)
+    public Interactor0<List<Beacon>> provideGetBeacons(GetBeacons getBeacons) {
+        return getBeacons;
     }
 
     @Provides

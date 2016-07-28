@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.presentation.adapters.ViewPagerAdapter;
+import upplic.com.angelavto.presentation.adapters.LoginViewPagerAdapter;
 import upplic.com.angelavto.presentation.view_controllers.AcLoginCtrl;
 
 public class LoginActivity extends BaseActivity<AcLoginCtrl> {
@@ -23,7 +22,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
     @BindView(R.id.ac_login_vp_body)
     ViewPager mVpBody;
 
-    private ViewPagerAdapter mAdapter;
+    private LoginViewPagerAdapter mAdapter;
     private String mNubmer;
 
     private ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -49,7 +48,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_login);
         ButterKnife.bind(this);
-        mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mAdapter = new LoginViewPagerAdapter(getSupportFragmentManager());
         mVpBody.setAdapter(mAdapter);
         mVpBody.addOnPageChangeListener(mPageChangeListener);
         disabledViewPageChange();

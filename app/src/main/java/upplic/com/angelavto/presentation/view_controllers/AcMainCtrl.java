@@ -105,7 +105,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cars -> { mRootView.loadData(joinCarsAndMenuItems(mMenu, cars));
-                            mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.SHOP));},
+                            mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.BEACONS));},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
     }
 

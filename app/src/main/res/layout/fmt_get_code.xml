@@ -57,7 +57,7 @@
         android:layout_alignRight="@+id/fmt_login_btn_get_code"
         android:layout_alignTop="@+id/fmt_login_btn_get_code"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="7dp"
         app:pv_autostart="false"
         app:pv_circular="true"
         app:pv_progressStyle="@style/LightCircularProgressDrawable" />

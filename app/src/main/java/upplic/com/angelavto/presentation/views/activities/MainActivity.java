@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     private View getFooterView() {
         View footer = mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_footer, mElvMenu, false);
-        Button createCar = (Button) footer.findViewById(R.id.v_app_menu_footer_btn_open_shop);
+        Button createCar = (Button) footer.findViewById(R.id.v_app_menu_footer_btn_create_car);
         createCar.setOnClickListener(v -> { mViewController.showFragmet(FragmentsFactory.Fragments.CRAETE_CAR);
             driveMenu();});
         return footer;

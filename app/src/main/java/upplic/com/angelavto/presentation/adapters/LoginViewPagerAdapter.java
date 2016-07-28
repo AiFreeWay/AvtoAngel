@@ -15,12 +15,14 @@ import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class LoginViewPagerAdapter extends FragmentPagerAdapter {
+
+    private final int LOGIN_PAGE_COUNT = 2;
 
     private List<? extends Fragment> mFragments = Collections.emptyList();
     private AdapterPageSizer mAdapterPageSizer;
 
-    public ViewPagerAdapter(FragmentManager fragmentManager) {
+    public LoginViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
         mAdapterPageSizer = new AdapterPageSizer(mFragments.size());
     }
@@ -54,7 +56,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public void disabledViewPageChange() {
         mAdapterPageSizer.canChange(false);
-        if (mFragments.size() > 0) {
+        if (mFragments.size() == LOGIN_PAGE_COUNT) {
             List<? extends Fragment> fullFragmentsList = mFragments.subList(0, mFragments.size());
             mFragments = mFragments.subList(0, 1);
             notifyDataSetChanged();

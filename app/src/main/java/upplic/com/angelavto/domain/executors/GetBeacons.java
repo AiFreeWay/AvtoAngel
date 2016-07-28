@@ -3,28 +3,27 @@ package upplic.com.angelavto.domain.executors;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import rx.Observable;
 import upplic.com.angelavto.domain.interactors.Interactor0;
-import upplic.com.angelavto.domain.models.Product;
+import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.repositories.Repository;
 
 
-public class GetProducts implements Interactor0<List<Product>> {
+public class GetBeacons implements Interactor0<List<Beacon>> {
 
     private Repository mRepository;
 
     @Inject
-    public GetProducts(Repository repository){
+    public GetBeacons(Repository repository){
         mRepository = repository;
     }
 
     @Override
-    public Observable<List<Product>> execute() {
-        Observable.OnSubscribe<List<Product>> subscriber = observer -> {
+    public Observable<List<Beacon>> execute() {
+        Observable.OnSubscribe<List<Beacon>> subscriber = observer -> {
             try {
-                observer.onNext(mRepository.getProducts());
+                observer.onNext(mRepository.getBeacons());
             } catch (Exception e) {
                 observer.onError(e);
             }

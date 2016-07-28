@@ -83,7 +83,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
 
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
         mViewController = new FmtGetCodeCtrl(this);
-        mBtnEnter.setOnClickListener(v -> mViewController.startMainActivity());
+        mBtnEnter.setOnClickListener(v -> mViewController.startSelectBeaconActivity());
         mBtnGetCode.setOnClickListener(v -> doOnSendCode());
     }
 
@@ -92,6 +92,8 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         super.onResume();
         mActivity.enableViewPageChange();
         disabledButtonEnter();
+        mEtCode.setEnabled(false);
+        mEtCode.setText("");
     }
 
     @Override
@@ -114,14 +116,14 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         appendColorText(R.string.fmt_login_description, mActivity.getNubmer(), mTvDescription);
         disabledButtonGetCode();
         enabledButtonEnter();
+        mEtCode.setEnabled(true);
         mProgress.start();
     }
 
     private void onChangeInterval(Long time) {
-        if (time == INTERVAL_LENGTH) {
+        if (time == INTERVAL_LENGTH)
             mTimerSubscription.unsubscribe();
-            mTvPepeatedResponse.setText("");
-        } else {
+        else {
             int remainingTime = INTERVAL_LENGTH-time.intValue();
             String timeText = intToMinuteAndSeconds(remainingTime);
             appendColorText(R.string.repeated, timeText, mTvPepeatedResponse);

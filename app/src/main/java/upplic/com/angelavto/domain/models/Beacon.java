@@ -1,17 +1,17 @@
 package upplic.com.angelavto.domain.models;
 
 
-public class Product {
+public class Beacon {
 
     private String title;
     private String subtitle;
     private String description;
     private String image;
 
-    public Product() {
+    public Beacon() {
     }
 
-    public Product(String title, String subtitle, String description, String image) {
+    public Beacon(String title, String subtitle, String description, String image) {
         this.title = title;
         this.subtitle = subtitle;
         this.description = description;

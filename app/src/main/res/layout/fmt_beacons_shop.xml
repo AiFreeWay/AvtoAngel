@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListView android:id="@+id/fmt_shop_lv_products"
+    <ListView android:id="@+id/fmt_beacons_shop_lv_products"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/include"
@@ -12,7 +12,7 @@
         android:dividerHeight="10dp"/>
 
     <com.rey.material.widget.ProgressView
-        android:id="@+id/fmt_shop_pv_progress"
+        android:id="@+id/fmt_beacons_shop_pv_progress"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
@@ -23,7 +23,7 @@
         app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
 
     <TextView
-        android:id="@+id/fmt_shop_tv_error"
+        android:id="@+id/fmt_beacons_shop_tv_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -34,7 +34,7 @@
         android:textSize="26sp"
         android:visibility="invisible" />
 
-    <include layout="@layout/v_shop_footer"
+    <include layout="@layout/v_beacon_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

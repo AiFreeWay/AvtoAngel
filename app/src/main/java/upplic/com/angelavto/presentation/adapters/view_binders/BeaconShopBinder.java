@@ -10,35 +10,35 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.domain.models.Product;
-import upplic.com.angelavto.presentation.view_controllers.FmtShopCtrl;
+import upplic.com.angelavto.domain.models.Beacon;
+import upplic.com.angelavto.presentation.view_controllers.FmtBeaconsShopCtrl;
 
-public class ProductBinder implements AbstractBinder<Product> {
+public class BeaconShopBinder implements AbstractBinder<Beacon> {
 
-    @BindView(R.id.v_menu_im_image)
+    @BindView(R.id.v_beacon_im_image)
     ImageView mIvIcon;
-    @BindView(R.id.v_menu_tv_title)
+    @BindView(R.id.v_beacon_tv_title)
     TextView mTvTitle;
-    @BindView(R.id.v_menu_tv_subtitle)
+    @BindView(R.id.v_beacon_tv_subtitle)
     TextView mTvSubtitle;
-    @BindView(R.id.v_menu_tv_description)
+    @BindView(R.id.v_beacon_tv_description)
     TextView mTvDescription;
 
 
-    private FmtShopCtrl mViewController;
+    private FmtBeaconsShopCtrl mViewController;
     private ListView mParent;
     private LayoutInflater mLayoutInflater;
 
-    public ProductBinder(FmtShopCtrl controller) {
+    public BeaconShopBinder(FmtBeaconsShopCtrl controller) {
         mViewController = controller;
         mParent = mViewController.getRootView().getLvProducts();
         mLayoutInflater = mViewController.getLayoutInflater();
     }
 
     @Override
-    public View bind(View view, Product data) {
+    public View bind(View view, Beacon data) {
         if (view == null)
-            view = mLayoutInflater.inflate(R.layout.v_shop, mParent, false);
+            view = mLayoutInflater.inflate(R.layout.v_beacon, mParent, false);
         ButterKnife.bind(this, view);
 
         mTvTitle.setText(data.getTitle());

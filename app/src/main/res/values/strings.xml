@@ -3,8 +3,9 @@
     <string name="get">Получить</string>
     <string name="input_code">Ваш код</string>
     <string name="fmt_login_description_select_phone">Ввести номер телефона</string>
+    <string name="ac_select_beacon_Description">Ввести номер телефона</string>
     <string name="fmt_login_input_phone">Введите номер</string>
-    <string name="fmt_login_description">Мы выслали код подтверждения на ваш телефон</string>
+    <string name="fmt_login_description">Для работы приложения необходимо наличе GPS/GSM - маяка, позволяющегоподдерживать связь между вашим автомобилем исмартфоном.</string>
     <string name="phone_number">Номер телефона</string>
     <string name="enter">Войти</string>
     <string name="repeated">Повторный запрос кода через</string>
@@ -25,4 +26,6 @@
     <string name="want_exit">Выйти из приложения?</string>
     <string name="show_on_map">Показать на карте</string>
     <string name="next">Продолжить</string>
+    <string name="i_have_beacon">У уже меня есть маяк</string>
+    <string name="i_have_not_beacon">У меня нет маяка</string>
 </resources>

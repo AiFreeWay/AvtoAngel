@@ -9,7 +9,7 @@
     android:paddingTop="20dp">
 
     <Button
-        android:id="@+id/v_app_menu_footer_btn_open_shop"
+        android:id="@+id/v_app_menu_footer_btn_create_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_green_button"
