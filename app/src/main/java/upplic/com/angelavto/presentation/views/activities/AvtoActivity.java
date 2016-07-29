@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -18,12 +20,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.adapters.ViewPagerTabsAdapter;
 import upplic.com.angelavto.presentation.view_controllers.AcAvtoCtrl;
 
 public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
 
-    public static final String CAR_ID = "carid";
+    public static final String CAR_TAG = "carrr";
 
     @BindView(R.id.ac_avto_toolbar)
     Toolbar mToolbar;
@@ -32,7 +35,7 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
     @BindView(R.id.ac_avto_tl_tabs)
     TabLayout mTlTabs;
 
-    private int mCarId;
+    private Car mCar;
     private ViewPagerTabsAdapter mAdapter;
     private MaterialMenuIconToolbar mMenuDrawer;
 
@@ -41,17 +44,35 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_auto);
         ButterKnife.bind(this);
-        mCarId = getIntent().getIntExtra(CAR_ID, -1);
+        mCar = (Car) getIntent().getSerializableExtra(CAR_TAG);
         initToolbar();
         mAdapter = new ViewPagerTabsAdapter(getSupportFragmentManager(), mTlTabs, mVpBody);
         mVpBody.setAdapter(mAdapter);
         mViewController = new AcAvtoCtrl(this);
-        mViewController.start();
-        setDangerState();
+        getSupportActionBar().setTitle(mCar.getTitle());
+        if (mCar.getState() == Car.STATE_UNLOCK)
+            setDangerState();
+        else
+            setNormalState();
     }
 
-    public int getCarId() {
-        return mCarId;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.avto_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.avto_menu_edit) {
+            mViewController.openEditAvtoActivity();
+            return true;
+        }
+        return false;
+    }
+
+    public Car getCar() {
+        return mCar;
     }
 
     public void loadData(List<TabLayout.Tab> tabs, List<Fragment> fragments) {
@@ -82,6 +103,6 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
                 return R.id.ac_avto_toolbar;
             }
         };
-        mMenuDrawer.setState(MaterialMenuDrawable.IconState.BURGER);
+        mMenuDrawer.setState(MaterialMenuDrawable.IconState.ARROW);
     }
 }

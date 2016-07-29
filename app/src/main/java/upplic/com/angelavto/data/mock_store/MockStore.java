@@ -20,9 +20,9 @@ public class MockStore {
         mBeacons.add(new Beacon("Тип №1", "Харакстеристики", "1700 руб.", ""));
 
         mCars = new ArrayList<Car>();
-        mCars.add(new Car(0, "Тесла", Car.STATE_LOCK));
-        mCars.add(new Car(1, "Москвич", Car.STATE_LOCK));
-        mCars.add(new Car(2, "Мазда", Car.STATE_UNLOCK));
+        mCars.add(new Car(0, "Тесла", Car.STATE_LOCK, "+ 7 (123) 4344 54 45"));
+        mCars.add(new Car(1, "Москвич", Car.STATE_LOCK, "+ 7 (123) 4344 54 45"));
+        mCars.add(new Car(2, "Мазда", Car.STATE_UNLOCK, "+ 7 (123) 4344 54 45"));
     }
 
     public List<Beacon> getGetBeacons() {

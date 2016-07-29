@@ -31,7 +31,7 @@ public class CarMapper {
             drawable = R.drawable.ic_lock_red;
 
         Intent intent = new Intent(context, AvtoActivity.class);
-        intent.putExtra(AvtoActivity.CAR_ID, car.getId());
+        intent.putExtra(AvtoActivity.CAR_TAG, car);
         return new AppMenuItem(car.getTitle(), drawable, new ActivityHandleMemento(intent, AbstractHundleMemento.MenuHandlers.ACTIVITY));
     }
 }

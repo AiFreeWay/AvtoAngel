@@ -2,6 +2,7 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -16,6 +17,7 @@ import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.fragments.GarageFragment;
 
 public class FmtGarageCtrl extends ViewController<GarageFragment> {
@@ -47,6 +49,8 @@ public class FmtGarageCtrl extends ViewController<GarageFragment> {
     }
 
     public void openEditAvtoActivity(Car data) {
-
+        Intent intent = new Intent(getRootView().getContext(), EditAvtoActivity.class);
+        intent.putExtra(EditAvtoActivity.CAR_TAG, data);
+        mRootView.startActivity(intent);
     }
 }

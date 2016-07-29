@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:text="Тесла"
         android:textColor="@color/slate_gray"
         android:textSize="19sp" />
 
@@ -22,7 +21,6 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/v_garage_tv_title"
         android:fontFamily="sans-serif-light"
-        android:text="Защита включена"
         android:textColor="@color/slate_gray"
         android:textSize="14sp" />
 

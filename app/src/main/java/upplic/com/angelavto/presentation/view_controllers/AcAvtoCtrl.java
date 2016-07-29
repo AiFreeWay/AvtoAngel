@@ -1,5 +1,6 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
+import android.content.Intent;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -13,13 +14,11 @@ import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
 import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
+import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 
 
 public class AcAvtoCtrl extends ViewController<AvtoActivity> {
 
-    @Inject
-    @Named(ActivityModule.GET_CAR_BY_ID)
-    Interactor1<Car, Integer> mGetCars;
     @Inject
     AvtoViewPagerFactory.Builder mFactoryBuilder;
 
@@ -36,12 +35,12 @@ public class AcAvtoCtrl extends ViewController<AvtoActivity> {
 
     @Override
     public void start() {
-        mGetCars.execute(mRootView.getCarId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(car -> {
-                    mRootView.getSupportActionBar()
-                        .setTitle(car.getTitle());},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcAvtoCtrl: start error "+e.toString()));
+
+    }
+
+    public void openEditAvtoActivity() {
+        Intent intent = new Intent(getRootView(), EditAvtoActivity.class);
+        intent.putExtra(EditAvtoActivity.CAR_TAG, mRootView.getCar());
+        mRootView.startActivity(intent);
     }
 }
