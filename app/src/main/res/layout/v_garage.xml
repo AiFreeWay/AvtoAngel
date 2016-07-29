@@ -2,34 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:padding="20dp">
 
-    <TextView android:id="@+id/v_garage_tv_title"
-        android:text="Тесла"
-        android:fontFamily="sans-serif-light"
-        android:textSize="19sp"
-        android:textColor="@color/slate_gray"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView android:id="@+id/v_garage_tv_description"
-        android:text="Защита включена"
+    <TextView
+        android:id="@+id/v_garage_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:textSize="14sp"
+        android:text="Тесла"
         android:textColor="@color/slate_gray"
-        android:layout_below="@+id/v_garage_tv_title"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/v_garage_tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/v_garage_tv_title"
+        android:fontFamily="sans-serif-light"
+        android:text="Защита включена"
+        android:textColor="@color/slate_gray"
+        android:textSize="14sp" />
 
     <ImageView
+        android:id="@+id/v_garage_iv_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/v_garage_iv_edit"
-        android:src="@drawable/ic_pencil"
-        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_pencil" />
 </RelativeLayout>
