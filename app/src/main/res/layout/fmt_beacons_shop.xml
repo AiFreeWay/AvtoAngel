@@ -2,14 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grideperlevy">
 
-    <ListView android:id="@+id/fmt_beacons_shop_lv_products"
+    <include layout="@layout/v_beacons_shop_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/include_header"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView android:id="@+id/fmt_beacons_shop_lv_beacons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/include"
         android:divider="@color/grideperlevy"
-        android:dividerHeight="10dp"/>
+        android:dividerHeight="10dp"
+        android:layout_below="@+id/include_header"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/fmt_beacons_shop_pv_progress"
@@ -40,5 +51,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/include" />
+        android:id="@+id/include_footer" />
 </RelativeLayout>

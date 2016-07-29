@@ -61,6 +61,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     public void popBack() {
+        mRootView.driveMenu();
         if (!mRouter.back())
             mRootView.finish();
     }
@@ -105,7 +106,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cars -> { mRootView.loadData(joinCarsAndMenuItems(mMenu, cars));
-                            mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.BEACONS));},
+                            mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.GARAGE));},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
     }
 

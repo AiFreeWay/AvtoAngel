@@ -31,7 +31,7 @@ public class BeaconBinder implements AbstractBinder<Beacon> {
 
     public BeaconBinder(FmtBeaconsCtrl controller) {
         mViewController = controller;
-        mParent = mViewController.getRootView().getLvProducts();
+        mParent = mViewController.getRootView().getLvBeacons();
         mLayoutInflater = mViewController.getLayoutInflater();
     }
 

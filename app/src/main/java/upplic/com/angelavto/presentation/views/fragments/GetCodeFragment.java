@@ -113,7 +113,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onChangeInterval);
-        appendColorText(R.string.fmt_login_description, mActivity.getNubmer(), mTvDescription);
+        appendColorText(R.string.fmt_get_code_description, mActivity.getNubmer(), mTvDescription);
         disabledButtonGetCode();
         enabledButtonEnter();
         mEtCode.setEnabled(true);

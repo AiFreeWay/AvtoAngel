@@ -23,8 +23,8 @@ import upplic.com.angelavto.presentation.view_controllers.FmtBeaconsShopCtrl;
 
 public class BeaconsShopFragment extends BaseFragment<FmtBeaconsShopCtrl> {
 
-    @BindView(R.id.fmt_beacons_shop_lv_products)
-    ListView mLvProducts;
+    @BindView(R.id.fmt_beacons_shop_lv_beacons)
+    ListView mLvBeacons;
     @BindView(R.id.fmt_beacons_shop_tv_error)
     TextView mTvError;
     @BindView(R.id.fmt_beacons_shop_pv_progress)
@@ -45,21 +45,22 @@ public class BeaconsShopFragment extends BaseFragment<FmtBeaconsShopCtrl> {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtBeaconsShopCtrl(this);
         mAdapter = new MultyListViewAdapter<Beacon>(new BeaconShopBinder(mViewController));
-        mLvProducts.setAdapter(mAdapter);
-        mLvProducts.addHeaderView(getHeaderView());
+        mLvBeacons.setAdapter(mAdapter);
         mViewController.start();
     }
 
-    public ListView getLvProducts() {
-        return mLvProducts;
+    @Override
+    public void onStart() {
+        super.onStart();
+        getBaseActivity().getSupportActionBar().setTitle(R.string.buy_beacon);
+    }
+
+    public ListView getLvBeacons() {
+        return mLvBeacons;
     }
 
     public void loadData(List<Beacon> beacons) {
         mAdapter.loadData(beacons);
-    }
-
-    private View getHeaderView() {
-        return mViewController.getLayoutInflater().inflate(R.layout.v_beacon_header, mLvProducts, false);
     }
 
     public void showStartLoad() {

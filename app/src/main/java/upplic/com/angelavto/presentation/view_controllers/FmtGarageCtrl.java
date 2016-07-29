@@ -1,7 +1,7 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
+
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -13,22 +13,20 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor0;
-import upplic.com.angelavto.domain.models.Beacon;
+import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
-import upplic.com.angelavto.presentation.views.activities.MainActivity;
-import upplic.com.angelavto.presentation.views.fragments.BeaconsShopFragment;
+import upplic.com.angelavto.presentation.views.fragments.GarageFragment;
 
-
-public class FmtBeaconsShopCtrl extends ViewController<BeaconsShopFragment> {
+public class FmtGarageCtrl extends ViewController<GarageFragment> {
 
     @Inject
-    @Named(ActivityModule.GET_BEACONS)
-    Interactor0<List<Beacon>> mGetBeacons;
+    @Named(ActivityModule.GET_CARS)
+    Interactor0<List<Car>> mGetCars;
 
     private LayoutInflater mLayoutInflater;
 
-    public FmtBeaconsShopCtrl(BeaconsShopFragment view) {
+    public FmtGarageCtrl(GarageFragment view) {
         super(view);
         mLayoutInflater = (LayoutInflater) mRootView.getBaseActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRootView.getActivityComponent()
@@ -37,21 +35,18 @@ public class FmtBeaconsShopCtrl extends ViewController<BeaconsShopFragment> {
 
     @Override
     public void start() {
-        mGetBeacons.execute()
+        mGetCars.execute()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(mRootView::showStartLoad)
-                .subscribe(products -> {mRootView.loadData(products);
-                            mRootView.showSuccesLoad();},
-                        e -> { Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtBeaconsShopCtrl: start error "+e.toString());
-                            mRootView.showDeniedLoad();});
+                .subscribe(cars -> mRootView.loadData(cars),
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
     }
 
     public LayoutInflater getLayoutInflater() {
         return  mLayoutInflater;
     }
 
-    public void hundleProductItemClick(Beacon data) {
+    public void openEditAvtoActivity(Car data) {
 
     }
 }

@@ -50,9 +50,9 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         initToolbar();
         mViewController = new AcMainCtrl(this);
         mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));
-        mElvMenu.setAdapter(mAdapter);
         mElvMenu.addHeaderView(getHeaderView());
         mElvMenu.addFooterView(getFooterView(), null, true);
+        mElvMenu.setAdapter(mAdapter);
         mViewController.start();
     }
 
