@@ -37,10 +37,4 @@ public class AcAvtoCtrl extends ViewController<AvtoActivity> {
     public void start() {
 
     }
-
-    public void openEditAvtoActivity() {
-        Intent intent = new Intent(getRootView(), EditAvtoActivity.class);
-        intent.putExtra(EditAvtoActivity.CAR_TAG, mRootView.getCar());
-        mRootView.startActivity(intent);
-    }
 }

@@ -53,6 +53,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         mElvMenu.addHeaderView(getHeaderView());
         mElvMenu.addFooterView(getFooterView(), null, true);
         mElvMenu.setAdapter(mAdapter);
+
         mViewController.start();
     }
 
@@ -85,6 +86,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
             mDlMenu.closeDrawer(Gravity.LEFT);
         else
             mDlMenu.openDrawer(Gravity.LEFT);
+    }
+
+    public boolean isDrawerOpen() {
+        return mDlMenu.isDrawerOpen(Gravity.LEFT);
     }
 
     public ListView getLvMenu() {

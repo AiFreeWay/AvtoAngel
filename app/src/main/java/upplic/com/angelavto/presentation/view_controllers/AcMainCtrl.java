@@ -61,7 +61,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     public void popBack() {
-        mRootView.driveMenu();
+        if (mRootView.isDrawerOpen())
+            mRootView.driveMenu();
         if (!mRouter.back())
             mRootView.finish();
     }

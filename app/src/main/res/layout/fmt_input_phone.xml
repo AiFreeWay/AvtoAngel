@@ -16,12 +16,12 @@
         android:drawableLeft="@drawable/ic_phone_gray"
         android:drawablePadding="15dp"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/phone_number"
+        android:hint="@string/phone_number_input"
         android:inputType="phone"
         android:lines="1"
         android:maxLines="1"
         android:textSize="19sp"
-        app:mask="+#(###) #### ## ##" />
+        app:mask="+#(###) ### ## ##" />
 
     <Button
         android:id="@+id/fmt_input_phone_btn_continue"

@@ -2,6 +2,7 @@ package upplic.com.angelavto.presentation.factories;
 
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 
 import com.rey.material.app.Dialog;
 
@@ -38,6 +39,8 @@ public class AppMenuFactory {
         if (mExitDialog == null)
             mExitDialog = new Dialog(mActivity, R.style.login_dialog)
                     .title(R.string.want_exit)
+                    .titleColor(ContextCompat.getColor(mActivity, R.color.slate_gray))
+                    .actionTextColor(ContextCompat.getColor(mActivity, R.color.green_jungle_krayola))
                     .positiveAction(R.string.yes)
                     .negativeAction(R.string.no)
                     .positiveActionClickListener(v -> mActivity.finish())

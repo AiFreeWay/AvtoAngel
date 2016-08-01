@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -17,11 +19,16 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.adapters.MultyListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.GarageBinder;
 import upplic.com.angelavto.presentation.view_controllers.FmtGarageCtrl;
+import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 public class GarageFragment extends BaseFragment<FmtGarageCtrl> {
 
     @BindView(R.id.fmt_garage_lv_cars)
     ListView mLvCars;
+    @BindView(R.id.fmt_garage_btn_add_car)
+    Button mBtnAddCar;
+    @BindView(R.id.fmt_garage_tv_warning)
+    TextView mTvWarning;
 
     private MultyListViewAdapter<Car> mAdapter;
 
@@ -39,6 +46,7 @@ public class GarageFragment extends BaseFragment<FmtGarageCtrl> {
         mViewController = new FmtGarageCtrl(this);
         mAdapter = new MultyListViewAdapter<Car>(new GarageBinder(mViewController));
         mLvCars.setAdapter(mAdapter);
+        mBtnAddCar.setOnClickListener(v -> mViewController.openAddCarFragment());
         mViewController.start();
     }
 
@@ -54,5 +62,17 @@ public class GarageFragment extends BaseFragment<FmtGarageCtrl> {
 
     public ListView getLvCars() {
         return mLvCars;
+    }
+
+    public void hideTextViewWarning() {
+        mTvWarning.setVisibility(View.INVISIBLE);
+    }
+
+    public void showTextViewWarning() {
+        mTvWarning.setVisibility(View.VISIBLE);
+    }
+
+    public int getFragmentsBodyResId() {
+        return ((MainActivity) getBaseActivity()).getFragmentsBodyResId();
     }
 }

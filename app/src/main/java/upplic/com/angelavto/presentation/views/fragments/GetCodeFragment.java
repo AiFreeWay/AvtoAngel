@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rey.material.widget.ProgressView;
 
@@ -90,7 +91,6 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     @Override
     public void onResume() {
         super.onResume();
-        mActivity.enableViewPageChange();
         disabledButtonEnter();
         mEtCode.setEnabled(false);
         mEtCode.setText("");
@@ -104,6 +104,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     }
 
     private void doOnSendCode() {
+        Toast.makeText(getContext(), R.string.input_code_message, Toast.LENGTH_SHORT).show();
         mTimerSubscription = mTimer
                 .doOnUnsubscribe(() -> {
                     enabledButtonGetCode();

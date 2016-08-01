@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grideperlevy"
-    android:orientation="vertical">
+    android:background="@color/grideperlevy">
 
     <TextView
         android:id="@+id/fmt_avto_drive_tv_warning"
@@ -21,6 +21,8 @@
         android:id="@+id/fmt_avto_drive_btn_security"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/fmt_avto_drive_tv_warning"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_marengo_button"
@@ -40,6 +42,8 @@
         android:id="@+id/fmt_avto_drive_btn_sound"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/fmt_avto_drive_btn_security"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="@drawable/selector_marengo_button"
@@ -59,6 +63,8 @@
         android:id="@+id/fmt_avto_drive_btn_update"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/fmt_avto_drive_btn_sound"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="@drawable/selector_marengo_button"
@@ -78,6 +84,8 @@
         android:id="@+id/fmt_avto_drive_btn_show_on_map"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/fmt_avto_drive_btn_update"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="@drawable/selector_green_button"
@@ -90,4 +98,18 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="17sp" />
-</LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fmt_avto_drive_fbtn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
+        android:src="@drawable/ic_pencil"
+        app:rippleColor="@color/green_blue"
+        app:layout_anchorGravity="bottom|right|end" />
+</RelativeLayout>

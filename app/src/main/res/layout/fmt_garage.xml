@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grideperlevy">
+    android:background="@color/grideperlevy"
+    android:orientation="vertical">
 
-    <ListView android:id="@+id/fmt_garage_lv_cars"
+    <ListView
+        android:id="@+id/fmt_garage_lv_cars"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/include"
-        android:divider="@color/grideperlevy"
+        android:layout_above="@+id/fmt_garage_btn_add_car"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
-        android:dividerHeight="10dp"/>
-</LinearLayout>
+        android:divider="@color/grideperlevy"
+        android:dividerHeight="10dp" />
+
+    <Button
+        android:id="@+id/fmt_garage_btn_add_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginRight="23dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/selector_green_button"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/add_car"
+        android:textAllCaps="false"
+        android:textColor="@color/grideperlevy"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/fmt_garage_tv_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/no_cars_in_garage"
+        android:textColor="@color/gray_box"
+        android:textSize="26sp"
+        android:visibility="invisible" />
+</RelativeLayout>

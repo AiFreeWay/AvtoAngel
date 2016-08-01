@@ -29,4 +29,9 @@
     <style name="LightCircularProgressDrawable" parent="Material.Drawable.CircularProgress">
         <item name="cpd_strokeColor">@color/white</item>
     </style>
+
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/green_jungle_krayola</item>
+        <item name="colorSwitchThumbNormal">@color/marron</item>
+    </style>
 </resources>

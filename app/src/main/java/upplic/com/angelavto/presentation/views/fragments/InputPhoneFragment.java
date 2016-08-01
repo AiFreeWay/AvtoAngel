@@ -21,7 +21,7 @@ import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
 public class InputPhoneFragment extends BaseFragment {
 
-    private final int PHONE_NUMBER_LENGTH = 18;
+    private final int PHONE_NUMBER_LENGTH = 17;
 
     @BindView(R.id.fmt_input_phone_et_number)
     EditText mEtNumber;

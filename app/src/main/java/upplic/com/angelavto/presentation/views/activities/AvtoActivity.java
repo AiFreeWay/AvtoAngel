@@ -56,21 +56,6 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
             setNormalState();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.avto_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.avto_menu_edit) {
-            mViewController.openEditAvtoActivity();
-            return true;
-        }
-        return false;
-    }
-
     public Car getCar() {
         return mCar;
     }

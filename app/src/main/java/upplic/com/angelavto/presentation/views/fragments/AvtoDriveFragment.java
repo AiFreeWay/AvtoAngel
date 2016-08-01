@@ -3,6 +3,7 @@ package upplic.com.angelavto.presentation.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
 
     @BindView(R.id.fmt_avto_drive_tv_warning)
     TextView mTvWarning;
+    @BindView(R.id.fmt_avto_drive_fbtn_edit)
+    FloatingActionButton mFbtnEdit;
 
     private Car mCar;
     private AvtoActivity mActivty;
@@ -37,11 +40,16 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         mViewController = new FmtAvtoDriveCtrl(this);
         mActivty = (AvtoActivity) getBaseActivity();
         mCar = mActivty.getCar();
+        mFbtnEdit.setOnClickListener(v -> mViewController.openEditAvtoActivity());
         if (mCar.getState() == Car.STATE_UNLOCK) {
             mTvWarning.setVisibility(View.VISIBLE);
             mTvWarning.setText("Местоположение "+mCar.getTitle()+" изменилось!");
         } else {
             mTvWarning.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public Car getCar() {
+        return mCar;
     }
 }

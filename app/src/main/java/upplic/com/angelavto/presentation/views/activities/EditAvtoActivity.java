@@ -3,12 +3,15 @@ package upplic.com.angelavto.presentation.views.activities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
+import com.rey.material.app.Dialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +30,16 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     EditText mEtCarTitle;
     @BindView(R.id.ac_edit_avto_et_phone)
     EditText mEtPhone;
+    @BindView(R.id.ac_edit_avto_btn_delete)
+    Button mBtnDelete;
+    @BindView(R.id.ac_edit_avto_btn_save)
+    Button mBtnSave;
 
     private Car mCar;
+    private Dialog mMessageDialog;
     private MaterialMenuIconToolbar mMenuDrawer;
+    private int mColorMarron;
+    private int mColorGreenJungleKrayola;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +52,18 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         getSupportActionBar().setTitle(R.string.edit);
         mEtCarTitle.setText(mCar.getTitle());
         mEtPhone.setText(mCar.getPhone());
+        mBtnDelete.setOnClickListener(v -> onDelete());
+        mBtnSave.setOnClickListener(v -> onSave());
+        mColorMarron = ContextCompat.getColor(this, R.color.marron);
+        mColorGreenJungleKrayola = ContextCompat.getColor(this, R.color.green_jungle_krayola);
+        mMessageDialog = new Dialog(this, R.style.login_dialog)
+                .title(R.string.want_exit)
+                .titleColor(ContextCompat.getColor(this, R.color.slate_gray))
+                .actionTextColor(mColorGreenJungleKrayola)
+                .positiveAction(R.string.yes)
+                .negativeAction(R.string.no)
+                .positiveActionClickListener(v -> mMessageDialog.dismiss())
+                .negativeActionClickListener(v -> mMessageDialog.dismiss());
     }
 
     private void initToolbar() {
@@ -55,5 +77,17 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
             }
         };
         mMenuDrawer.setState(MaterialMenuDrawable.IconState.ARROW);
+    }
+
+    private void onDelete() {
+        mMessageDialog.setTitle(R.string.delete_confirm);
+        mMessageDialog.positiveActionTextColor(mColorMarron);
+        mMessageDialog.show();
+    }
+
+    private void onSave() {
+        mMessageDialog.setTitle(R.string.save_confirm);
+        mMessageDialog.positiveActionTextColor(mColorGreenJungleKrayola);
+        mMessageDialog.show();
     }
 }
