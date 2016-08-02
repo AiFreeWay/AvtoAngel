@@ -13,18 +13,18 @@ public class Car implements Serializable {
 
     private int id;
     private String title;
-    private int state;
-    private int notification;
+    private int sequrityState;
+    private int notificationState;
     private String phone;
 
     public Car() {
     }
 
-    public Car(int id, String title, int state, int notification, String phone) {
+    public Car(int id, String title, int sequrityState, int notificationState, String phone) {
         this.id = id;
         this.title = title;
-        this.state = state;
-        this.notification = notification;
+        this.sequrityState = sequrityState;
+        this.notificationState = notificationState;
         this.phone = phone;
     }
 
@@ -44,20 +44,20 @@ public class Car implements Serializable {
         this.title = title;
     }
 
-    public int getState() {
-        return state;
+    public int getSequrityState() {
+        return sequrityState;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setSequrityState(int sequrityState) {
+        this.sequrityState = sequrityState;
     }
 
-    public int getNotification() {
-        return notification;
+    public int getNotificationState() {
+        return notificationState;
     }
 
-    public void setNotification(int notification) {
-        this.notification = notification;
+    public void setNotificationState(int notificationState) {
+        this.notificationState = notificationState;
     }
 
     public String getPhone() {

@@ -9,8 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -50,7 +48,7 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
         mVpBody.setAdapter(mAdapter);
         mViewController = new AcAvtoCtrl(this);
         getSupportActionBar().setTitle(mCar.getTitle());
-        if (mCar.getState() == Car.STATE_UNLOCK)
+        if (mCar.getSequrityState() == Car.STATE_UNLOCK)
             setDangerState();
         else
             setNormalState();

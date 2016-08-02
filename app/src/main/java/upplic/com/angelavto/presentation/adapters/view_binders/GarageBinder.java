@@ -3,7 +3,6 @@ package upplic.com.angelavto.presentation.adapters.view_binders;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -50,8 +49,8 @@ public class GarageBinder implements AbstractBinder<Car> {
     private void initSwitchListeners(Car data) {
         mSwtSecurity.setOnCheckedChangeListener(null);
         mSwtNotifications.setOnCheckedChangeListener(null);
-        proccessCarState(data.getState());
-        proccessCarNotification(data.getNotification());
+        proccessCarState(data.getSequrityState());
+        proccessCarNotification(data.getNotificationState());
         SwitchStateListener switchStateListener = new SwitchStateListener(data);
         mSwtSecurity.setOnCheckedChangeListener(switchStateListener);
         mSwtNotifications.setOnCheckedChangeListener(switchStateListener);

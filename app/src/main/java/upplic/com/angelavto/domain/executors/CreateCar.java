@@ -8,12 +8,12 @@ import upplic.com.angelavto.domain.interactors.Interactor;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.repositories.Repository;
 
-public class CreateOrUpdateCars implements Interactor<Car> {
+public class CreateCar implements Interactor<Car> {
 
     private Repository mRepository;
 
     @Inject
-    public CreateOrUpdateCars(Repository repository){
+    public CreateCar(Repository repository){
         mRepository = repository;
     }
 
@@ -21,7 +21,7 @@ public class CreateOrUpdateCars implements Interactor<Car> {
     public Observable<Void> execute(Car data) {
         Observable.OnSubscribe<Void> subscriber = observer -> {
             try {
-                mRepository.createOrUdateCar(data);
+                mRepository.createCar(data);
             } catch (Exception e) {
                 observer.onError(e);
             }

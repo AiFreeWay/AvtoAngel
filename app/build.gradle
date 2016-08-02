@@ -59,8 +59,10 @@ dependencies {
     compile 'com.vicmikhailau:MaskedEditText:1.1.0'
 
     //DB
-    compile files('libs/ormlite-android-4.48.jar')
-    compile files('libs/ormlite-core-4.48.jar')
+    compile 'io.requery:sqlite-android:3.13.0-1'
+    compile 'io.requery:requery:1.0.0-rc2'
+    compile 'io.requery:requery-android:1.0.0-rc2'
+    apt 'io.requery:requery-processor:1.0.0-rc2'
 
     //Utils
     compile 'com.jakewharton:butterknife:8.0.1'

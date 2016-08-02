@@ -16,13 +16,13 @@
         android:id="@+id/ac_edit_avto_til_car_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ac_edit_avto_toolbar"
+        android:layout_marginTop="20dp"
         android:background="@color/white"
         android:paddingTop="15dp"
-        android:layout_marginTop="20dp"
-        android:theme="@style/CarCreateEditText"
-        android:layout_below="@+id/ac_edit_avto_toolbar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:theme="@style/CarCreateEditText">
 
         <EditText
             android:id="@+id/ac_edit_avto_et_car_title"

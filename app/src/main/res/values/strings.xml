@@ -42,4 +42,5 @@
     <string name="no_cars_in_garage">Нет машин в гараже</string>
     <string name="security_on">Защита</string>
     <string name="configuration_changed">Настройки изменились</string>
+    <string name="need_fill_fields">Заполните поля</string>
 </resources>

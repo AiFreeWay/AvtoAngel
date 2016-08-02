@@ -46,16 +46,18 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_edit_avto);
         ButterKnife.bind(this);
+
         mCar = (Car) getIntent().getSerializableExtra(CAR_TAG);
-        initToolbar();
+        mColorMarron = ContextCompat.getColor(this, R.color.marron);
+        mColorGreenJungleKrayola = ContextCompat.getColor(this, R.color.green_jungle_krayola);
         mViewController = new AcEditAvtoCtrl(this);
+
+        initToolbar();
         getSupportActionBar().setTitle(R.string.edit);
         mEtCarTitle.setText(mCar.getTitle());
         mEtPhone.setText(mCar.getPhone());
         mBtnDelete.setOnClickListener(v -> onDelete());
         mBtnSave.setOnClickListener(v -> onSave());
-        mColorMarron = ContextCompat.getColor(this, R.color.marron);
-        mColorGreenJungleKrayola = ContextCompat.getColor(this, R.color.green_jungle_krayola);
         mMessageDialog = new Dialog(this, R.style.login_dialog)
                 .title(R.string.want_exit)
                 .titleColor(ContextCompat.getColor(this, R.color.slate_gray))
