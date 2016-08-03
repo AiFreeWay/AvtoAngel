@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,13 @@ import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.functions.Action0;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.utils.PhoneNumberTextWatcher;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
 
 public class InputPhoneFragment extends BaseFragment {
-
-    private final int PHONE_NUMBER_LENGTH = 17;
 
     @BindView(R.id.fmt_input_phone_et_number)
     EditText mEtNumber;
@@ -33,25 +34,13 @@ public class InputPhoneFragment extends BaseFragment {
     private Drawable mDrawableOnButtonDisabled;
     private int mColorOnButtonEnabled;
     private int mColorOnButtonDisabled;
+    private PhoneNumberTextWatcher mPhoneNumberMask;
 
-    private TextWatcher mNuberWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            if (editable.length() == PHONE_NUMBER_LENGTH)
-                enabledButton();
-            else
-                disabledButton();
-        }
+    private PhoneNumberTextWatcher.AfterTextChangeListener mActionWather = editable -> {
+        if (editable.length() == PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH)
+            enabledButton();
+        else
+            disabledButton();
     };
 
     @Nullable
@@ -71,8 +60,10 @@ public class InputPhoneFragment extends BaseFragment {
         mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
         mColorOnButtonEnabled = ContextCompat.getColor(getContext(), R.color.grideperlevy);
         mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
+        mPhoneNumberMask = new PhoneNumberTextWatcher(mEtNumber);
 
-        mEtNumber.addTextChangedListener(mNuberWatcher);
+        mPhoneNumberMask.setAfterTextChangeListener(mActionWather);
+        mEtNumber.addTextChangedListener(mPhoneNumberMask);
         mBtnContinue.setOnClickListener(v -> nextSlide());
         mEtNumber.setText(mActivity.getNubmer());
     }

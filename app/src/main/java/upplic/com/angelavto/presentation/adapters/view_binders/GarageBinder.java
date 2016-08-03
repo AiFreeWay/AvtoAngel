@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.functions.Action0;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.view_controllers.FmtGarageCtrl;
@@ -51,9 +52,8 @@ public class GarageBinder implements AbstractBinder<Car> {
         mSwtNotifications.setOnCheckedChangeListener(null);
         proccessCarState(data.getSequrityState());
         proccessCarNotification(data.getNotificationState());
-        SwitchStateListener switchStateListener = new SwitchStateListener(data);
-        mSwtSecurity.setOnCheckedChangeListener(switchStateListener);
-        mSwtNotifications.setOnCheckedChangeListener(switchStateListener);
+        mSwtSecurity.setOnCheckedChangeListener(new SwitchStateListener(data, SwitchStateListener.TYPE_SEQURITY));
+        mSwtNotifications.setOnCheckedChangeListener(new SwitchStateListener(data, SwitchStateListener.TYPE_NOTIFICATION));
     }
 
     private void proccessCarNotification(int notificationState) {
@@ -88,10 +88,15 @@ public class GarageBinder implements AbstractBinder<Car> {
 
     private class SwitchStateListener implements CompoundButton.OnCheckedChangeListener {
 
+        public static final int TYPE_SEQURITY = 0;
+        public static final int TYPE_NOTIFICATION = 1;
+
         private Car mCar;
         private Toast mToast;
+        private int mType;
 
-        public SwitchStateListener(Car car) {
+        public SwitchStateListener(Car car, int type) {
+            mType = type;
             mCar = car;
             String message = "Настройки для '"+mCar.getTitle()+"' изменены.";
             mToast = Toast.makeText(mViewController.getRootView().getContext(), message, Toast.LENGTH_SHORT);
@@ -101,6 +106,30 @@ public class GarageBinder implements AbstractBinder<Car> {
         public void onCheckedChanged(CompoundButton view, boolean state) {
             mToast.show();
             onSwitchStateChange(view, state);
+            changeModelValue(state);
+            mViewController.hundleClick(mCar);
+        }
+
+        private void changeModelValue(boolean state) {
+            if (mType == TYPE_SEQURITY)
+                changeSequrity(state);
+            else
+                changeNotification(state);
+        }
+
+
+        private void changeNotification(boolean state) {
+            if (state)
+                mCar.setNotificationState(Car.NOTIFICATION_ON);
+            else
+                mCar.setNotificationState(Car.NOTIFICATION_OFF);
+        }
+
+        private void changeSequrity(boolean state) {
+            if (state)
+                mCar.setSequrityState(Car.STATE_LOCK);
+            else
+                mCar.setSequrityState(Car.STATE_UNLOCK);
         }
     }
 }

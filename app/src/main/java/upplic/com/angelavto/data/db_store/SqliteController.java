@@ -16,16 +16,18 @@ import io.requery.rx.SingleEntityStore;
 import io.requery.sql.Configuration;
 import io.requery.sql.EntityDataStore;
 import io.requery.sql.TableCreationMode;
+import rx.Observable;
+import rx.schedulers.Schedulers;
 import upplic.com.angelavto.data.db_store.tables.CarTable;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
-import upplic.com.angelavto.data.db_store.tables.Tables;
+import upplic.com.angelavto.data.db_store.tables.Schema;
 import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 
 public class SqliteController {
 
-    private final EntityModel TABLE_SCHEMA = new Tables();
+    private final EntityModel TABLE_SCHEMA = new Schema();
 
     private SingleEntityStore<Persistable> mDataStore;
     private Context mContext;
@@ -50,10 +52,31 @@ public class SqliteController {
                 .toList();
     }
 
-    public void createCar(Car car) throws Exception {
-        CarTableEntity carDB = CarMapper.mapCar(car);
-        mDataStore.insert(carDB)
-                .doOnError(e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "SqliteController: createCar error "+e.toString()))
-                .subscribe();
+    public Observable<CarTableEntity> createCar(Car car) {
+        return mDataStore.insert(CarMapper.mapCar(car))
+                .toObservable()
+                .subscribeOn(Schedulers.newThread())
+                .doOnError(e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "SqliteController: createCar error "+e.toString()));
+    }
+
+    public boolean canCreateCar(Car car) {
+        List carsList = mDataStore.select(CarTableEntity.class)
+                .where(CarTableEntity.TITLE.like(car.getTitle()))
+                .get()
+                .toList();
+        return carsList.size() == 0;
+    }
+
+    public Observable<CarTableEntity> getCarById(int id) {
+        return mDataStore.select(CarTableEntity.class)
+                .where(CarTableEntity.ID.eq(id))
+                .get()
+                .toObservable();
+    }
+
+    public Observable updateCar(Car car) {
+        return getCarById(car.getId())
+                .flatMap(entity -> mDataStore.update(CarMapper.fillEntityModelData(entity, car))
+                        .toObservable());
     }
 }

@@ -13,6 +13,7 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import upplic.com.angelavto.domain.interactors.Interactor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
@@ -27,6 +28,9 @@ public class FmtGarageCtrl extends ViewController<GarageFragment> {
     @Inject
     @Named(ActivityModule.GET_CARS)
     Interactor0<List<Car>> mGetCars;
+    @Inject
+    @Named(ActivityModule.UPDATE_CAR)
+    Interactor<Car> mUpdateCar;
     @Inject
     FragmentRouter.RouterBilder mRouterBilder;
     @Inject
@@ -69,5 +73,13 @@ public class FmtGarageCtrl extends ViewController<GarageFragment> {
 
     public void openAddCarFragment() {
         mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
+    }
+
+    public void hundleClick(Car car) {
+        mUpdateCar.execute(car)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aVoid -> {},
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGarageCtrl: hundleClick error "+e.toString()));
     }
 }

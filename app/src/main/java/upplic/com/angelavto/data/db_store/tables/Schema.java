@@ -10,13 +10,13 @@ import io.requery.meta.NotMappedException;
 import io.requery.meta.Type;
 
 
-public class Tables implements EntityModel {
+public class Schema implements EntityModel {
 
     public static final String TABLE_NAME = "avto_angel_base";
 
     private Map<Class, Type<?>> mTables;
 
-    public Tables() {
+    public Schema() {
         mTables = new HashMap<>();
         mTables.put(CarTableEntity.class, CarTableEntity.$TYPE);
     }

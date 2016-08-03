@@ -19,6 +19,7 @@ import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.presentation.adapters.MultyListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.BeaconShopBinder;
 import upplic.com.angelavto.presentation.view_controllers.FmtBeaconsShopCtrl;
+import upplic.com.angelavto.presentation.view_controllers.ViewController;
 
 
 public class BeaconsShopFragment extends BaseFragment<FmtBeaconsShopCtrl> {

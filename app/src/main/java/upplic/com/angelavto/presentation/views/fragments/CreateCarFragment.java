@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.presentation.utils.PhoneNumberTextWatcher;
 import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
 
 
@@ -24,6 +25,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     EditText mEtTitle;
     @BindView(R.id.fmt_create_et_phone)
     EditText mEtPhone;
+
+    private PhoneNumberTextWatcher mPhoneNumberMask;
 
     @Nullable
     @Override
@@ -37,6 +40,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtCreateCarCtrl(this);
+        mPhoneNumberMask = new PhoneNumberTextWatcher(mEtPhone);
+        mEtPhone.addTextChangedListener(mPhoneNumberMask);
         mBtnCreateCar.setOnClickListener(v -> doOnCreateCar());
         mViewController.start();
     }
@@ -47,8 +52,15 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         getBaseActivity().getSupportActionBar().setTitle(R.string.add_car);
     }
 
+    public void truncateFields() {
+        mEtTitle.setText("");
+        mEtPhone.setText("");
+    }
+
     private void doOnCreateCar() {
-        if (mEtTitle.getText().toString().isEmpty() || mEtPhone.getText().toString().isEmpty())
+        String title = mEtTitle.getText().toString();
+        String phone = mEtPhone.getText().toString();
+        if (title.isEmpty() || phone.isEmpty() || phone.length() != PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH)
             Toast.makeText(getContext(), R.string.need_fill_fields, Toast.LENGTH_SHORT).show();
         else
             mViewController.addCar(getCar());
@@ -58,6 +70,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         Car car = new Car();
         car.setTitle(mEtTitle.getText().toString());
         car.setPhone(mEtPhone.getText().toString());
+        car.setNotificationState(Car.NOTIFICATION_OFF);
+        car.setSequrityState(Car.STATE_UNLOCK);
         return car;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.ExpandableListView;
 
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     public void start() {
         mMenu = mAppMenuFactory.getMenu();
         checkCarsCount();
+        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.GARAGE));
     }
 
     public void popBack() {
@@ -80,6 +82,25 @@ public class AcMainCtrl extends ViewController<MainActivity> {
             hundleActivity(activityHandleMemento);
         }
         mRootView.driveMenu();
+    }
+
+    public void hundleExpandAppMenuClick(AppMenuItem data) {
+        int groupPosition = mRootView.getAdapter().getGroupPosition(data);
+        ExpandableListView menu = mRootView.getLvMenu();
+        if (menu.isGroupExpanded(groupPosition))
+            menu.collapseGroup(groupPosition);
+        else
+            menu.expandGroup(groupPosition);
+
+    }
+
+
+    public LayoutInflater getLayoutInflater() {
+        return  mLayoutInflater;
+    }
+
+    public void showFragmet(FragmentsFactory.Fragments fragmentIndifinder) {
+        mRouter.show(mFragmentsFactory.getFragment(fragmentIndifinder));
     }
 
     private void hundleFragment(FragmentHandleMemento fragmentHandleMemento) {
@@ -106,8 +127,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         mGetCars.execute()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(cars -> { mRootView.loadData(joinCarsAndMenuItems(mMenu, cars));
-                            mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.GARAGE));},
+                .subscribe(cars -> mRootView.loadData(joinCarsAndMenuItems(mMenu, cars)),
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
     }
 
@@ -115,14 +135,5 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         List<AppMenuItem> carsAsMenuItems = CarMapper.mapCars(mRootView, cars);
         menues.get(AppMenuFactory.MenuItems.AVTO.id).setInsertedMenu(carsAsMenuItems);
         return menues;
-    }
-
-
-    public LayoutInflater getLayoutInflater() {
-        return  mLayoutInflater;
-    }
-
-    public void showFragmet(FragmentsFactory.Fragments fragmentIndifinder) {
-        mRouter.show(mFragmentsFactory.getFragment(fragmentIndifinder));
     }
 }

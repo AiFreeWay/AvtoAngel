@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
@@ -41,9 +42,10 @@ public class AppMenuBinder implements AbstractExpannableBinder<AppMenuItem, AppM
         ButterKnife.bind(this, view);
         mIvIcon.setImageDrawable(getDrawable(data.getDrawable()));
         mTvTitle.setText(data.getTitle());
-        if (data.getExpannableList().size() > 0)
+        if (data.getExpannableList().size() > 0) {
             mIvIndicator.setVisibility(View.VISIBLE);
-        else {
+            view.setOnClickListener(v -> mViewController.hundleExpandAppMenuClick(data));
+        } else {
             view.setOnClickListener(v -> mViewController.hundleAppMenuClick(data));
             mIvIndicator.setVisibility(View.INVISIBLE);
         }

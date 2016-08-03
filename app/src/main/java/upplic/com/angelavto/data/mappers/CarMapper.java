@@ -36,4 +36,12 @@ public class CarMapper {
         carDB.setTrackerNumber(car.getPhone());
         return carDB;
     }
+
+    public static CarTableEntity fillEntityModelData(CarTableEntity entity, Car model) {
+        entity.setTitle(model.getTitle());
+        entity.setSecuritynState(model.getSequrityState());
+        entity.setNotificationState(model.getNotificationState());
+        entity.setTrackerNumber(model.getPhone());
+        return entity;
+    }
 }

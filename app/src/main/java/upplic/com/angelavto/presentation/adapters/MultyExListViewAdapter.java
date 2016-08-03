@@ -87,4 +87,8 @@ public class MultyExListViewAdapter<G extends Expannable<C>, C> extends BaseExpa
     public List<G> getData() {
         return mData;
     }
+
+    public int getGroupPosition(G group) {
+        return mData.indexOf(group);
+    }
 }

@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.presentation.utils.PhoneNumberTextWatcher;
 import upplic.com.angelavto.presentation.view_controllers.AcEditAvtoCtrl;
 
 
@@ -40,6 +41,7 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     private MaterialMenuIconToolbar mMenuDrawer;
     private int mColorMarron;
     private int mColorGreenJungleKrayola;
+    private PhoneNumberTextWatcher mPhoneNumberMask;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         mColorMarron = ContextCompat.getColor(this, R.color.marron);
         mColorGreenJungleKrayola = ContextCompat.getColor(this, R.color.green_jungle_krayola);
         mViewController = new AcEditAvtoCtrl(this);
+        mPhoneNumberMask = new PhoneNumberTextWatcher(mEtPhone);
+        mEtPhone.addTextChangedListener(mPhoneNumberMask);
 
         initToolbar();
         getSupportActionBar().setTitle(R.string.edit);

@@ -11,6 +11,7 @@ import upplic.com.angelavto.domain.executors.CreateCar;
 import upplic.com.angelavto.domain.executors.GetCarById;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetBeacons;
+import upplic.com.angelavto.domain.executors.UpdateCar;
 import upplic.com.angelavto.domain.interactors.Interactor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
@@ -30,6 +31,7 @@ public class ActivityModule {
     public static final String GET_CARS = "getcars";
     public static final String CREATE_CAR = "createcar";
     public static final String GET_CAR_BY_ID = "getcarbyid";
+    public static final String UPDATE_CAR = "updateCar";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -84,7 +86,7 @@ public class ActivityModule {
 
     @Provides
     @Named(CREATE_CAR)
-    public Interactor<Car> provideCreateCar(CreateCar createCar) {
+    public Interactor1<Boolean, Car> provideCreateCar(CreateCar createCar) {
         return createCar;
     }
 
@@ -92,5 +94,11 @@ public class ActivityModule {
     @Named(GET_CAR_BY_ID)
     public Interactor1<Car, Integer> provideGetCarById(GetCarById getCarById) {
         return getCarById;
+    }
+
+    @Provides
+    @Named(UPDATE_CAR)
+    public Interactor<Car> provideUpdateCar(UpdateCar updateCar) {
+        return updateCar;
     }
 }

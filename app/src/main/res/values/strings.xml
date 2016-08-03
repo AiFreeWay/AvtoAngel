@@ -43,4 +43,5 @@
     <string name="security_on">Защита</string>
     <string name="configuration_changed">Настройки изменились</string>
     <string name="need_fill_fields">Заполните поля</string>
+    <string name="car_exists">Машина с таким названием уже существует</string>
 </resources>
