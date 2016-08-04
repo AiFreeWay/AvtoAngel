@@ -64,12 +64,17 @@ dependencies {
     compile 'io.requery:requery-android:1.0.0-rc2'
     apt 'io.requery:requery-processor:1.0.0-rc2'
 
+    //Network
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+
     //Utils
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
-    compile 'com.github.florent37:viewanimator:1.0.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
 
 

@@ -14,6 +14,7 @@ import rx.Observable;
 import rx.Single;
 import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.SqliteController;
+import upplic.com.angelavto.data.db_store.table_controllers.CarDBController;
 import upplic.com.angelavto.data.db_store.tables.CarTable;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.data.mappers.CarMapper;
@@ -27,14 +28,15 @@ public class RepositoryImpl implements Repository {
 
     private MockStore mMockStore;
     private ReplaySubject<List<Car>> mCarSubject;
-    private SqliteController  mDBStore;
+    private CarDBController mCarDBController;
 
     @Inject
     public RepositoryImpl(Context context) {
-        mDBStore = new SqliteController(context);
+        SqliteController dBStore = new SqliteController(context);
+        mCarDBController = dBStore.getCarDBController();
         mMockStore = new MockStore();
         mCarSubject = ReplaySubject.create();
-        mCarSubject.onNext(CarMapper.mapCarsDB(mDBStore.getCars()));
+        mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars()));
     }
 
     @Override
@@ -49,29 +51,29 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Observable<CarTableEntity> createCar(Car car) {
-        return mDBStore.createCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mDBStore.getCars())));
+        return mCarDBController.createCar(car)
+                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars())));
     }
 
     @Override
     public Car getCarById(int id) throws Exception {
-        return mMockStore.getCarById(id);
+        return null;
     }
 
     @Override
     public boolean canCreateCar(Car car) {
-        return mDBStore.canCreateCar(car);
+        return mCarDBController.canCreateCar(car);
     }
 
     @Override
     public Observable<CarTableEntity> updateCar(Car car) {
-        return mDBStore.updateCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mDBStore.getCars())));
+        return mCarDBController.updateCar(car)
+                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars())));
     }
 
     @Override
     public Observable<Integer> deleteCar(Car car) {
-        return mDBStore.deleteCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mDBStore.getCars())));
+        return mCarDBController.deleteCar(car)
+                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars())));
     }
 }

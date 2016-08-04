@@ -44,4 +44,8 @@
     <string name="configuration_changed">Настройки изменились</string>
     <string name="need_fill_fields">Заполните поля</string>
     <string name="car_exists">Машина с таким названием уже существует</string>
+    <string name="record">Запись</string>
+    <string name="log">Журнал</string>
+    <string name="location_not_found">Местоположение не определено</string>
+    <string name="distance_not_found">Растояние не определено</string>
 </resources>

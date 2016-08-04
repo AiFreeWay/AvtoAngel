@@ -18,6 +18,7 @@ import io.requery.sql.EntityDataStore;
 import io.requery.sql.TableCreationMode;
 import rx.Observable;
 import rx.schedulers.Schedulers;
+import upplic.com.angelavto.data.db_store.table_controllers.CarDBController;
 import upplic.com.angelavto.data.db_store.tables.CarTable;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.data.db_store.tables.Schema;
@@ -31,11 +32,13 @@ public class SqliteController {
 
     private SingleEntityStore<Persistable> mDataStore;
     private Context mContext;
+    private CarDBController mCarDBController;
 
     public SqliteController(Context context) {
         mContext = context;
         StrictMode.enableDefaults();
         initStore();
+        mCarDBController = new CarDBController(mDataStore);
     }
 
     private void initStore() {
@@ -46,45 +49,7 @@ public class SqliteController {
         mDataStore = RxSupport.toReactiveStore(new EntityDataStore<Persistable>(configuration));
     }
 
-    public List<CarTableEntity> getCars() {
-        return mDataStore.select(CarTableEntity.class)
-                .get()
-                .toList();
-    }
-
-    public Observable<CarTableEntity> createCar(Car car) {
-        return mDataStore.insert(CarMapper.mapCar(car))
-                .toObservable()
-                .subscribeOn(Schedulers.newThread())
-                .doOnError(e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "SqliteController: createCar error "+e.toString()));
-    }
-
-    public boolean canCreateCar(Car car) {
-        List carsList = mDataStore.select(CarTableEntity.class)
-                .where(CarTableEntity.TITLE.like(car.getTitle()))
-                .get()
-                .toList();
-        return carsList.size() == 0;
-    }
-
-    public Observable<CarTableEntity> getCarById(int id) {
-        return mDataStore.select(CarTableEntity.class)
-                .where(CarTableEntity.ID.eq(id))
-                .get()
-                .toObservable();
-    }
-
-    public Observable<CarTableEntity> updateCar(Car car) {
-        return getCarById(car.getId())
-                .flatMap(entity -> mDataStore.update(CarMapper.fillEntityModelData(entity, car))
-                        .toObservable());
-    }
-
-    public Observable<Integer> deleteCar(Car car) {
-        return mDataStore.delete(CarTableEntity.class)
-                .where(CarTableEntity.ID.eq(car.getId()))
-                .get()
-                .toSingle()
-                .toObservable();
+    public CarDBController getCarDBController() {
+        return mCarDBController;
     }
 }

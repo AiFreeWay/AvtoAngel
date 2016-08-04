@@ -5,6 +5,7 @@ import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
 public class FmtMapCtrl extends ViewController<MapFragement> {
 
+
     public FmtMapCtrl(MapFragement view) {
         super(view);
     }
