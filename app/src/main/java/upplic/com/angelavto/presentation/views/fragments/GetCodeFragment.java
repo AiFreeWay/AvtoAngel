@@ -31,6 +31,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.domain.models.Login;
 import upplic.com.angelavto.presentation.view_controllers.FmtGetCodeCtrl;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
@@ -85,7 +86,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
         mViewController = new FmtGetCodeCtrl(this);
         mBtnEnter.setOnClickListener(v -> mViewController.startSelectBeaconActivity());
-        mBtnGetCode.setOnClickListener(v -> doOnSendCode());
+        mBtnGetCode.setOnClickListener(v -> mViewController.sendCode());
     }
 
     @Override
@@ -103,7 +104,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
             mTimerSubscription.unsubscribe();
     }
 
-    private void doOnSendCode() {
+    public void doOnSendCode() {
         Toast.makeText(getContext(), R.string.input_code_message, Toast.LENGTH_SHORT).show();
         mTimerSubscription = mTimer
                 .doOnUnsubscribe(() -> {
@@ -119,6 +120,10 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         enabledButtonEnter();
         mEtCode.setEnabled(true);
         mProgress.start();
+    }
+
+    public Login getLogin() {
+        return new Login(mActivity.getNubmer());
     }
 
     private void onChangeInterval(Long time) {

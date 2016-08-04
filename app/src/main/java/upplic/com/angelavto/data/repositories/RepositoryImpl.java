@@ -19,13 +19,17 @@ import upplic.com.angelavto.data.db_store.tables.CarTable;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mock_store.MockStore;
+import upplic.com.angelavto.data.net_store.NetworkController;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.Login;
+import upplic.com.angelavto.domain.models.SendCodeRequestResult;
 import upplic.com.angelavto.domain.repositories.Repository;
 
 @Singleton
 public class RepositoryImpl implements Repository {
 
+    private NetworkController mNetworkController;
     private MockStore mMockStore;
     private ReplaySubject<List<Car>> mCarSubject;
     private CarDBController mCarDBController;
@@ -34,6 +38,7 @@ public class RepositoryImpl implements Repository {
     public RepositoryImpl(Context context) {
         SqliteController dBStore = new SqliteController(context);
         mCarDBController = dBStore.getCarDBController();
+        mNetworkController = new NetworkController();
         mMockStore = new MockStore();
         mCarSubject = ReplaySubject.create();
         mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars()));
@@ -75,5 +80,10 @@ public class RepositoryImpl implements Repository {
     public Observable<Integer> deleteCar(Car car) {
         return mCarDBController.deleteCar(car)
                 .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars())));
+    }
+
+    @Override
+    public Observable registration(Login login) {
+        return mNetworkController.registration(login);
     }
 }
