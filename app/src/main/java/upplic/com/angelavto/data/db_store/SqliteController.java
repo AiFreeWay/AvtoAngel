@@ -74,9 +74,17 @@ public class SqliteController {
                 .toObservable();
     }
 
-    public Observable updateCar(Car car) {
+    public Observable<CarTableEntity> updateCar(Car car) {
         return getCarById(car.getId())
                 .flatMap(entity -> mDataStore.update(CarMapper.fillEntityModelData(entity, car))
                         .toObservable());
+    }
+
+    public Observable<Integer> deleteCar(Car car) {
+        return mDataStore.delete(CarTableEntity.class)
+                .where(CarTableEntity.ID.eq(car.getId()))
+                .get()
+                .toSingle()
+                .toObservable();
     }
 }

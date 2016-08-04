@@ -1,5 +1,6 @@
 package upplic.com.angelavto.presentation.views.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -63,12 +65,10 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         mBtnDelete.setOnClickListener(v -> onDelete());
         mBtnSave.setOnClickListener(v -> onSave());
         mMessageDialog = new Dialog(this, R.style.login_dialog)
-                .title(R.string.want_exit)
                 .titleColor(ContextCompat.getColor(this, R.color.slate_gray))
                 .actionTextColor(mColorGreenJungleKrayola)
                 .positiveAction(R.string.yes)
                 .negativeAction(R.string.no)
-                .positiveActionClickListener(v -> mMessageDialog.dismiss())
                 .negativeActionClickListener(v -> mMessageDialog.dismiss());
     }
 
@@ -88,12 +88,34 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     private void onDelete() {
         mMessageDialog.setTitle(R.string.delete_confirm);
         mMessageDialog.positiveActionTextColor(mColorMarron);
+        mMessageDialog.positiveActionClickListener(v -> {
+            mViewController.deleteCar(mCar);
+            mMessageDialog.dismiss();
+        });
         mMessageDialog.show();
     }
 
     private void onSave() {
         mMessageDialog.setTitle(R.string.save_confirm);
         mMessageDialog.positiveActionTextColor(mColorGreenJungleKrayola);
+        mMessageDialog.positiveActionClickListener(v -> {
+            if (isFieldsCorrect())
+                mViewController.updateCar(updateCarFromFields());
+            else
+                Toast.makeText(this, R.string.need_fill_fields, Toast.LENGTH_SHORT).show();
+            mMessageDialog.dismiss();});
         mMessageDialog.show();
+    }
+
+    private Car updateCarFromFields() {
+        mCar.setTitle(mEtCarTitle.getText().toString());
+        mCar.setPhone(mEtPhone.getText().toString());
+        return mCar;
+    }
+
+    private boolean isFieldsCorrect() {
+        String title = mEtCarTitle.getText().toString();
+        String phone = mEtPhone.getText().toString();
+        return !(title.isEmpty() || phone.isEmpty() || phone.length() != PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH);
     }
 }

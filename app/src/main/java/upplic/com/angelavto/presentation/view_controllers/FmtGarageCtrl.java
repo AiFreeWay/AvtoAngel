@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -79,6 +80,10 @@ public class FmtGarageCtrl extends ViewController<GarageFragment> {
         mUpdateCar.execute(car)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnCompleted(() -> {
+                    String message = "Настройки для '"+car.getTitle()+"' изменены.";
+                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
+                })
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGarageCtrl: hundleClick error "+e.toString()));
     }

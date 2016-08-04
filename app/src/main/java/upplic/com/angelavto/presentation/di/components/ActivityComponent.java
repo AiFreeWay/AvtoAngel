@@ -3,6 +3,7 @@ package upplic.com.angelavto.presentation.di.components;
 import dagger.Component;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.di.scopes.PerActivity;
+import upplic.com.angelavto.presentation.view_controllers.AcEditAvtoCtrl;
 import upplic.com.angelavto.presentation.view_controllers.AcLoginCtrl;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 import upplic.com.angelavto.presentation.view_controllers.AcAvtoCtrl;
@@ -27,4 +28,5 @@ public interface ActivityComponent {
     void inject(FmtSelectBeaconController viewController);
     void inject(FmtBeaconsShopCtrl viewController);
     void inject(FmtGarageCtrl viewController);
+    void inject(AcEditAvtoCtrl viewController);
 }

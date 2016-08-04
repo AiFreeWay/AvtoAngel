@@ -8,6 +8,7 @@ import javax.inject.Named;
 import dagger.Module;
 import dagger.Provides;
 import upplic.com.angelavto.domain.executors.CreateCar;
+import upplic.com.angelavto.domain.executors.DeleteCar;
 import upplic.com.angelavto.domain.executors.GetCarById;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetBeacons;
@@ -32,6 +33,7 @@ public class ActivityModule {
     public static final String CREATE_CAR = "createcar";
     public static final String GET_CAR_BY_ID = "getcarbyid";
     public static final String UPDATE_CAR = "updateCar";
+    public static final String DELETE_CAR = "deletecar";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -100,5 +102,11 @@ public class ActivityModule {
     @Named(UPDATE_CAR)
     public Interactor<Car> provideUpdateCar(UpdateCar updateCar) {
         return updateCar;
+    }
+
+    @Provides
+    @Named(DELETE_CAR)
+    public Interactor<Car> provideDeleteCar(DeleteCar deleteCar) {
+        return deleteCar;
     }
 }

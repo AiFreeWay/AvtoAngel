@@ -17,5 +17,6 @@ public interface Repository {
     ReplaySubject<List<Car>> getCars();
     Observable<CarTableEntity> createCar(Car car);
     boolean canCreateCar(Car car);
-    Observable updateCar(Car car);
+    Observable<CarTableEntity> updateCar(Car car);
+    Observable<Integer> deleteCar(Car car);
 }

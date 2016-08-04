@@ -92,19 +92,15 @@ public class GarageBinder implements AbstractBinder<Car> {
         public static final int TYPE_NOTIFICATION = 1;
 
         private Car mCar;
-        private Toast mToast;
         private int mType;
 
         public SwitchStateListener(Car car, int type) {
             mType = type;
             mCar = car;
-            String message = "Настройки для '"+mCar.getTitle()+"' изменены.";
-            mToast = Toast.makeText(mViewController.getRootView().getContext(), message, Toast.LENGTH_SHORT);
         }
 
         @Override
         public void onCheckedChanged(CompoundButton view, boolean state) {
-            mToast.show();
             onSwitchStateChange(view, state);
             changeModelValue(state);
             mViewController.hundleClick(mCar);

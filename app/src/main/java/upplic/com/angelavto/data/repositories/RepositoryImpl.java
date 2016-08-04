@@ -64,8 +64,14 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable updateCar(Car car) {
+    public Observable<CarTableEntity> updateCar(Car car) {
         return mDBStore.updateCar(car)
+                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mDBStore.getCars())));
+    }
+
+    @Override
+    public Observable<Integer> deleteCar(Car car) {
+        return mDBStore.deleteCar(car)
                 .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mDBStore.getCars())));
     }
 }
