@@ -76,6 +76,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (LoginActivity) getBaseActivity();
+        mViewController = new FmtGetCodeCtrl(this);
 
         mDrawableOnButtonEnterEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_green_button);
         mDrawableOnButtonEnterDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
@@ -84,7 +85,6 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         mColorMarengo = ContextCompat.getColor(getContext(), R.color.marengo);
 
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
-        mViewController = new FmtGetCodeCtrl(this);
         mBtnEnter.setOnClickListener(v -> mViewController.startSelectBeaconActivity());
         mBtnGetCode.setOnClickListener(v -> mViewController.sendCode());
     }
@@ -120,6 +120,10 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         enabledButtonEnter();
         mEtCode.setEnabled(true);
         mProgress.start();
+    }
+
+    public void showWarning() {
+        Toast.makeText(getContext(), R.string.cannot_send_code, Toast.LENGTH_SHORT).show();
     }
 
     public Login getLogin() {

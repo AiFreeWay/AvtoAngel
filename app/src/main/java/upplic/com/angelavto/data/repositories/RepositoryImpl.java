@@ -8,14 +8,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.requery.Persistable;
-import io.requery.rx.SingleEntityStore;
 import rx.Observable;
-import rx.Single;
 import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.SqliteController;
 import upplic.com.angelavto.data.db_store.table_controllers.CarDBController;
-import upplic.com.angelavto.data.db_store.tables.CarTable;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mock_store.MockStore;
@@ -25,6 +21,7 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Login;
 import upplic.com.angelavto.domain.models.SendCodeRequestResult;
 import upplic.com.angelavto.domain.repositories.Repository;
+
 
 @Singleton
 public class RepositoryImpl implements Repository {
@@ -83,7 +80,7 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable registration(Login login) {
+    public Observable<SendCodeRequestResult> registration(Login login) {
         return mNetworkController.registration(login);
     }
 }

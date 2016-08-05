@@ -1,16 +1,15 @@
 package upplic.com.angelavto.domain.repositories;
 
-
 import java.util.List;
 
 import rx.Observable;
-import rx.Single;
 import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Login;
 import upplic.com.angelavto.domain.models.SendCodeRequestResult;
+
 
 public interface Repository {
 
@@ -21,5 +20,5 @@ public interface Repository {
     boolean canCreateCar(Car car);
     Observable<CarTableEntity> updateCar(Car car);
     Observable<Integer> deleteCar(Car car);
-    Observable registration(Login login);
+    Observable<SendCodeRequestResult> registration(Login login);
 }
