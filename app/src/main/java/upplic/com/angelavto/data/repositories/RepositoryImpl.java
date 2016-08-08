@@ -14,6 +14,8 @@ import upplic.com.angelavto.data.db_store.SqliteController;
 import upplic.com.angelavto.data.db_store.table_controllers.CarDBController;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.data.mappers.CarMapper;
+import upplic.com.angelavto.data.mappers.LoginMapper;
+import upplic.com.angelavto.data.mappers.RegistrationMapper;
 import upplic.com.angelavto.data.mock_store.MockStore;
 import upplic.com.angelavto.data.net_store.NetworkController;
 import upplic.com.angelavto.domain.models.Beacon;
@@ -83,11 +85,13 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Observable<RegistrationResult> registration(RegistrationDomain registrationDomain) {
-        return mNetworkController.registration(registrationDomain);
+        return mNetworkController.registration(registrationDomain)
+                .flatMap(registrationResponse -> Observable.just(RegistrationMapper.mapRegistration(registrationResponse)));
     }
 
     @Override
     public Observable<LoginResult> login(LoginDomain loginDomain) {
-        return mNetworkController.login(loginDomain);
+        return mNetworkController.login(loginDomain)
+                .flatMap(loginResponse -> Observable.just(LoginMapper.mapLogin(loginResponse)));
     }
 }

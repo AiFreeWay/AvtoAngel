@@ -3,25 +3,13 @@ package upplic.com.angelavto.domain.models;
 
 public class LoginResult {
 
-    private int id;
     private Result result;
-    private String jsonrpc;
 
     public LoginResult() {
     }
 
-    public LoginResult(int id, Result result, String jsonrpc) {
-        this.id = id;
+    public LoginResult(Result result) {
         this.result = result;
-        this.jsonrpc = jsonrpc;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Result getResult() {
@@ -30,14 +18,6 @@ public class LoginResult {
 
     public void setResult(Result result) {
         this.result = result;
-    }
-
-    public String getJsonrpc() {
-        return jsonrpc;
-    }
-
-    public void setJsonrpc(String jsonrpc) {
-        this.jsonrpc = jsonrpc;
     }
 
     public static class Result {
