@@ -49,4 +49,6 @@
     <string name="location_not_found">Местоположение не определено</string>
     <string name="distance_not_found">Растояние не определено</string>
     <string name="cannot_send_code">Не удалось отправить сообщение</string>
+    <string name="error_autorization">Ошибка авторизации</string>
+    <string name="code_must_be_correct">Код должен состоять из 4 символов</string>
 </resources>

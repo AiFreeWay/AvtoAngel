@@ -1,18 +1,16 @@
 package upplic.com.angelavto.domain.models;
 
 
-public class SendCodeRequestResult {
-
-    private static final String sSuccessValue = "ok";
+public class LoginResult {
 
     private int id;
-    private String result;
+    private Result result;
     private String jsonrpc;
 
-    public SendCodeRequestResult() {
+    public LoginResult() {
     }
 
-    public SendCodeRequestResult(int id, String result, String jsonrpc) {
+    public LoginResult(int id, Result result, String jsonrpc) {
         this.id = id;
         this.result = result;
         this.jsonrpc = jsonrpc;
@@ -26,11 +24,11 @@ public class SendCodeRequestResult {
         this.id = id;
     }
 
-    public String getResult() {
+    public Result getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(Result result) {
         this.result = result;
     }
 
@@ -42,9 +40,20 @@ public class SendCodeRequestResult {
         this.jsonrpc = jsonrpc;
     }
 
-    public boolean isSuccess() {
-        if (result != null)
-            return result.equals(sSuccessValue);
-        return false;
+    public static class Result {
+
+        private String key;
+
+        public Result(String key) {
+            this.key = key;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
     }
 }

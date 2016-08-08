@@ -5,6 +5,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.HawkBuilder;
+import com.orhanobut.hawk.LogLevel;
+
 import upplic.com.angelavto.presentation.di.components.ApplicationComponent;
 import upplic.com.angelavto.presentation.di.components.DaggerApplicationComponent;
 import upplic.com.angelavto.presentation.di.modules.ApplicationModule;
@@ -21,6 +25,10 @@ public class AngelAvto extends Application {
         super.onCreate();
         mAppComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .build();
+        Hawk.init(this)
+                .setEncryptionMethod(HawkBuilder.EncryptionMethod.MEDIUM)
+                .setStorage(HawkBuilder.newSqliteStorage(this))
                 .build();
     }
 

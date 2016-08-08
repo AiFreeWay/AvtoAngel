@@ -18,8 +18,10 @@ import upplic.com.angelavto.data.mock_store.MockStore;
 import upplic.com.angelavto.data.net_store.NetworkController;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.domain.models.Login;
-import upplic.com.angelavto.domain.models.SendCodeRequestResult;
+import upplic.com.angelavto.domain.models.LoginDomain;
+import upplic.com.angelavto.domain.models.LoginResult;
+import upplic.com.angelavto.domain.models.RegistrationDomain;
+import upplic.com.angelavto.domain.models.RegistrationResult;
 import upplic.com.angelavto.domain.repositories.Repository;
 
 
@@ -80,7 +82,12 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable<SendCodeRequestResult> registration(Login login) {
-        return mNetworkController.registration(login);
+    public Observable<RegistrationResult> registration(RegistrationDomain registrationDomain) {
+        return mNetworkController.registration(registrationDomain);
+    }
+
+    @Override
+    public Observable<LoginResult> login(LoginDomain loginDomain) {
+        return mNetworkController.login(loginDomain);
     }
 }

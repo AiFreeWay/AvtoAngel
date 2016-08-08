@@ -4,12 +4,12 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import upplic.com.angelavto.domain.interactors.Interactor1;
-import upplic.com.angelavto.domain.models.Login;
-import upplic.com.angelavto.domain.models.SendCodeRequestResult;
+import upplic.com.angelavto.domain.models.RegistrationDomain;
+import upplic.com.angelavto.domain.models.RegistrationResult;
 import upplic.com.angelavto.domain.repositories.Repository;
 
 
-public class Registration implements Interactor1<SendCodeRequestResult, Login> {
+public class Registration implements Interactor1<RegistrationResult, RegistrationDomain> {
 
     private Repository mRepository;
 
@@ -19,7 +19,7 @@ public class Registration implements Interactor1<SendCodeRequestResult, Login> {
     }
 
     @Override
-    public Observable<SendCodeRequestResult> execute(Login data) {
+    public Observable<RegistrationResult> execute(RegistrationDomain data) {
         return mRepository.registration(data);
     }
 }

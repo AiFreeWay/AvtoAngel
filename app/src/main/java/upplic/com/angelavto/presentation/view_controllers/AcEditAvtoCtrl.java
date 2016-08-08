@@ -20,11 +20,9 @@ import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
 
-    @Inject
-    @Named(ActivityModule.UPDATE_CAR)
+    @Inject @Named(ActivityModule.UPDATE_CAR)
     Interactor<Car> mUpdateCar;
-    @Inject
-    @Named(ActivityModule.DELETE_CAR)
+    @Inject @Named(ActivityModule.DELETE_CAR)
     Interactor<Car> mDeleteCar;
 
     public AcEditAvtoCtrl(EditAvtoActivity view) {

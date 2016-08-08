@@ -1,14 +1,14 @@
 package upplic.com.angelavto.domain.models;
 
 
-public class Login {
+public class RegistrationDomain {
 
-    private String number;
+    protected String number;
 
-    public Login() {
+    public RegistrationDomain() {
     }
 
-    public Login(String number) {
+    public RegistrationDomain(String number) {
         this.number = cleanNumber(number);
     }
 
@@ -20,7 +20,7 @@ public class Login {
         this.number = cleanNumber(number);
     }
 
-    private String cleanNumber(String number) {
+    protected String cleanNumber(String number) {
         return number.replaceAll("[^0-9]", "");
     }
 }

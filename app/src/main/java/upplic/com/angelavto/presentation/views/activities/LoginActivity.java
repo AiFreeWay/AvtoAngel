@@ -18,6 +18,7 @@ import upplic.com.angelavto.presentation.view_controllers.AcLoginCtrl;
 public class LoginActivity extends BaseActivity<AcLoginCtrl> {
 
     public static final int GET_CODE_SLIDE_POSITION = 1;
+    public static final String API_KEY_TAG = "apikey";
 
     @BindView(R.id.ac_login_vp_body)
     ViewPager mVpBody;
@@ -35,6 +36,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         mVpBody.setAdapter(mAdapter);
         mVpBody.setOnTouchListener((view, event) -> true);
         mViewController = new AcLoginCtrl(this);
+        mViewController.start();
     }
 
     public void loadData(List<? extends Fragment> fragments) {

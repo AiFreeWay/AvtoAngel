@@ -7,12 +7,12 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Response;
 import upplic.com.angelavto.domain.executors.CreateCar;
 import upplic.com.angelavto.domain.executors.DeleteCar;
 import upplic.com.angelavto.domain.executors.GetCarById;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetBeacons;
+import upplic.com.angelavto.domain.executors.Login;
 import upplic.com.angelavto.domain.executors.Registration;
 import upplic.com.angelavto.domain.executors.UpdateCar;
 import upplic.com.angelavto.domain.interactors.Interactor;
@@ -20,8 +20,10 @@ import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Beacon;
-import upplic.com.angelavto.domain.models.Login;
-import upplic.com.angelavto.domain.models.SendCodeRequestResult;
+import upplic.com.angelavto.domain.models.LoginDomain;
+import upplic.com.angelavto.domain.models.LoginResult;
+import upplic.com.angelavto.domain.models.RegistrationDomain;
+import upplic.com.angelavto.domain.models.RegistrationResult;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
 import upplic.com.angelavto.presentation.factories.LoginViewPagerFactory;
@@ -39,6 +41,7 @@ public class ActivityModule {
     public static final String UPDATE_CAR = "updateCar";
     public static final String DELETE_CAR = "deletecar";
     public static final String REGISTRATION = "registration";
+    public static final String LOGIN = "login";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -117,7 +120,13 @@ public class ActivityModule {
 
     @Provides
     @Named(REGISTRATION)
-    public Interactor1<SendCodeRequestResult, Login> provaideRegistration(Registration registration) {
+    public Interactor1<RegistrationResult, RegistrationDomain> provaideRegistration(Registration registration) {
         return registration;
+    }
+
+    @Provides
+    @Named(LOGIN)
+    public Interactor1<LoginResult, LoginDomain> provaideLogin(Login login) {
+        return login;
     }
 }

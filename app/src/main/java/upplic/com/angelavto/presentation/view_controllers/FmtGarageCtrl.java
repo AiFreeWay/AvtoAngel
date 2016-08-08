@@ -26,11 +26,9 @@ import upplic.com.angelavto.presentation.views.fragments.GarageFragment;
 
 public class FmtGarageCtrl extends ViewController<GarageFragment> {
 
-    @Inject
-    @Named(ActivityModule.GET_CARS)
+    @Inject @Named(ActivityModule.GET_CARS)
     Interactor0<List<Car>> mGetCars;
-    @Inject
-    @Named(ActivityModule.UPDATE_CAR)
+    @Inject @Named(ActivityModule.UPDATE_CAR)
     Interactor<Car> mUpdateCar;
     @Inject
     FragmentRouter.RouterBilder mRouterBilder;

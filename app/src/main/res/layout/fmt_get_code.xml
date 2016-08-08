@@ -25,9 +25,10 @@
         android:layout_marginTop="17dp"
         android:drawableLeft="@drawable/ic_lock"
         android:drawablePadding="15dp"
+        android:maxLength="4"
         android:fontFamily="sans-serif-light"
         android:hint="@string/input_code"
-        android:inputType="text"
+        android:inputType="numberSigned"
         android:lines="1"
         android:maxLines="1"
         android:textSize="19sp" />

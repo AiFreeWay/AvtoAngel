@@ -31,7 +31,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.domain.models.Login;
+import upplic.com.angelavto.domain.models.LoginDomain;
+import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.presentation.view_controllers.FmtGetCodeCtrl;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
@@ -85,8 +86,8 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         mColorMarengo = ContextCompat.getColor(getContext(), R.color.marengo);
 
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
-        mBtnEnter.setOnClickListener(v -> mViewController.startSelectBeaconActivity());
-        mBtnGetCode.setOnClickListener(v -> mViewController.sendCode());
+        mBtnEnter.setOnClickListener(v -> mViewController.login());
+        mBtnGetCode.setOnClickListener(v -> mViewController.registration());
     }
 
     @Override
@@ -122,12 +123,16 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         mProgress.start();
     }
 
-    public void showWarning() {
-        Toast.makeText(getContext(), R.string.cannot_send_code, Toast.LENGTH_SHORT).show();
+    public void showToast(int stringRes) {
+        Toast.makeText(getContext(), stringRes, Toast.LENGTH_SHORT).show();
     }
 
-    public Login getLogin() {
-        return new Login(mActivity.getNubmer());
+    public RegistrationDomain getRegistrationModel() {
+        return new RegistrationDomain(mActivity.getNubmer());
+    }
+
+    public LoginDomain getLoginModel() {
+        return new LoginDomain(mActivity.getNubmer(), mEtCode.getText().toString());
     }
 
     private void onChangeInterval(Long time) {

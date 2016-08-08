@@ -77,4 +77,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.github.orhanobut:hawk:1.23'
 }

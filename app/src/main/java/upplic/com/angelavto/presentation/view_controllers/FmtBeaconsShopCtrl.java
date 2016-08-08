@@ -22,8 +22,7 @@ import upplic.com.angelavto.presentation.views.fragments.BeaconsShopFragment;
 
 public class FmtBeaconsShopCtrl extends ViewController<BeaconsShopFragment> {
 
-    @Inject
-    @Named(ActivityModule.GET_BEACONS)
+    @Inject @Named(ActivityModule.GET_BEACONS)
     Interactor0<List<Beacon>> mGetBeacons;
 
     private LayoutInflater mLayoutInflater;

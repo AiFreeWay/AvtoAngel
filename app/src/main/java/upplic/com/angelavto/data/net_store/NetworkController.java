@@ -5,8 +5,11 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import upplic.com.angelavto.data.mappers.LoginMapper;
-import upplic.com.angelavto.domain.models.Login;
-import upplic.com.angelavto.domain.models.SendCodeRequestResult;
+import upplic.com.angelavto.data.mappers.RegistrationMapper;
+import upplic.com.angelavto.domain.models.LoginDomain;
+import upplic.com.angelavto.domain.models.LoginResult;
+import upplic.com.angelavto.domain.models.RegistrationDomain;
+import upplic.com.angelavto.domain.models.RegistrationResult;
 
 
 public class NetworkController {
@@ -26,7 +29,11 @@ public class NetworkController {
         mApiController = retrofit.create(ApiController.class);
     }
 
-    public Observable<SendCodeRequestResult> registration(Login login) {
-        return mApiController.registration(LoginMapper.mapLogin(login));
+    public Observable<RegistrationResult> registration(RegistrationDomain registrationDomain) {
+        return mApiController.registration(RegistrationMapper.mapRegistration(registrationDomain));
+    }
+
+    public Observable<LoginResult> login(LoginDomain loginDomain) {
+        return mApiController.login(LoginMapper.mapLogin(loginDomain));
     }
 }
