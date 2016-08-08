@@ -21,14 +21,6 @@ public class GetBeacons implements Interactor0<List<Beacon>> {
 
     @Override
     public Observable<List<Beacon>> execute() {
-        Observable.OnSubscribe<List<Beacon>> subscriber = observer -> {
-            try {
-                observer.onNext(mRepository.getBeacons());
-            } catch (Exception e) {
-                observer.onError(e);
-            }
-            observer.onCompleted();
-        };
-        return Observable.create(subscriber);
+        return mRepository.getBeacons().cache();
     }
 }

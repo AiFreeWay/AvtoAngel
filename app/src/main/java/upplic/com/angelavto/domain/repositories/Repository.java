@@ -15,7 +15,7 @@ import upplic.com.angelavto.domain.models.RegistrationResult;
 
 public interface Repository {
 
-    List<Beacon> getBeacons() throws Exception;
+    Observable<List<Beacon>> getBeacons();
     Car getCarById(int id) throws Exception;
     ReplaySubject<List<Car>> getCars();
     Observable<CarTableEntity> createCar(Car car);

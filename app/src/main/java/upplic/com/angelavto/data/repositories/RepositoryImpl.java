@@ -13,10 +13,10 @@ import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.SqliteController;
 import upplic.com.angelavto.data.db_store.table_controllers.CarDBController;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
+import upplic.com.angelavto.data.mappers.BeaconsMapper;
 import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mappers.LoginMapper;
 import upplic.com.angelavto.data.mappers.RegistrationMapper;
-import upplic.com.angelavto.data.mock_store.MockStore;
 import upplic.com.angelavto.data.net_store.NetworkController;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
@@ -31,7 +31,6 @@ import upplic.com.angelavto.domain.repositories.Repository;
 public class RepositoryImpl implements Repository {
 
     private NetworkController mNetworkController;
-    private MockStore mMockStore;
     private ReplaySubject<List<Car>> mCarSubject;
     private CarDBController mCarDBController;
 
@@ -40,14 +39,14 @@ public class RepositoryImpl implements Repository {
         SqliteController dBStore = new SqliteController(context);
         mCarDBController = dBStore.getCarDBController();
         mNetworkController = new NetworkController();
-        mMockStore = new MockStore();
         mCarSubject = ReplaySubject.create();
         mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars()));
     }
 
     @Override
-    public List<Beacon> getBeacons() throws Exception {
-         return mMockStore.getGetBeacons();
+    public Observable<List<Beacon>> getBeacons() {
+         return mNetworkController.getBeacons()
+                 .flatMap(beaconsResponse -> Observable.just(BeaconsMapper.mapBeacons(beaconsResponse)));
     }
 
     @Override

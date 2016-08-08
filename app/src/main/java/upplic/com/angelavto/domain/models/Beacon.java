@@ -3,19 +3,33 @@ package upplic.com.angelavto.domain.models;
 
 public class Beacon {
 
+    private int id;
+    private String imgUrl;
     private String title;
-    private String subtitle;
-    private String description;
-    private String image;
 
     public Beacon() {
     }
 
-    public Beacon(String title, String subtitle, String description, String image) {
+    public Beacon(int id, String imgUrl, String title) {
+        this.id = id;
+        this.imgUrl = imgUrl;
         this.title = title;
-        this.subtitle = subtitle;
-        this.description = description;
-        this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imgUrl;
+    }
+
+    public void setImagUrle(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getTitle() {
@@ -24,29 +38,5 @@ public class Beacon {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

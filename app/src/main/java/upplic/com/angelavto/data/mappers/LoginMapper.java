@@ -13,6 +13,6 @@ public class LoginMapper {
     }
 
     public static LoginResult mapLogin(LoginResponse loginResponse) {
-        return new LoginResult(loginResponse.getResult());
+        return new LoginResult(loginResponse.getResult().getKey());
     }
 }

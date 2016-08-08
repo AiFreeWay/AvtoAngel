@@ -3,37 +3,20 @@ package upplic.com.angelavto.domain.models;
 
 public class LoginResult {
 
-    private Result result;
+    private String key;
 
     public LoginResult() {
     }
 
-    public LoginResult(Result result) {
-        this.result = result;
+    public LoginResult(String key) {
+        this.key = key;
     }
 
-    public Result getResult() {
-        return result;
+    public String getKey() {
+        return key;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
-    }
-
-    public static class Result {
-
-        private String key;
-
-        public Result(String key) {
-            this.key = key;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
+    public void setKey(String key) {
+        this.key = key;
     }
 }

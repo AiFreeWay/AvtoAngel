@@ -65,7 +65,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
     }
 
     private void endLogin(LoginResult loginResult) {
-        Hawk.put(LoginActivity.API_KEY_TAG, loginResult.getResult().getKey());
+        Hawk.put(LoginActivity.API_KEY_TAG, loginResult.getKey());
         Intent intent = new Intent(mRootView.getBaseActivity(), SelectBeaconActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

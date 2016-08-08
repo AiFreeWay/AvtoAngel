@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
@@ -42,8 +44,11 @@ public class BeaconBinder implements AbstractBinder<Beacon> {
         ButterKnife.bind(this, view);
 
         mTvTitle.setText(data.getTitle());
-        mTvSubtitle.setText(data.getSubtitle());
-        mTvDescription.setText(data.getDescription());
+        Picasso.with(view.getContext())
+                .load(data.getImageUrl())
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.image_placeholder)
+                .into(mIvIcon);
         view.setOnClickListener(v -> mViewController.hundleProductItemClick(data));
         return view;
     }
