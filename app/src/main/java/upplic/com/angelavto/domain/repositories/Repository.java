@@ -20,8 +20,6 @@ public interface Repository {
     Observable<RegistrationResult> registration(RegistrationDomain registrationDomain);
     Observable<LoginResult> login(LoginDomain loginDomain);
 
-    Observable<CarTableEntity> upsertCarDB(Car car);
-    Observable<CarTableEntity> createCarDB(Car car);
     Observable<CarTableEntity> updateCarDB(Car car);
     Observable<Integer> deleteCarDB(Car car);
 

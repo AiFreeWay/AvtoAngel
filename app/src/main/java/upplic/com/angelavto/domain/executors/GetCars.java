@@ -23,11 +23,6 @@ public class GetCars implements Interactor0<List<Car>> {
     @Override
     public Observable<List<Car>> execute() {
         return mRepository.getCarsNetwork()
-                .map(cars -> {
-                    for (Car car : cars)
-                        mRepository.upsertCarDB(car)
-                                .subscribe();
-                    return cars;})
                 .cache();
     }
 }

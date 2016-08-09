@@ -53,27 +53,16 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable<List<Car>> getCarsNetwork() {
-        return  mNetworkController.getCars(getToken())
-                .flatMap(getCarsResponse -> { mCarSubject.onNext(CarMapper.mapCarsFromNetwork(getCarsResponse));
-                return  mCarSubject;});
-    }
-
-    @Override
     public Observable<UpsertCarResult> upsertCarNetwork(Car car) {
         return mNetworkController.upsertCar(getToken(), car)
+                .map(upsertCarResponse1 -> { getCarsNetwork().subscribe();
+                    return upsertCarResponse1;})
                 .flatMap(upsertCarResponse -> Observable.just(CarMapper.mapUpsertCarNetwork(upsertCarResponse)));
     }
 
     @Override
     public Observable<Integer> deleteCarNetwork(Car car) {
         return null;
-    }
-
-    @Override
-    public Observable<CarTableEntity> createCarDB(Car car) {
-        return mCarDBController.createCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars())));
     }
 
     @Override
@@ -94,6 +83,13 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Observable<List<Car>> getCarsNetwork() {
+        return  mNetworkController.getCars(getToken())
+                .flatMap(getCarsResponse -> { mCarSubject.onNext(CarMapper.mapCarsFromNetwork(getCarsResponse));
+                    return  mCarSubject;});
+    }
+
+    @Override
     public Observable<RegistrationResult> registration(RegistrationDomain registrationDomain) {
         return mNetworkController.registration(registrationDomain)
                 .flatMap(registrationResponse -> Observable.just(RegistrationMapper.mapRegistration(registrationResponse)));
@@ -103,11 +99,6 @@ public class RepositoryImpl implements Repository {
     public Observable<LoginResult> login(LoginDomain loginDomain) {
         return mNetworkController.login(loginDomain)
                 .flatMap(loginResponse -> Observable.just(LoginMapper.mapLogin(loginResponse)));
-    }
-
-    @Override
-    public Observable<CarTableEntity> upsertCarDB(Car car) {
-        return mCarDBController.upsert(car);
     }
 
     private String getToken() {
