@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.repositories.Repository;
@@ -21,7 +22,12 @@ public class GetCars implements Interactor0<List<Car>> {
 
     @Override
     public Observable<List<Car>> execute() {
-        return mRepository.getCars()
+        return mRepository.getCarsNetwork()
+                .map(cars -> {
+                    for (Car car : cars)
+                        mRepository.upsertCarDB(car)
+                                .subscribe();
+                    return cars;})
                 .cache();
     }
 }

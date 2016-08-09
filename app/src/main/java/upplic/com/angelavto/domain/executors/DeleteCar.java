@@ -19,7 +19,7 @@ public class DeleteCar implements Interactor<Car> {
 
     @Override
     public Observable execute(Car data) {
-        return mRepository.deleteCar(data)
+        return mRepository.deleteCarDB(data)
                 .flatMap(entity -> Observable.empty());
     }
 }

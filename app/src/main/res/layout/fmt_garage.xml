@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grideperlevy"
@@ -15,6 +16,17 @@
         android:layout_marginTop="20dp"
         android:divider="@color/grideperlevy"
         android:dividerHeight="10dp" />
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/fmt_garage_pv_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:pv_autostart="false"
+        app:pv_circular="false"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
 
     <Button
         android:id="@+id/fmt_garage_btn_add_car"
@@ -42,6 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/no_cars_in_garage"
+        android:textAlignment="center"
         android:textColor="@color/gray_box"
         android:textSize="26sp"
         android:visibility="invisible" />

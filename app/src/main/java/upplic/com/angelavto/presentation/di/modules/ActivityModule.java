@@ -24,6 +24,7 @@ import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
+import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
 import upplic.com.angelavto.presentation.factories.LoginViewPagerFactory;
@@ -38,7 +39,7 @@ public class ActivityModule {
     public static final String GET_CARS = "getcars";
     public static final String CREATE_CAR = "createcar";
     public static final String GET_CAR_BY_ID = "getcarbyid";
-    public static final String UPDATE_CAR = "updateCar";
+    public static final String UPDATE_CAR = "updateCarDB";
     public static final String DELETE_CAR = "deletecar";
     public static final String REGISTRATION = "registration";
     public static final String LOGIN = "login";
@@ -96,7 +97,7 @@ public class ActivityModule {
 
     @Provides
     @Named(CREATE_CAR)
-    public Interactor1<Boolean, Car> provideCreateCar(CreateCar createCar) {
+    public Interactor1<UpsertCarResult, Car> provideCreateCar(CreateCar createCar) {
         return createCar;
     }
 

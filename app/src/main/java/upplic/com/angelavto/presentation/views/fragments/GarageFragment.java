@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rey.material.widget.ProgressView;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,6 +31,8 @@ public class GarageFragment extends BaseFragment<FmtGarageCtrl> {
     Button mBtnAddCar;
     @BindView(R.id.fmt_garage_tv_warning)
     TextView mTvWarning;
+    @BindView(R.id.fmt_garage_pv_progress)
+    ProgressView mPvProgress;
 
     private MultyListViewAdapter<Car> mAdapter;
 
@@ -53,7 +57,11 @@ public class GarageFragment extends BaseFragment<FmtGarageCtrl> {
     @Override
     public void onStart() {
         super.onStart();
-        getBaseActivity().getSupportActionBar().setTitle(R.string.garage);
+        try {
+            getBaseActivity().getSupportActionBar().setTitle(R.string.garage);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     public void loadData(List<Car> cars) {
@@ -64,12 +72,28 @@ public class GarageFragment extends BaseFragment<FmtGarageCtrl> {
         return mLvCars;
     }
 
-    public void hideTextViewWarning() {
+    public void showStartLoad() {
         mTvWarning.setVisibility(View.INVISIBLE);
+        mPvProgress.start();
     }
 
-    public void showTextViewWarning() {
+    public void showSuccesLoad() {
+        mPvProgress.stop();
+    }
+
+    public void showDeniedLoad() {
+        mTvWarning.setText(R.string.cant_load_data);
         mTvWarning.setVisibility(View.VISIBLE);
+        mPvProgress.stop();
+    }
+
+    public void showEmptyGarageWarning() {
+        mTvWarning.setVisibility(View.VISIBLE);
+        mTvWarning.setText(R.string.no_cars_in_garage);
+    }
+
+    public void hideEmptyGarageWarning() {
+        mTvWarning.setVisibility(View.INVISIBLE);
     }
 
     public int getFragmentsBodyResId() {

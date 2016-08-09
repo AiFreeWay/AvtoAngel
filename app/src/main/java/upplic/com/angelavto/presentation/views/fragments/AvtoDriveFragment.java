@@ -41,11 +41,11 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         mActivty = (AvtoActivity) getBaseActivity();
         mCar = mActivty.getCar();
         mFbtnEdit.setOnClickListener(v -> mViewController.openEditAvtoActivity());
-        if (mCar.getSequrityState() == Car.STATE_UNLOCK) {
+        if (mCar.isStatus())
+            mTvWarning.setVisibility(View.INVISIBLE);
+        else {
             mTvWarning.setVisibility(View.VISIBLE);
             mTvWarning.setText("Местоположение "+mCar.getTitle()+" изменилось!");
-        } else {
-            mTvWarning.setVisibility(View.INVISIBLE);
         }
     }
 

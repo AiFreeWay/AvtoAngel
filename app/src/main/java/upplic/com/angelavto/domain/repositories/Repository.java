@@ -11,17 +11,22 @@ import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
+import upplic.com.angelavto.domain.models.UpsertCarResult;
 
 
 public interface Repository {
 
     Observable<List<Beacon>> getBeacons();
-    Car getCarById(int id) throws Exception;
-    ReplaySubject<List<Car>> getCars();
-    Observable<CarTableEntity> createCar(Car car);
-    boolean canCreateCar(Car car);
-    Observable<CarTableEntity> updateCar(Car car);
-    Observable<Integer> deleteCar(Car car);
     Observable<RegistrationResult> registration(RegistrationDomain registrationDomain);
     Observable<LoginResult> login(LoginDomain loginDomain);
+
+    Observable<CarTableEntity> upsertCarDB(Car car);
+    Observable<CarTableEntity> createCarDB(Car car);
+    Observable<CarTableEntity> updateCarDB(Car car);
+    Observable<Integer> deleteCarDB(Car car);
+
+    Observable<List<Car>> getCarsNetwork();
+    Observable<UpsertCarResult> upsertCarNetwork(Car car);
+    Observable<Integer> deleteCarNetwork(Car car);
+    Car getCarByIdNetwork(int id) throws Exception;
 }

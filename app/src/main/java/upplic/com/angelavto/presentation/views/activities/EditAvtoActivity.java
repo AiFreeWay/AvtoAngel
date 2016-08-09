@@ -1,10 +1,8 @@
 package upplic.com.angelavto.presentation.views.activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
@@ -61,7 +59,7 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         initToolbar();
         getSupportActionBar().setTitle(R.string.edit);
         mEtCarTitle.setText(mCar.getTitle());
-        mEtPhone.setText(mCar.getPhone());
+        mEtPhone.setText(mCar.getTrackerNumber());
         mBtnDelete.setOnClickListener(v -> onDelete());
         mBtnSave.setOnClickListener(v -> onSave());
         mMessageDialog = new Dialog(this, R.style.login_dialog)
@@ -109,7 +107,7 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
 
     private Car updateCarFromFields() {
         mCar.setTitle(mEtCarTitle.getText().toString());
-        mCar.setPhone(mEtPhone.getText().toString());
+        mCar.setTrackerNumber(mEtPhone.getText().toString());
         return mCar;
     }
 

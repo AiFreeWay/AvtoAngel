@@ -51,13 +51,16 @@ public class FmtGarageCtrl extends ViewController<GarageFragment> {
         mGetCars.execute()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(cars -> {
+                    mRootView.showSuccesLoad();
                     if (cars.size() > 0) {
                         mRootView.loadData(cars);
-                        mRootView.hideTextViewWarning();
+                        mRootView.hideEmptyGarageWarning();
                     } else
-                        mRootView.showTextViewWarning();},
-                    e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
+                        mRootView.showEmptyGarageWarning();},
+                    e -> { mRootView.showDeniedLoad();
+                        Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString());});
     }
 
     public LayoutInflater getLayoutInflater() {

@@ -1,7 +1,8 @@
 package upplic.com.angelavto.data.repositories;
 
-
 import android.content.Context;
+
+import com.orhanobut.hawk.Hawk;
 
 import java.util.List;
 
@@ -24,7 +25,9 @@ import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
+import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.domain.repositories.Repository;
+import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
 
 @Singleton
@@ -40,7 +43,7 @@ public class RepositoryImpl implements Repository {
         mCarDBController = dBStore.getCarDBController();
         mNetworkController = new NetworkController();
         mCarSubject = ReplaySubject.create();
-        mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars()));
+        mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars()));
     }
 
     @Override
@@ -50,36 +53,44 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public ReplaySubject<List<Car>> getCars() {
-        return mCarSubject;
+    public Observable<List<Car>> getCarsNetwork() {
+        return  mNetworkController.getCars(getToken())
+                .flatMap(getCarsResponse -> { mCarSubject.onNext(CarMapper.mapCarsFromNetwork(getCarsResponse));
+                return  mCarSubject;});
     }
 
     @Override
-    public Observable<CarTableEntity> createCar(Car car) {
-        return mCarDBController.createCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars())));
+    public Observable<UpsertCarResult> upsertCarNetwork(Car car) {
+        return mNetworkController.upsertCar(getToken(), car)
+                .flatMap(upsertCarResponse -> Observable.just(CarMapper.mapUpsertCarNetwork(upsertCarResponse)));
     }
 
     @Override
-    public Car getCarById(int id) throws Exception {
+    public Observable<Integer> deleteCarNetwork(Car car) {
         return null;
     }
 
     @Override
-    public boolean canCreateCar(Car car) {
-        return mCarDBController.canCreateCar(car);
+    public Observable<CarTableEntity> createCarDB(Car car) {
+        return mCarDBController.createCar(car)
+                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars())));
     }
 
     @Override
-    public Observable<CarTableEntity> updateCar(Car car) {
+    public Car getCarByIdNetwork(int id) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Observable<CarTableEntity> updateCarDB(Car car) {
         return mCarDBController.updateCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars())));
+                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars())));
     }
 
     @Override
-    public Observable<Integer> deleteCar(Car car) {
+    public Observable<Integer> deleteCarDB(Car car) {
         return mCarDBController.deleteCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsDB(mCarDBController.getCars())));
+                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars())));
     }
 
     @Override
@@ -92,5 +103,14 @@ public class RepositoryImpl implements Repository {
     public Observable<LoginResult> login(LoginDomain loginDomain) {
         return mNetworkController.login(loginDomain)
                 .flatMap(loginResponse -> Observable.just(LoginMapper.mapLogin(loginResponse)));
+    }
+
+    @Override
+    public Observable<CarTableEntity> upsertCarDB(Car car) {
+        return mCarDBController.upsert(car);
+    }
+
+    private String getToken() {
+        return Hawk.<String>get(LoginActivity.API_KEY_TAG);
     }
 }

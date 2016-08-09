@@ -2,46 +2,56 @@ package upplic.com.angelavto.data.mappers;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import upplic.com.angelavto.data.db_store.tables.CarTable;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
+import upplic.com.angelavto.data.net_store.requests_entityes.UpsertCarRequest;
+import upplic.com.angelavto.data.net_store.response_entityes.GetCarsResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.UpsertCarResponse;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.UpsertCarResult;
 
 public class CarMapper {
 
-    public static List<Car> mapCarsDB(List<CarTableEntity> carsDB) {
+    public static List<Car> mapCarsFromDB(List<CarTableEntity> carsDB) {
         List<Car> cars = new ArrayList<>();
         for (CarTable carDB : carsDB)
-            cars.add(mapCarDB(carDB));
+            cars.add(mapCarFromDB(carDB));
         return cars;
     }
 
-    public static Car mapCarDB(CarTable carDB) {
-        return new Car(carDB.getId(), carDB.getTitle(), carDB.getSecuritynState(), carDB.getNotificationState(), carDB.getTrackerNumber());
+    public static Car mapCarFromDB(CarTable carDB) {
+        return new Car(carDB.getId(), carDB.getTitle(), carDB.getStatus(), carDB.getNotification(), carDB.getTrackerNumber(), carDB.getTrackerType());
     }
 
-    public static List<CarTableEntity> mapCars(List<Car> cars) {
+    public static List<CarTableEntity> mapCarsToDB(List<Car> cars) {
         List<CarTableEntity> carsDB = new ArrayList<>();
         for (Car car : cars)
-            carsDB.add(mapCar(car));
+            carsDB.add(mapCarToDB(car));
         return carsDB;
     }
 
-    public static CarTableEntity mapCar(Car car) {
+    public static CarTableEntity mapCarToDB(Car car) {
         CarTableEntity carDB = new CarTableEntity();
+        carDB.setId(car.getId());
         carDB.setTitle(car.getTitle());
-        carDB.setSecuritynState(car.getSequrityState());
-        carDB.setNotificationState(car.getNotificationState());
-        carDB.setTrackerNumber(car.getPhone());
+        carDB.setStatus(car.isStatus());
+        carDB.setNotification(car.isNotification());
+        carDB.setTrackerNumber(car.getTrackerNumber());
         return carDB;
     }
 
-    public static CarTableEntity fillEntityModelData(CarTableEntity entity, Car model) {
-        entity.setTitle(model.getTitle());
-        entity.setSecuritynState(model.getSequrityState());
-        entity.setNotificationState(model.getNotificationState());
-        entity.setTrackerNumber(model.getPhone());
-        return entity;
+    public static List<Car> mapCarsFromNetwork(GetCarsResponse getCarsResponse) {
+        return Arrays.asList(getCarsResponse.getResult());
+    }
+
+    public static UpsertCarRequest mapCarsToNetwork(String key, Car car) {
+        return new UpsertCarRequest(key, car);
+    }
+
+    public static UpsertCarResult mapUpsertCarNetwork(UpsertCarResponse upsertCarResponse) {
+        return new UpsertCarResult(upsertCarResponse.getResult());
     }
 }

@@ -25,7 +25,7 @@ public class CarMapper {
 
     public static AppMenuItem mapCars(Context context, Car car) {
         int drawable;
-        if (car.getSequrityState() == Car.STATE_LOCK)
+        if (car.isStatus())
             drawable = R.drawable.ic_lock_green;
         else
             drawable = R.drawable.ic_lock_red;

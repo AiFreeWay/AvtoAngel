@@ -29,18 +29,10 @@ public class CarDBController {
     }
 
     public Observable<CarTableEntity> createCar(Car car) {
-        return mDataStore.insert(CarMapper.mapCar(car))
+        return mDataStore.insert(CarMapper.mapCarToDB(car))
                 .toObservable()
                 .subscribeOn(Schedulers.newThread())
-                .doOnError(e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "SqliteController: createCar error "+e.toString()));
-    }
-
-    public boolean canCreateCar(Car car) {
-        List carsList = mDataStore.select(CarTableEntity.class)
-                .where(CarTableEntity.TITLE.like(car.getTitle()))
-                .get()
-                .toList();
-        return carsList.size() == 0;
+                .doOnError(e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "SqliteController: createCarDB error "+e.toString()));
     }
 
     public Observable<CarTableEntity> getCarById(int id) {
@@ -51,9 +43,8 @@ public class CarDBController {
     }
 
     public Observable<CarTableEntity> updateCar(Car car) {
-        return getCarById(car.getId())
-                .flatMap(entity -> mDataStore.update(CarMapper.fillEntityModelData(entity, car))
-                        .toObservable());
+        return mDataStore.update(CarMapper.mapCarToDB(car))
+                .toObservable();
     }
 
     public Observable<Integer> deleteCar(Car car) {
@@ -61,6 +52,11 @@ public class CarDBController {
                 .where(CarTableEntity.ID.eq(car.getId()))
                 .get()
                 .toSingle()
+                .toObservable();
+    }
+
+    public Observable<CarTableEntity> upsert(Car car) {
+        return mDataStore.upsert(CarMapper.mapCarToDB(car))
                 .toObservable();
     }
 }

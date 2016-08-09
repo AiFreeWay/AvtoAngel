@@ -8,11 +8,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.functions.Action0;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.view_controllers.FmtGarageCtrl;
@@ -50,20 +48,18 @@ public class GarageBinder implements AbstractBinder<Car> {
     private void initSwitchListeners(Car data) {
         mSwtSecurity.setOnCheckedChangeListener(null);
         mSwtNotifications.setOnCheckedChangeListener(null);
-        proccessCarState(data.getSequrityState());
-        proccessCarNotification(data.getNotificationState());
+        proccessCarState(data.isStatus());
+        proccessCarNotification(data.isNotification());
         mSwtSecurity.setOnCheckedChangeListener(new SwitchStateListener(data, SwitchStateListener.TYPE_SEQURITY));
         mSwtNotifications.setOnCheckedChangeListener(new SwitchStateListener(data, SwitchStateListener.TYPE_NOTIFICATION));
     }
 
-    private void proccessCarNotification(int notificationState) {
-        boolean isNotificationOn = notificationState == Car.NOTIFICATION_ON;
-        setState(mSwtNotifications, isNotificationOn);
+    private void proccessCarNotification(boolean notification) {
+        setState(mSwtNotifications, notification);
     }
 
-    private void proccessCarState(int state) {
-        boolean isLock = state == Car.STATE_LOCK;
-        setState(mSwtSecurity, isLock);
+    private void proccessCarState(boolean status) {
+        setState(mSwtSecurity, status);
     }
 
     private void setState(CompoundButton view, boolean state) {
@@ -108,24 +104,9 @@ public class GarageBinder implements AbstractBinder<Car> {
 
         private void changeModelValue(boolean state) {
             if (mType == TYPE_SEQURITY)
-                changeSequrity(state);
+                mCar.setStatus(state);
             else
-                changeNotification(state);
-        }
-
-
-        private void changeNotification(boolean state) {
-            if (state)
-                mCar.setNotificationState(Car.NOTIFICATION_ON);
-            else
-                mCar.setNotificationState(Car.NOTIFICATION_OFF);
-        }
-
-        private void changeSequrity(boolean state) {
-            if (state)
-                mCar.setSequrityState(Car.STATE_LOCK);
-            else
-                mCar.setSequrityState(Car.STATE_UNLOCK);
+                mCar.setNotification(state);
         }
     }
 }

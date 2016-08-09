@@ -19,7 +19,7 @@ public class UpdateCar implements Interactor<Car> {
 
     @Override
     public Observable execute(Car data) {
-        return mRepository.updateCar(data)
+        return mRepository.updateCarDB(data)
                 .flatMap(entity -> Observable.empty());
     }
 }

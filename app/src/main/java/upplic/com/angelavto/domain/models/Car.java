@@ -5,27 +5,34 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
 
-    public static final int STATE_LOCK = 0;
-    public static final int STATE_UNLOCK = 1;
-
-    public static final int NOTIFICATION_ON = 2;
-    public static final int NOTIFICATION_OFF = 3;
-
     private int id;
     private String title;
-    private int sequrityState;
-    private int notificationState;
-    private String phone;
+    private boolean status;
+    private boolean record;
+    private boolean notification;
+    private String trackerNumber;
+    private int trackerType;
 
     public Car() {
     }
 
-    public Car(int id, String title, int sequrityState, int notificationState, String phone) {
+    public Car(int id, String title, boolean status, boolean notification, String trackerNumber, int trackerType) {
         this.id = id;
         this.title = title;
-        this.sequrityState = sequrityState;
-        this.notificationState = notificationState;
-        this.phone = phone;
+        this.status = status;
+        this.notification = notification;
+        this.trackerNumber = trackerNumber;
+        this.trackerType = trackerType;
+    }
+
+    public Car(int id, String title, boolean status, boolean record, boolean notification, String trackerNumber, int trackerType) {
+        this.id = id;
+        this.title = title;
+        this.status = status;
+        this.record = record;
+        this.notification = notification;
+        this.trackerNumber = trackerNumber;
+        this.trackerType = trackerType;
     }
 
     public int getId() {
@@ -44,27 +51,43 @@ public class Car implements Serializable {
         this.title = title;
     }
 
-    public int getSequrityState() {
-        return sequrityState;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setSequrityState(int sequrityState) {
-        this.sequrityState = sequrityState;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public int getNotificationState() {
-        return notificationState;
+    public boolean isRecord() {
+        return record;
     }
 
-    public void setNotificationState(int notificationState) {
-        this.notificationState = notificationState;
+    public void setRecord(boolean record) {
+        this.record = record;
     }
 
-    public String getPhone() {
-        return phone;
+    public boolean isNotification() {
+        return notification;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setNotification(boolean notification) {
+        this.notification = notification;
+    }
+
+    public String getTrackerNumber() {
+        return trackerNumber;
+    }
+
+    public void setTrackerNumber(String trackerNumber) {
+        this.trackerNumber = trackerNumber;
+    }
+
+    public int getTrackerType() {
+        return trackerType;
+    }
+
+    public void setTrackerType(int trackerType) {
+        this.trackerType = trackerType;
     }
 }

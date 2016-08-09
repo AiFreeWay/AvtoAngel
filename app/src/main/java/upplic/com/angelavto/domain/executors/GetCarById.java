@@ -1,9 +1,5 @@
 package upplic.com.angelavto.domain.executors;
 
-import android.util.Log;
-
-import java.util.List;
-
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -25,7 +21,7 @@ public class GetCarById implements Interactor1<Car, Integer> {
     public Observable<Car> execute(Integer data) {
         Observable.OnSubscribe<Car> subscriber = observer -> {
             try {
-                observer.onNext(mRepository.getCarById(data));
+                observer.onNext(mRepository.getCarByIdNetwork(data));
             } catch (Exception e) {
                 observer.onError(e);
             }

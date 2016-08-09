@@ -53,7 +53,11 @@ public class BeaconsShopFragment extends BaseFragment<FmtBeaconsShopCtrl> {
     @Override
     public void onStart() {
         super.onStart();
-        getBaseActivity().getSupportActionBar().setTitle(R.string.buy_beacon);
+        try {
+            getBaseActivity().getSupportActionBar().setTitle(R.string.buy_beacon);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     public ListView getLvBeacons() {

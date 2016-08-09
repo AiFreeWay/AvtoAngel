@@ -1,17 +1,26 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rey.material.widget.ProgressView;
+import com.rey.material.widget.Spinner;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.utils.PhoneNumberTextWatcher;
 import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
@@ -19,14 +28,23 @@ import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
 
 public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
 
-    @BindView(R.id.fmt_create_btn_create_car)
+    @BindView(R.id.fmt_create_car_btn_create_car)
     Button mBtnCreateCar;
-    @BindView(R.id.fmt_create_et_car)
+    @BindView(R.id.fmt_create_car_et_car)
     EditText mEtTitle;
-    @BindView(R.id.fmt_create_et_phone)
+    @BindView(R.id.fmt_create_car_et_phone)
     EditText mEtPhone;
+    @BindView(R.id.fmt_create_car_pv_progress)
+    ProgressView mPvProgress;
+    @BindView(R.id.fmt_create_car_spn_beacon_type)
+    Spinner mSpnBeaconType;
 
     private PhoneNumberTextWatcher mPhoneNumberMask;
+    private int mColorOnButtonEnabled;
+    private int mColorOnButtonDisabled;
+    private Drawable mDrawableOnButtonEnabled;
+    private Drawable mDrawableOnButtonDisabled;
+    private ArrayAdapter<Beacon> mAdapter;
 
     @Nullable
     @Override
@@ -41,6 +59,10 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtCreateCarCtrl(this);
         mPhoneNumberMask = new PhoneNumberTextWatcher(mEtPhone);
+        mDrawableOnButtonEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button);
+        mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_marengo_disabled);
+        mColorOnButtonEnabled = ContextCompat.getColor(getContext(), R.color.grideperlevy);
+        mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
         mEtPhone.addTextChangedListener(mPhoneNumberMask);
         mBtnCreateCar.setOnClickListener(v -> doOnCreateCar());
         mViewController.start();
@@ -49,12 +71,40 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     @Override
     public void onStart() {
         super.onStart();
-        getBaseActivity().getSupportActionBar().setTitle(R.string.add_car);
+        try {
+            getBaseActivity().getSupportActionBar().setTitle(R.string.add_car);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     public void truncateFields() {
         mEtTitle.setText("");
         mEtPhone.setText("");
+    }
+
+    public void showStartLoad() {
+        mPvProgress.start();
+        mBtnCreateCar.setEnabled(false);
+        mBtnCreateCar.setBackground(mDrawableOnButtonDisabled);
+        mBtnCreateCar.setTextColor(mColorOnButtonDisabled);
+    }
+
+    public void showSuccesLoad() {
+        mPvProgress.stop();
+        mBtnCreateCar.setEnabled(true);
+        mBtnCreateCar.setBackground(mDrawableOnButtonEnabled);
+        mBtnCreateCar.setTextColor(mColorOnButtonEnabled);
+    }
+
+    public void showDeniedLoad(int messageResiId) {
+        Toast.makeText(getContext(), R.string.cant_load_data, Toast.LENGTH_SHORT).show();
+        mPvProgress.stop();
+    }
+
+    public void loadData(List<Beacon> beacons) {
+        mAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, beacons);
+        mSpnBeaconType.setAdapter(mAdapter);
     }
 
     private void doOnCreateCar() {
@@ -69,9 +119,9 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     private Car getCar() {
         Car car = new Car();
         car.setTitle(mEtTitle.getText().toString());
-        car.setPhone(mEtPhone.getText().toString());
-        car.setNotificationState(Car.NOTIFICATION_OFF);
-        car.setSequrityState(Car.STATE_UNLOCK);
+        car.setTrackerNumber(mEtPhone.getText().toString());
+        int beaconType = mAdapter.getItem(mSpnBeaconType.getSelectedItemPosition()).getId();
+        car.setTrackerType(beaconType);
         return car;
     }
 }

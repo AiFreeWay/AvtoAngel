@@ -128,7 +128,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cars -> mRootView.loadData(joinCarsAndMenuItems(mMenu, cars)),
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
+                        e -> { mRootView.loadData(mMenu);
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString());});
     }
 
     private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars) {

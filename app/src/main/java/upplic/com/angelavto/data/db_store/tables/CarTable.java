@@ -10,12 +10,12 @@ import io.requery.Persistable;
 @Entity
 public interface CarTable extends Parcelable, Persistable {
 
-    @Key @Generated
+    @Key
     int getId();
 
     String getTitle();
     int getTrackerType();
     String getTrackerNumber();
-    int getNotificationState();
-    int getSecuritynState();
+    boolean getStatus();
+    boolean getNotification();
 }

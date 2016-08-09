@@ -1,7 +1,5 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
-
-
 import javax.inject.Inject;
 
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;

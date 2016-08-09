@@ -48,10 +48,10 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
         mVpBody.setAdapter(mAdapter);
         mViewController = new AcAvtoCtrl(this);
         getSupportActionBar().setTitle(mCar.getTitle());
-        if (mCar.getSequrityState() == Car.STATE_UNLOCK)
-            setDangerState();
-        else
+        if (mCar.isStatus())
             setNormalState();
+        else
+            setDangerState();
     }
 
     public Car getCar() {

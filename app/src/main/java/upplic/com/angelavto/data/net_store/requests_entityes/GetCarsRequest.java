@@ -1,16 +1,16 @@
 package upplic.com.angelavto.data.net_store.requests_entityes;
 
 
-public class LoginRequest extends BaseRequest {
+public class GetCarsRequest extends BaseRequest {
 
-    private String method = "auth";
+    private String method = "getCars";
     private Params params;
 
-    public LoginRequest() {
+    public GetCarsRequest() {
     }
 
-    public LoginRequest(String number, String code) {
-        params = new Params(number, code);
+    public GetCarsRequest(String key) {
+        params = new Params(key);
     }
 
     public String getMethod() {
@@ -31,12 +31,10 @@ public class LoginRequest extends BaseRequest {
 
     public static class Params {
 
-        public String number;
-        public String code;
+        public String key;
 
-        public Params(String number, String code) {
-            this.number = number;
-            this.code = code;
+        public Params(String key) {
+            this.key = key;
         }
     }
 }

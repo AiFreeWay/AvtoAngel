@@ -9,12 +9,17 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mappers.LoginMapper;
 import upplic.com.angelavto.data.mappers.RegistrationMapper;
 import upplic.com.angelavto.data.net_store.requests_entityes.BeaconsRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.GetCarsRequest;
 import upplic.com.angelavto.data.net_store.response_entityes.BeaconsResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.UpsertCarResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.GetCarsResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.LoginResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.RegistrationResponse;
+import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 
@@ -57,5 +62,13 @@ public class NetworkController {
 
     public Observable<BeaconsResponse> getBeacons() {
         return mApiController.getBeacons(BEACONS_REQUEST);
+    }
+
+    public Observable<GetCarsResponse> getCars(String key) {
+        return mApiController.getCars(new GetCarsRequest(key));
+    }
+
+    public Observable<UpsertCarResponse> upsertCar(String key, Car car) {
+        return mApiController.upsertCar(CarMapper.mapCarsToNetwork(key, car));
     }
 }
