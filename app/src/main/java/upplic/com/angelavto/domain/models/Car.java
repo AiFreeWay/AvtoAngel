@@ -12,6 +12,8 @@ public class Car implements Serializable {
     private boolean notification;
     private String trackerNumber;
     private int trackerType;
+    private double lat;
+    private double lon;
 
     public Car() {
     }

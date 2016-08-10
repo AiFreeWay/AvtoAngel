@@ -53,11 +53,11 @@ public class FmtCreateCarCtrl extends ViewController<CreateCarFragment> {
                 .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(upsertCarResult -> {
                             mRootView.showSuccesLoad();
-                    if (upsertCarResult.isSuccess()) {
-                        mRootView.truncateFields();
-                        Toast.makeText(mRootView.getContext(), R.string.create_car_success, Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(mRootView.getContext(), R.string.car_exists, Toast.LENGTH_SHORT).show();},
+                            if (upsertCarResult.isSuccess()) {
+                                mRootView.truncateFields();
+                                Toast.makeText(mRootView.getContext(), R.string.create_car_success, Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(mRootView.getContext(), R.string.car_exists, Toast.LENGTH_SHORT).show();},
                         e -> { mRootView.showDeniedLoad(R.string.cant_final_execute);
                             Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtCreateCarCtrl: addCar error "+e.toString());});
     }

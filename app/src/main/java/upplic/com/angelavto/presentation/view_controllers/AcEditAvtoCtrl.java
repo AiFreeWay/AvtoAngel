@@ -11,7 +11,9 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor;
+import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
@@ -21,7 +23,7 @@ import upplic.com.angelavto.presentation.views.activities.MainActivity;
 public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
 
     @Inject @Named(ActivityModule.UPDATE_CAR)
-    Interactor<Car> mUpdateCar;
+    Interactor1<UpsertCarResult, Car> mUpdateCar;
     @Inject @Named(ActivityModule.DELETE_CAR)
     Interactor<Car> mDeleteCar;
 

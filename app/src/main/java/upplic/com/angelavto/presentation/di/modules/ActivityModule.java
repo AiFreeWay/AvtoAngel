@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 import upplic.com.angelavto.domain.executors.CreateCar;
 import upplic.com.angelavto.domain.executors.DeleteCar;
-import upplic.com.angelavto.domain.executors.GetCarById;
+import upplic.com.angelavto.domain.executors.GetCarDetail;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetBeacons;
 import upplic.com.angelavto.domain.executors.Login;
@@ -38,8 +38,8 @@ public class ActivityModule {
     public static final String GET_BEACONS = "getbeacons";
     public static final String GET_CARS = "getcars";
     public static final String CREATE_CAR = "createcar";
-    public static final String GET_CAR_BY_ID = "getcarbyid";
-    public static final String UPDATE_CAR = "updateCarDB";
+    public static final String UPDATE_CAR = "updatecar";
+    public static final String GET_CAR_DETAIL = "getcardetail";
     public static final String DELETE_CAR = "deletecar";
     public static final String REGISTRATION = "registration";
     public static final String LOGIN = "login";
@@ -102,14 +102,14 @@ public class ActivityModule {
     }
 
     @Provides
-    @Named(GET_CAR_BY_ID)
-    public Interactor1<Car, Integer> provideGetCarById(GetCarById getCarById) {
-        return getCarById;
+    @Named(GET_CAR_DETAIL)
+    public Interactor1<Car, Integer> provideGetCarDetail(GetCarDetail getCarDetail) {
+        return getCarDetail;
     }
 
     @Provides
     @Named(UPDATE_CAR)
-    public Interactor<Car> provideUpdateCar(UpdateCar updateCar) {
+    public Interactor1<UpsertCarResult, Car> provideUpdateCar(UpdateCar updateCar) {
         return updateCar;
     }
 

@@ -13,8 +13,10 @@ import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mappers.LoginMapper;
 import upplic.com.angelavto.data.mappers.RegistrationMapper;
 import upplic.com.angelavto.data.net_store.requests_entityes.BeaconsRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.GetCarDetailRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarsRequest;
 import upplic.com.angelavto.data.net_store.response_entityes.BeaconsResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.GetCarDetailResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.UpsertCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarsResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.LoginResponse;
@@ -70,5 +72,9 @@ public class NetworkController {
 
     public Observable<UpsertCarResponse> upsertCar(String key, Car car) {
         return mApiController.upsertCar(CarMapper.mapCarsToNetwork(key, car));
+    }
+
+    public Observable<GetCarDetailResponse> getCarDetail(String key, int id) {
+        return mApiController.getCarDetail(new GetCarDetailRequest(key, id));
     }
 }

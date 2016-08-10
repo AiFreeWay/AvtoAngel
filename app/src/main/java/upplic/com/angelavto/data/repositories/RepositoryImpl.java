@@ -43,7 +43,6 @@ public class RepositoryImpl implements Repository {
         mCarDBController = dBStore.getCarDBController();
         mNetworkController = new NetworkController();
         mCarSubject = ReplaySubject.create();
-        mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars()));
     }
 
     @Override
@@ -55,7 +54,7 @@ public class RepositoryImpl implements Repository {
     @Override
     public Observable<UpsertCarResult> upsertCarNetwork(Car car) {
         return mNetworkController.upsertCar(getToken(), car)
-                .map(upsertCarResponse1 -> { getCarsNetwork().subscribe();
+                .map(upsertCarResponse1 -> { getCarsNetworkEmit().subscribe();
                     return upsertCarResponse1;})
                 .flatMap(upsertCarResponse -> Observable.just(CarMapper.mapUpsertCarNetwork(upsertCarResponse)));
     }
@@ -66,27 +65,37 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Car getCarByIdNetwork(int id) throws Exception {
-        return null;
+    public Observable<Car> getCarDetailNetwork(int id) {
+        return mNetworkController.getCarDetail(getToken(), id)
+                .flatMap(getCarDetailResponse -> Observable.just(CarMapper.mapCarDetailFromNetwork(getCarDetailResponse)));
     }
 
     @Override
-    public Observable<CarTableEntity> updateCarDB(Car car) {
-        return mCarDBController.updateCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars())));
+    public Observable<CarTableEntity> upsertCarDB(Car car) {
+        return mCarDBController.upsertCar(car);
     }
 
     @Override
     public Observable<Integer> deleteCarDB(Car car) {
-        return mCarDBController.deleteCar(car)
-                .doOnCompleted(() -> mCarSubject.onNext(CarMapper.mapCarsFromDB(mCarDBController.getCars())));
+        return null;
+    }
+
+    @Override
+    public void updateCarDBFromNetwork(List<Car> cars) {
+        mCarDBController.updateCarDBFromNetwork(cars);
+    }
+
+    @Override
+    public Observable<List<Car>> getCarsNetworkEmit() {
+        return mNetworkController.getCars(getToken())
+                .flatMap(getCarsResponse -> { mCarSubject.onNext(CarMapper.mapCarsFromNetwork(getCarsResponse));
+                    return  mCarSubject;});
     }
 
     @Override
     public Observable<List<Car>> getCarsNetwork() {
-        return  mNetworkController.getCars(getToken())
-                .flatMap(getCarsResponse -> { mCarSubject.onNext(CarMapper.mapCarsFromNetwork(getCarsResponse));
-                    return  mCarSubject;});
+        return mNetworkController.getCars(getToken())
+                .flatMap(getCarsResponse -> Observable.just(CarMapper.mapCarsFromNetwork(getCarsResponse)));
     }
 
     @Override

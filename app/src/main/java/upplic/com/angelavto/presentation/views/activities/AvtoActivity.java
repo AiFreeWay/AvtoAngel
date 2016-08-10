@@ -33,6 +33,7 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
     @BindView(R.id.ac_avto_tl_tabs)
     TabLayout mTlTabs;
 
+    private int mCarId;
     private Car mCar;
     private ViewPagerTabsAdapter mAdapter;
     private MaterialMenuIconToolbar mMenuDrawer;
@@ -42,20 +43,14 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_auto);
         ButterKnife.bind(this);
-        mCar = (Car) getIntent().getSerializableExtra(CAR_TAG);
+        mViewController = new AcAvtoCtrl(this);
+        Car car  = (Car) getIntent().getSerializableExtra(CAR_TAG);
+        mCarId = car.getId();
         initToolbar();
         mAdapter = new ViewPagerTabsAdapter(getSupportFragmentManager(), mTlTabs, mVpBody);
         mVpBody.setAdapter(mAdapter);
-        mViewController = new AcAvtoCtrl(this);
-        getSupportActionBar().setTitle(mCar.getTitle());
-        if (mCar.isStatus())
-            setNormalState();
-        else
-            setDangerState();
-    }
-
-    public Car getCar() {
-        return mCar;
+        getSupportActionBar().setTitle(car.getTitle());
+        mViewController.start();
     }
 
     public void loadData(List<TabLayout.Tab> tabs, List<Fragment> fragments) {
@@ -74,6 +69,18 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
     public void setNormalState() {
         mToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
         mTlTabs.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+    }
+
+    public void setCatDetail(Car car) {
+        mCar = car;
+    }
+
+    public Car getCar() {
+        return mCar;
+    }
+
+    public int getCarId() {
+        return mCarId;
     }
 
     private void initToolbar() {

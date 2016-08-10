@@ -20,11 +20,14 @@ public interface Repository {
     Observable<RegistrationResult> registration(RegistrationDomain registrationDomain);
     Observable<LoginResult> login(LoginDomain loginDomain);
 
-    Observable<CarTableEntity> updateCarDB(Car car);
-    Observable<Integer> deleteCarDB(Car car);
 
+    Observable<CarTableEntity> upsertCarDB(Car car);
+    Observable<Integer> deleteCarDB(Car car);
+    void updateCarDBFromNetwork(List<Car> cars);
+
+    Observable<List<Car>> getCarsNetworkEmit();
     Observable<List<Car>> getCarsNetwork();
     Observable<UpsertCarResult> upsertCarNetwork(Car car);
     Observable<Integer> deleteCarNetwork(Car car);
-    Car getCarByIdNetwork(int id) throws Exception;
+    Observable<Car> getCarDetailNetwork(int id);
 }

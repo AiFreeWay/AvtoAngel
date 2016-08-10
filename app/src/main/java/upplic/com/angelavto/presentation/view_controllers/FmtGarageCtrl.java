@@ -14,9 +14,10 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import upplic.com.angelavto.domain.interactors.Interactor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
@@ -29,7 +30,7 @@ public class FmtGarageCtrl extends ViewController<GarageFragment> {
     @Inject @Named(ActivityModule.GET_CARS)
     Interactor0<List<Car>> mGetCars;
     @Inject @Named(ActivityModule.UPDATE_CAR)
-    Interactor<Car> mUpdateCar;
+    Interactor1<UpsertCarResult, Car> mUpdateCar;
     @Inject
     FragmentRouter.RouterBilder mRouterBilder;
     @Inject

@@ -1,5 +1,6 @@
 package upplic.com.angelavto.data.db_store.table_controllers;
 
+
 import java.util.List;
 
 import io.requery.Persistable;
@@ -18,22 +19,24 @@ public class CarDBController {
         mDataStore = dataStore;
     }
 
-    public List<CarTableEntity> getCars() {
-        return mDataStore.select(CarTableEntity.class)
-                .get()
-                .toList();
-    }
-
-    public Observable<CarTableEntity> updateCar(Car car) {
-        return mDataStore.update(CarMapper.mapCarToDB(car))
+    public Observable<CarTableEntity> upsertCar(Car car) {
+        return mDataStore.upsert(CarMapper.mapCarToDB(car))
                 .toObservable();
     }
 
     public Observable<Integer> deleteCar(Car car) {
-        return mDataStore.delete(CarTableEntity.class)
-                .where(CarTableEntity.ID.eq(car.getId()))
-                .get()
-                .toSingle()
-                .toObservable();
+        return null;
+    }
+
+    public void updateCarDBFromNetwork(List<Car> cars) {
+        for (Car car : cars)
+            mDataStore.update(CarTableEntity.class)
+                    .set(CarTableEntity.TITLE, car.getTitle())
+                    .set(CarTableEntity.TRACKER_NUMBER, car.getTrackerNumber())
+                    .set(CarTableEntity.TRACKER_TYPE, car.getTrackerType())
+                    .set(CarTableEntity.STATUS, car.isStatus())
+                    .get()
+                    .toSingle()
+                    .subscribe();
     }
 }

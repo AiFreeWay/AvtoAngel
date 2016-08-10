@@ -23,7 +23,6 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     @BindView(R.id.fmt_avto_drive_fbtn_edit)
     FloatingActionButton mFbtnEdit;
 
-    private Car mCar;
     private AvtoActivity mActivty;
 
     @Nullable
@@ -39,17 +38,10 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtAvtoDriveCtrl(this);
         mActivty = (AvtoActivity) getBaseActivity();
-        mCar = mActivty.getCar();
         mFbtnEdit.setOnClickListener(v -> mViewController.openEditAvtoActivity());
-        if (mCar.isStatus())
-            mTvWarning.setVisibility(View.INVISIBLE);
-        else {
-            mTvWarning.setVisibility(View.VISIBLE);
-            mTvWarning.setText("Местоположение "+mCar.getTitle()+" изменилось!");
-        }
     }
 
     public Car getCar() {
-        return mCar;
+        return mActivty.getCar();
     }
 }
