@@ -21,6 +21,7 @@ import upplic.com.angelavto.data.mappers.RegistrationMapper;
 import upplic.com.angelavto.data.net_store.NetworkController;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
@@ -60,8 +61,9 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable<Integer> deleteCarNetwork(Car car) {
-        return null;
+    public Observable<DeleteCarResult> deleteCarNetwork(Car car) {
+        return mNetworkController.deleteCar(getToken(), car.getId())
+                .flatMap(deleteCarResponse -> Observable.just(CarMapper.mapDeleteCarNetwork(deleteCarResponse)));
     }
 
     @Override
@@ -76,8 +78,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable<Integer> deleteCarDB(Car car) {
-        return null;
+    public void deleteCarDB(Car car) {
+        mCarDBController.deleteCar(car);
     }
 
     @Override

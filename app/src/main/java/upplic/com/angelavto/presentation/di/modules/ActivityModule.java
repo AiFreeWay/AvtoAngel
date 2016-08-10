@@ -20,6 +20,7 @@ import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Beacon;
+import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
@@ -115,7 +116,7 @@ public class ActivityModule {
 
     @Provides
     @Named(DELETE_CAR)
-    public Interactor<Car> provideDeleteCar(DeleteCar deleteCar) {
+    public Interactor1<DeleteCarResult, Car> provideDeleteCar(DeleteCar deleteCar) {
         return deleteCar;
     }
 

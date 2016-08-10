@@ -13,6 +13,7 @@ import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
@@ -25,7 +26,7 @@ public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
     @Inject @Named(ActivityModule.UPDATE_CAR)
     Interactor1<UpsertCarResult, Car> mUpdateCar;
     @Inject @Named(ActivityModule.DELETE_CAR)
-    Interactor<Car> mDeleteCar;
+    Interactor1<DeleteCarResult, Car> mDeleteCar;
 
     public AcEditAvtoCtrl(EditAvtoActivity view) {
         super(view);
@@ -54,7 +55,7 @@ public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(this::backToMainActivity)
-                .subscribe(aVoid -> {},
+                .subscribe(deleteCarResult -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGarageCtrl: hundleClick error "+e.toString()));
     }
 

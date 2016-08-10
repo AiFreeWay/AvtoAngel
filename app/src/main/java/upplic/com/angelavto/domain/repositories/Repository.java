@@ -7,6 +7,7 @@ import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
@@ -22,12 +23,12 @@ public interface Repository {
 
 
     Observable<CarTableEntity> upsertCarDB(Car car);
-    Observable<Integer> deleteCarDB(Car car);
+    void deleteCarDB(Car car);
     void updateCarDBFromNetwork(List<Car> cars);
 
     Observable<List<Car>> getCarsNetworkEmit();
     Observable<List<Car>> getCarsNetwork();
     Observable<UpsertCarResult> upsertCarNetwork(Car car);
-    Observable<Integer> deleteCarNetwork(Car car);
+    Observable<DeleteCarResult> deleteCarNetwork(Car car);
     Observable<Car> getCarDetailNetwork(int id);
 }

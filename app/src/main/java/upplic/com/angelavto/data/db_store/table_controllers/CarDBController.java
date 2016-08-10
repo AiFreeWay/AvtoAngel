@@ -24,8 +24,12 @@ public class CarDBController {
                 .toObservable();
     }
 
-    public Observable<Integer> deleteCar(Car car) {
-        return null;
+    public void deleteCar(Car car) {
+        mDataStore.delete(CarTableEntity.class)
+                .where(CarTableEntity.ID.eq(car.getId()))
+                .get()
+                .toSingle()
+                .subscribe();
     }
 
     public void updateCarDBFromNetwork(List<Car> cars) {
