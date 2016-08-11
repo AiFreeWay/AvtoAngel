@@ -30,7 +30,6 @@ public class AppMenuFactory {
     private void generateItems() {
         mMenu.add(MenuItems.AVTO.id, new AppMenuItem("Автомобили", R.drawable.ic_auto, null));
         mMenu.add(MenuItems.SHOP.id, new AppMenuItem("Купить трекер", R.drawable.ic_shop, new FragmentHandleMemento(FragmentsFactory.Fragments.BEACONS_SHOP, AbstractHundleMemento.MenuHandlers.FRAGMENT)));
-        mMenu.add(MenuItems.GARAGE.id, new AppMenuItem("Гараж", R.drawable.ic_garage, new FragmentHandleMemento(FragmentsFactory.Fragments.GARAGE, AbstractHundleMemento.MenuHandlers.FRAGMENT)));
         mMenu.add(MenuItems.ABOUT.id, new AppMenuItem("О программе", R.drawable.ic_about, new ActionHundleMemento(null, AbstractHundleMemento.MenuHandlers.ACTION)));
         mMenu.add(MenuItems.EXIT.id, new AppMenuItem("Выйти", R.drawable.ic_exit, new ActionHundleMemento(() -> getMaterialDialog().show(), AbstractHundleMemento.MenuHandlers.ACTION)));
     }
@@ -59,9 +58,8 @@ public class AppMenuFactory {
     public enum MenuItems {
         AVTO(0),
         SHOP(1),
-        GARAGE(2),
-        ABOUT(3),
-        EXIT(4);
+        ABOUT(2),
+        EXIT(3);
 
         public int id;
         MenuItems(int id) {

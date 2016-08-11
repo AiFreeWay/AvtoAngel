@@ -9,7 +9,6 @@ public class Car implements Serializable {
     private String title;
     private boolean status;
     private boolean record;
-    private boolean notification;
     private String trackerNumber;
     private int trackerType;
     private double lat;
@@ -18,21 +17,19 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(int id, String title, boolean status, boolean notification, String trackerNumber, int trackerType) {
+    public Car(int id, String title, boolean status, String trackerNumber, int trackerType) {
         this.id = id;
         this.title = title;
         this.status = status;
-        this.notification = notification;
         this.trackerNumber = trackerNumber;
         this.trackerType = trackerType;
     }
 
-    public Car(int id, String title, boolean status, boolean record, boolean notification, String trackerNumber, int trackerType) {
+    public Car(int id, String title, boolean status, boolean record, String trackerNumber, int trackerType) {
         this.id = id;
         this.title = title;
         this.status = status;
         this.record = record;
-        this.notification = notification;
         this.trackerNumber = trackerNumber;
         this.trackerType = trackerType;
     }
@@ -67,14 +64,6 @@ public class Car implements Serializable {
 
     public void setRecord(boolean record) {
         this.record = record;
-    }
-
-    public boolean isNotification() {
-        return notification;
-    }
-
-    public void setNotification(boolean notification) {
-        this.notification = notification;
     }
 
     public String getTrackerNumber() {

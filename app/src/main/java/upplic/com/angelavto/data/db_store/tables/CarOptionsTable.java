@@ -8,14 +8,12 @@ import io.requery.Key;
 import io.requery.Persistable;
 
 @Entity
-public interface CarTable extends Parcelable, Persistable {
+public interface CarOptionsTable extends Parcelable, Persistable {
 
     @Key
     int getId();
 
     String getTitle();
-    int getTrackerType();
-    String getTrackerNumber();
-    boolean getStatus();
     boolean getNotification();
+    long getEditDate();
 }

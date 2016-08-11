@@ -3,10 +3,10 @@ package upplic.com.angelavto.domain.repositories;
 import java.util.List;
 
 import rx.Observable;
-import rx.subjects.ReplaySubject;
-import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
+import upplic.com.angelavto.data.db_store.tables.CarOptionsTableEntity;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
@@ -22,7 +22,8 @@ public interface Repository {
     Observable<LoginResult> login(LoginDomain loginDomain);
 
 
-    Observable<CarTableEntity> upsertCarDB(Car car);
+    Observable<CarOptions> upsertCarDB(Car car);
+    Observable<List<CarOptions>> getCarsDB();
     void deleteCarDB(Car car);
     void updateCarDBFromNetwork(List<Car> cars);
 

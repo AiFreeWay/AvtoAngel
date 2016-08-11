@@ -6,8 +6,8 @@ import java.util.List;
 import io.requery.Persistable;
 import io.requery.rx.SingleEntityStore;
 import rx.Observable;
-import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
-import upplic.com.angelavto.data.mappers.CarMapper;
+import upplic.com.angelavto.data.db_store.tables.CarOptionsTableEntity;
+import upplic.com.angelavto.data.mappers.CarOptionsMapper;
 import upplic.com.angelavto.domain.models.Car;
 
 
@@ -19,14 +19,14 @@ public class CarDBController {
         mDataStore = dataStore;
     }
 
-    public Observable<CarTableEntity> upsertCar(Car car) {
-        return mDataStore.upsert(CarMapper.mapCarToDB(car))
+    public Observable<CarOptionsTableEntity> upsertCar(Car car) {
+        return mDataStore.upsert(CarOptionsMapper.mapCarOptions(car))
                 .toObservable();
     }
 
     public void deleteCar(Car car) {
-        mDataStore.delete(CarTableEntity.class)
-                .where(CarTableEntity.ID.eq(car.getId()))
+        mDataStore.delete(CarOptionsTableEntity.class)
+                .where(CarOptionsTableEntity.ID.eq(car.getId()))
                 .get()
                 .toSingle()
                 .subscribe();
@@ -34,13 +34,16 @@ public class CarDBController {
 
     public void updateCarDBFromNetwork(List<Car> cars) {
         for (Car car : cars)
-            mDataStore.update(CarTableEntity.class)
-                    .set(CarTableEntity.TITLE, car.getTitle())
-                    .set(CarTableEntity.TRACKER_NUMBER, car.getTrackerNumber())
-                    .set(CarTableEntity.TRACKER_TYPE, car.getTrackerType())
-                    .set(CarTableEntity.STATUS, car.isStatus())
+            mDataStore.update(CarOptionsTableEntity.class)
+                    .set(CarOptionsTableEntity.TITLE, car.getTitle())
                     .get()
                     .toSingle()
                     .subscribe();
+    }
+
+    public List<CarOptionsTableEntity> getCars() {
+        return mDataStore.select(CarOptionsTableEntity.class)
+                .get()
+                .toList();
     }
 }

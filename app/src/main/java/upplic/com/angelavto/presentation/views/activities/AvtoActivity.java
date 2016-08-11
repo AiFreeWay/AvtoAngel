@@ -19,12 +19,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.adapters.ViewPagerTabsAdapter;
 import upplic.com.angelavto.presentation.view_controllers.AcAvtoCtrl;
 
 public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
 
-    public static final String CAR_TAG = "carrr";
+    public static final String CAR_OPTIONS_TAG = "carrr";
 
     @BindView(R.id.ac_avto_toolbar)
     Toolbar mToolbar;
@@ -44,7 +45,7 @@ public class AvtoActivity extends BaseActivity<AcAvtoCtrl> {
         setContentView(R.layout.ac_auto);
         ButterKnife.bind(this);
         mViewController = new AcAvtoCtrl(this);
-        Car car  = (Car) getIntent().getSerializableExtra(CAR_TAG);
+        CarOptions car  = (CarOptions) getIntent().getSerializableExtra(CAR_OPTIONS_TAG);
         mCarId = car.getId();
         initToolbar();
         mAdapter = new ViewPagerTabsAdapter(getSupportFragmentManager(), mTlTabs, mVpBody);

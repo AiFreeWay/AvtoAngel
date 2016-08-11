@@ -12,6 +12,7 @@ import upplic.com.angelavto.domain.executors.DeleteCar;
 import upplic.com.angelavto.domain.executors.GetCarDetail;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetBeacons;
+import upplic.com.angelavto.domain.executors.GetCarsDB;
 import upplic.com.angelavto.domain.executors.Login;
 import upplic.com.angelavto.domain.executors.Registration;
 import upplic.com.angelavto.domain.executors.UpdateCar;
@@ -20,6 +21,7 @@ import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Beacon;
+import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
@@ -38,6 +40,7 @@ public class ActivityModule {
 
     public static final String GET_BEACONS = "getbeacons";
     public static final String GET_CARS = "getcars";
+    public static final String GET_CARS_DB = "getcarsdb";
     public static final String CREATE_CAR = "createcar";
     public static final String UPDATE_CAR = "updatecar";
     public static final String GET_CAR_DETAIL = "getcardetail";
@@ -94,6 +97,12 @@ public class ActivityModule {
     @Named(GET_CARS)
     public Interactor0<List<Car>> provideGetCars(GetCars getCars) {
         return getCars;
+    }
+
+    @Provides
+    @Named(GET_CARS_DB)
+    public Interactor0<List<CarOptions>> provideGetCarsDB(GetCarsDB getCarsDB) {
+        return getCarsDB;
     }
 
     @Provides

@@ -17,6 +17,7 @@ import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.mappers.CarMapper;
@@ -24,6 +25,7 @@ import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
+import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
 import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
@@ -42,6 +44,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     AppMenuFactory mAppMenuFactory;
     @Inject @Named(ActivityModule.GET_CARS)
     Interactor0<List<Car>> mGetCars;
+    @Inject @Named(ActivityModule.GET_CARS_DB)
+    Interactor0<List<CarOptions>> mGetCarsDB;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
@@ -59,7 +63,16 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     public void start() {
         mMenu = mAppMenuFactory.getMenu();
         checkCarsCount();
-        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.GARAGE));
+        mGetCarsDB.execute()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(cars -> {
+                    if (cars.size()>0)
+                        startAvtoActivity(getLatestCar(cars));
+                    else
+                        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));},
+                    e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
+
     }
 
     public void popBack() {
@@ -136,5 +149,19 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         List<AppMenuItem> carsAsMenuItems = CarMapper.mapCars(mRootView, cars);
         menues.get(AppMenuFactory.MenuItems.AVTO.id).setInsertedMenu(carsAsMenuItems);
         return menues;
+    }
+
+    private CarOptions getLatestCar(List<CarOptions> cars) {
+        CarOptions latestCar = new CarOptions();
+        for (CarOptions car : cars)
+            if (car.getEditDate()>latestCar.getEditDate())
+                latestCar = car;
+        return latestCar;
+    }
+
+    private void startAvtoActivity(CarOptions car) {
+        Intent intent = new Intent(mRootView, AvtoActivity.class);
+        intent.putExtra(AvtoActivity.CAR_OPTIONS_TAG, car);
+        mRootView.startActivity(intent);
     }
 }

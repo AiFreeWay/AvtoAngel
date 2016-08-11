@@ -3,9 +3,6 @@ package upplic.com.angelavto.data.db_store;
 
 import android.content.Context;
 import android.os.StrictMode;
-import android.util.Log;
-
-import java.util.List;
 
 import io.requery.Persistable;
 import io.requery.android.BuildConfig;
@@ -16,15 +13,8 @@ import io.requery.rx.SingleEntityStore;
 import io.requery.sql.Configuration;
 import io.requery.sql.EntityDataStore;
 import io.requery.sql.TableCreationMode;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 import upplic.com.angelavto.data.db_store.table_controllers.CarDBController;
-import upplic.com.angelavto.data.db_store.tables.CarTable;
-import upplic.com.angelavto.data.db_store.tables.CarTableEntity;
 import upplic.com.angelavto.data.db_store.tables.Schema;
-import upplic.com.angelavto.data.mappers.CarMapper;
-import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.presentation.app.AngelAvto;
 
 public class SqliteController {
 

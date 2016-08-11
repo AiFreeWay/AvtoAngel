@@ -9,6 +9,7 @@ import java.util.List;
 
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
 import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
@@ -31,7 +32,14 @@ public class CarMapper {
             drawable = R.drawable.ic_lock_red;
 
         Intent intent = new Intent(context, AvtoActivity.class);
-        intent.putExtra(AvtoActivity.CAR_TAG, car);
+        intent.putExtra(AvtoActivity.CAR_OPTIONS_TAG, mapCar(car));
         return new AppMenuItem(car.getTitle(), drawable, new ActivityHandleMemento(intent, AbstractHundleMemento.MenuHandlers.ACTIVITY));
+    }
+
+    private static CarOptions mapCar(Car car) {
+        CarOptions carOptions = new CarOptions();
+        carOptions.setId(car.getId());
+        carOptions.setTitle(car.getTitle());
+        return carOptions;
     }
 }

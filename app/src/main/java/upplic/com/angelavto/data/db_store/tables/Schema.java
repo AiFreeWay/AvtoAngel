@@ -18,7 +18,7 @@ public class Schema implements EntityModel {
 
     public Schema() {
         mTables = new HashMap<>();
-        mTables.put(CarTableEntity.class, CarTableEntity.$TYPE);
+        mTables.put(CarOptionsTableEntity.class, CarOptionsTableEntity.$TYPE);
     }
 
     @Override
