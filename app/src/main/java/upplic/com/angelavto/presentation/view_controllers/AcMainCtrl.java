@@ -97,14 +97,9 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         mRootView.driveMenu();
     }
 
-    public void hundleExpandAppMenuClick(AppMenuItem data) {
-        int groupPosition = mRootView.getAdapter().getGroupPosition(data);
-        ExpandableListView menu = mRootView.getLvMenu();
-        if (menu.isGroupExpanded(groupPosition))
-            menu.collapseGroup(groupPosition);
-        else
-            menu.expandGroup(groupPosition);
-
+    public void hundleExpandAppMenuClick() {
+        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
+        mRootView.driveMenu();
     }
 
 
@@ -140,7 +135,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         mGetCars.execute()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(cars -> mRootView.loadData(joinCarsAndMenuItems(mMenu, cars)),
+                .subscribe(cars -> { mRootView.loadData(joinCarsAndMenuItems(mMenu, cars));
+                            mRootView.getLvMenu().expandGroup(AppMenuFactory.MenuItems.AVTO.id);},
                         e -> { mRootView.loadData(mMenu);
                             Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString());});
     }

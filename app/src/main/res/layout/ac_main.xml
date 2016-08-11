@@ -27,6 +27,7 @@
             android:layout_gravity="start"
             android:background="@color/white"
             android:choiceMode="singleChoice"
+            android:labelFor="@drawable/ic_plus"
             android:groupIndicator="@null"
             android:dividerHeight="0dp"
             android:divider="@color/white" />

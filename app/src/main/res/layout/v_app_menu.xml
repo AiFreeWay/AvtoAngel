@@ -38,5 +38,5 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_arrow" />
+        android:src="@drawable/ic_plus" />
 </RelativeLayout>

@@ -44,7 +44,7 @@ public class AppMenuBinder implements AbstractExpannableBinder<AppMenuItem, AppM
         mTvTitle.setText(data.getTitle());
         if (data.getExpannableList().size() > 0) {
             mIvIndicator.setVisibility(View.VISIBLE);
-            view.setOnClickListener(v -> mViewController.hundleExpandAppMenuClick(data));
+            view.setOnClickListener(v -> mViewController.hundleExpandAppMenuClick());
         } else {
             view.setOnClickListener(v -> mViewController.hundleAppMenuClick(data));
             mIvIndicator.setVisibility(View.INVISIBLE);
