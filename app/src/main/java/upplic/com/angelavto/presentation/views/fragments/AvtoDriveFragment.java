@@ -1,6 +1,5 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +13,7 @@ import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.view_controllers.FmtAvtoDriveCtrl;
-import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
+
 
 public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
 
@@ -23,7 +22,7 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     @BindView(R.id.fmt_avto_drive_fbtn_edit)
     FloatingActionButton mFbtnEdit;
 
-    private AvtoActivity mActivty;
+    private AvtoFragment mParentFragment;
 
     @Nullable
     @Override
@@ -37,11 +36,11 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtAvtoDriveCtrl(this);
-        mActivty = (AvtoActivity) getBaseActivity();
+        mParentFragment = (AvtoFragment) getParentFragment();
         mFbtnEdit.setOnClickListener(v -> mViewController.openEditAvtoActivity());
     }
 
     public Car getCar() {
-        return mActivty.getCar();
+        return mParentFragment.getCar();
     }
 }

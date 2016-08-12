@@ -7,10 +7,8 @@ import com.orhanobut.hawk.Hawk;
 import javax.inject.Inject;
 
 import upplic.com.angelavto.presentation.factories.LoginViewPagerFactory;
-import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
-import upplic.com.angelavto.presentation.views.activities.SelectBeaconActivity;
 
 
 public class AcLoginCtrl extends ViewController<LoginActivity> {

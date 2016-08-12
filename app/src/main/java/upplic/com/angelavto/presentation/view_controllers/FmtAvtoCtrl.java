@@ -12,10 +12,10 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
-import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
+import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 
 
-public class AcAvtoCtrl extends ViewController<AvtoActivity> {
+public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
 
     @Inject @Named(ActivityModule.GET_CAR_DETAIL)
     Interactor1<Car, Integer> mGetCarDetal;
@@ -25,7 +25,7 @@ public class AcAvtoCtrl extends ViewController<AvtoActivity> {
 
     private AvtoViewPagerFactory mFactory;
 
-    public AcAvtoCtrl(AvtoActivity view) {
+    public FmtAvtoCtrl(AvtoFragment view) {
         super(view);
         mRootView.getActivityComponent()
                 .inject(this);
@@ -39,6 +39,6 @@ public class AcAvtoCtrl extends ViewController<AvtoActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mRootView::setCatDetail,
-                 e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcAvtoCtrl: start error "+e.toString()));
+                 e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: start error "+e.toString()));
     }
 }

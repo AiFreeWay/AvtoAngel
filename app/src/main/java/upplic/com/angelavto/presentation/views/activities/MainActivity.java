@@ -102,6 +102,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         mAdapter.loadData(menu);
     }
 
+    public Toolbar getToolbar() {
+        return mToolbar;
+    }
+
     private void initToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));

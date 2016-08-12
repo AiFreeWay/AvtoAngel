@@ -3,9 +3,9 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.ExpandableListView;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
-import upplic.com.angelavto.presentation.views.activities.AvtoActivity;
+import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
 import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
@@ -68,7 +68,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cars -> {
                     if (cars.size()>0)
-                        startAvtoActivity(getLatestCar(cars));
+                        startAvtoFragment(getLatestCar(cars));
                     else
                         mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));},
                     e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
@@ -155,9 +155,9 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         return latestCar;
     }
 
-    private void startAvtoActivity(CarOptions car) {
-        Intent intent = new Intent(mRootView, AvtoActivity.class);
-        intent.putExtra(AvtoActivity.CAR_OPTIONS_TAG, car);
-        mRootView.startActivity(intent);
+    private void startAvtoFragment(CarOptions car) {
+        Fragment fragment = mFragmentsFactory.getFragment(FragmentsFactory.Fragments.AVTO);
+        fragment.getArguments().putSerializable(AvtoFragment.CAR_OPTIONS_TAG, car);
+        mRouter.show(fragment);
     }
 }

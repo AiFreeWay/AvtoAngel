@@ -5,29 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/ac_avto_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="?attr/colorAccent" />
-
     <android.support.design.widget.TabLayout
-        android:id="@+id/ac_avto_tl_tabs"
+        android:id="@+id/fmt_avto_tl_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorAccent"
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/gray_box"
-        android:layout_below="@+id/ac_avto_toolbar"
+        android:layout_below="@+id/fmt_avto_toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/ac_avto_vp_body"
+        android:id="@+id/fmt_avto_vp_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ac_avto_tl_tabs"
+        android:layout_below="@+id/fmt_avto_tl_tabs"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
