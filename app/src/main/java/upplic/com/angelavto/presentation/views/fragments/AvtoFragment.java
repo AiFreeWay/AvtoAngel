@@ -94,7 +94,7 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         return mCar;
     }
 
-    public int getCarId() {
-        return mCarOptions.getId();
+    public CarOptions getCarOptions() {
+        return mCarOptions;
     }
 }
