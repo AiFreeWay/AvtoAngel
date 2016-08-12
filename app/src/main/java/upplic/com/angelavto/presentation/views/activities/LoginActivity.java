@@ -19,6 +19,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
 
     public static final int GET_CODE_SLIDE_POSITION = 1;
     public static final String API_KEY_TAG = "apikey";
+    public static final String FIRTS_START = "first_start";
 
     @BindView(R.id.ac_login_vp_body)
     ViewPager mVpBody;

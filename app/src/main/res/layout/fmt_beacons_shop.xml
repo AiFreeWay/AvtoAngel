@@ -50,7 +50,7 @@
 
     <include
         android:id="@+id/include_footer"
-        layout="@layout/v_beacon_footer"
+        layout="@layout/v_beacon_shop_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

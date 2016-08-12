@@ -1,13 +1,11 @@
 package upplic.com.angelavto.presentation.factories;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
-import upplic.com.angelavto.presentation.views.fragments.BeaconsFragment;
 import upplic.com.angelavto.presentation.views.fragments.BeaconsShopFragment;
 import upplic.com.angelavto.presentation.views.fragments.CreateCarFragment;
 import upplic.com.angelavto.presentation.views.fragments.SelectBeaconFragment;
@@ -23,7 +21,6 @@ public class FragmentsFactory {
     }
 
     private void generateFragments() {
-        mFragmentsList.add(Fragments.BEACONS.id, new BeaconsFragment());
         mFragmentsList.add(Fragments.BEACONS_SHOP.id, new BeaconsShopFragment());
         mFragmentsList.add(Fragments.SELECT_BEACON.id, new SelectBeaconFragment());
         mFragmentsList.add(Fragments.CRAETE_CAR.id, new CreateCarFragment());
@@ -41,11 +38,10 @@ public class FragmentsFactory {
     }
 
     public enum Fragments {
-        BEACONS(0),
-        BEACONS_SHOP(1),
-        SELECT_BEACON(2),
-        CRAETE_CAR(3),
-        AVTO(4);
+        BEACONS_SHOP(0),
+        SELECT_BEACON(1),
+        CRAETE_CAR(2),
+        AVTO(3);
 
         public int id;
         Fragments(int id) {

@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 
+import com.orhanobut.hawk.Hawk;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,6 +27,7 @@ import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
+import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
@@ -61,6 +64,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     @Override
     public void start() {
+        Hawk.put(LoginActivity.FIRTS_START, true);
         mMenu = mAppMenuFactory.getMenu();
         checkCarsCount();
         mGetCarsDB.execute()

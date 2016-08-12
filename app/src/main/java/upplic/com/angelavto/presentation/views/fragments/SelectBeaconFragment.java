@@ -17,6 +17,8 @@ public class SelectBeaconFragment extends BaseFragment<FmtSelectBeaconController
 
     @BindView(R.id.v_select_beacon_btn_select_beacon)
     Button mBtnSelectBeacon;
+    @BindView(R.id.v_select_beacon_btn_open_shop)
+    Button mBtnOpenShop;
 
     @Nullable
     @Override
@@ -30,7 +32,8 @@ public class SelectBeaconFragment extends BaseFragment<FmtSelectBeaconController
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtSelectBeaconController(this);
-        mBtnSelectBeacon.setOnClickListener(v -> mViewController.openToBeaconsFragment());
+        mBtnSelectBeacon.setOnClickListener(v -> mViewController.startMainActivity());
+        mBtnSelectBeacon.setOnClickListener(v -> mViewController.showBeaconsShopFragment());
         mViewController.start();
     }
 }
