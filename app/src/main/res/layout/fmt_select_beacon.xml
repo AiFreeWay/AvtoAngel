@@ -44,12 +44,12 @@
         android:textAllCaps="false"
         android:textColor="@color/grideperlevy"
         android:textSize="15sp"
-        android:layout_above="@+id/v_select_beacon_btn_select_beacon"
-        android:layout_alignLeft="@+id/v_select_beacon_btn_select_beacon"
-        android:layout_alignStart="@+id/v_select_beacon_btn_select_beacon" />
+        android:layout_above="@+id/v_select_beacon_btn_start_app"
+        android:layout_alignLeft="@+id/v_select_beacon_btn_start_app"
+        android:layout_alignStart="@+id/v_select_beacon_btn_start_app" />
 
     <Button
-        android:id="@+id/v_select_beacon_btn_select_beacon"
+        android:id="@+id/v_select_beacon_btn_start_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_green_button"

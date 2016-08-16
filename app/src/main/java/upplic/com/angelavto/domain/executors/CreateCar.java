@@ -44,7 +44,7 @@ public class CreateCar implements Interactor1<UpsertCarResult, Car> {
                 .subscribe(cars -> {
                     for (Car carNetwork : cars)
                         if ((car.getTitle().equals(carNetwork.getTitle()))) {
-                            mRepository.upsertCarDB(carNetwork).subscribe();
+                            mRepository.upsertCarOptions(carNetwork);
                             break;}})
                 .unsubscribe();
     }

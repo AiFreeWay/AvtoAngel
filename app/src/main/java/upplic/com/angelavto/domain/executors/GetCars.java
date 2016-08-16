@@ -22,8 +22,7 @@ public class GetCars implements Interactor0<List<Car>> {
     @Override
     public Observable<List<Car>> execute() {
         return mRepository.getCarsNetworkEmit()
-                .map(cars -> {
-                    mRepository.updateCarDBFromNetwork(cars);
+                .map(cars -> { mRepository.updateCarOptionsFromNetwork(cars);
                     return cars;})
                 .cache();
     }

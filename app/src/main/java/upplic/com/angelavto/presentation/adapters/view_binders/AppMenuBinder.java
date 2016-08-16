@@ -42,13 +42,11 @@ public class AppMenuBinder implements AbstractExpannableBinder<AppMenuItem, AppM
         ButterKnife.bind(this, view);
         mIvIcon.setImageDrawable(getDrawable(data.getDrawable()));
         mTvTitle.setText(data.getTitle());
-        if (data.getExpannableList().size() > 0) {
+        if (data.getExpannableList().size() > 0)
             mIvIndicator.setVisibility(View.VISIBLE);
-            view.setOnClickListener(v -> mViewController.hundleExpandAppMenuClick());
-        } else {
-            view.setOnClickListener(v -> mViewController.hundleAppMenuClick(data));
+        else
             mIvIndicator.setVisibility(View.INVISIBLE);
-        }
+        view.setOnClickListener(v -> mViewController.hundleAppMenuClick(data));
         return view;
     }
 

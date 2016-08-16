@@ -20,7 +20,7 @@ public class GetCarDetail implements Interactor1<Car, Integer> {
     @Override
     public Observable<Car> execute(Integer data) {
         return mRepository.getCarDetailNetwork(data)
-                .map(car -> { mRepository.upsertCarDB(car).subscribe();
+                .map(car -> { mRepository.updateCarOptionsEditTime(data);
                         return car;});
     }
 }

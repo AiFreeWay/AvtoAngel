@@ -44,6 +44,7 @@
         android:layout_centerVertical="true"
         android:text="@string/cant_load_data"
         android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/gray_box"
         android:textSize="26sp"
         android:visibility="invisible" />

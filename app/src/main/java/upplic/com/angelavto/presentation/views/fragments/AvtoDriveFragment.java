@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.view_controllers.FmtAvtoDriveCtrl;
 
 
@@ -32,8 +33,6 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     Button mBtnNotification;
     @BindView(R.id.fmt_avto_drive_btn_update)
     Button mBtnUpdate;
-    @BindView(R.id.fmt_avto_drive_btn_show_on_map)
-    Button mBtnShowOnMap;
 
     private int mColorMarron;
     private int mColorGreen;
@@ -56,20 +55,39 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         mColorMarron = ContextCompat.getColor(getContext(), R.color.marron);
         mColorGreen = ContextCompat.getColor(getContext(), R.color.green_jungle_krayola);
         mFbtnEdit.setOnClickListener(v -> mViewController.openEditAvtoActivity());
+        mBtnStatus.setOnClickListener(v -> mViewController.changeState());
+        mBtnNotification.setOnClickListener(v -> mViewController.changeNotification());
+        mBtnUpdate.setOnClickListener(v -> refresh());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        notifyFragment();
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        mParentFragment.refresh();
     }
 
     public Car getCar() {
         return mParentFragment.getCar();
     }
 
-    public void notifyFragment() {
-        initStatusButton();
-        initNotificationButton();
-        initUpdateButton();
-        initShowOnMapButton();
+    public CarOptions getCarOptions() {
+        return mParentFragment.getCarOptions();
     }
 
-    private void initStatusButton() {
+    public void notifyFragment() {
+        if (getCar() != null) {
+            initStatusButton();
+            initNotificationButton();
+        }
+    }
+
+    public void initStatusButton() {
         mBtnStatus.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button));
         if (mParentFragment.getCar().isStatus()) {
             mBtnStatus.setTextColor(mColorGreen);
@@ -79,7 +97,7 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
             mBtnStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock_red, 0, 0, 0);
         }
     }
-    private void initNotificationButton() {
+    public void initNotificationButton() {
         mBtnNotification.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button));
         if (mParentFragment.getCarOptions().isNotification()) {
             mBtnNotification.setTextColor(mColorGreen);
@@ -89,15 +107,4 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
             mBtnNotification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_notifications_red, 0, 0, 0);
         }
     }
-
-    private void initUpdateButton() {
-        mBtnUpdate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button));
-        mBtnUpdate.setTextColor(Color.WHITE);
-        mBtnUpdate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_update_white, 0, 0, 0);
-    }
-    private void initShowOnMapButton() {
-        mBtnShowOnMap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_green_button));
-        mBtnShowOnMap.setTextColor(Color.WHITE);
-    }
-
 }

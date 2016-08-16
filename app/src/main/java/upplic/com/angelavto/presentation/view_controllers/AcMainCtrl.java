@@ -47,8 +47,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     AppMenuFactory mAppMenuFactory;
     @Inject @Named(ActivityModule.GET_CARS)
     Interactor0<List<Car>> mGetCars;
-    @Inject @Named(ActivityModule.GET_CARS_DB)
-    Interactor0<List<CarOptions>> mGetCarsDB;
+    @Inject @Named(ActivityModule.GET_CAR_OPTIONS)
+    Interactor0<List<CarOptions>> mGetCarsOptions;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
@@ -67,16 +67,6 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         Hawk.put(LoginActivity.FIRTS_START, true);
         mMenu = mAppMenuFactory.getMenu();
         checkCarsCount();
-        mGetCarsDB.execute()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(cars -> {
-                    if (cars.size()>0)
-                        startAvtoFragment(getLatestCar(cars));
-                    else
-                        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));},
-                    e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString()));
-
     }
 
     public void popBack() {
@@ -98,11 +88,6 @@ public class AcMainCtrl extends ViewController<MainActivity> {
             ActivityHandleMemento activityHandleMemento = (ActivityHandleMemento) hundleMemento;
             hundleActivity(activityHandleMemento);
         }
-        mRootView.driveMenu();
-    }
-
-    public void hundleExpandAppMenuClick() {
-        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
         mRootView.driveMenu();
     }
 
@@ -139,16 +124,31 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         mGetCars.execute()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(cars -> { mRootView.loadData(joinCarsAndMenuItems(mMenu, cars));
-                            mRootView.getLvMenu().expandGroup(AppMenuFactory.MenuItems.AVTO.id);},
-                        e -> { mRootView.loadData(mMenu);
+                .subscribe(this::showStartFragment,
+                        e -> {showStartFragment(null);
                             Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString());});
     }
 
-    private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars) {
-        List<AppMenuItem> carsAsMenuItems = CarMapper.mapCars(mRootView, cars);
+    private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars, List<CarOptions> carOptionses) {
+        List<AppMenuItem> carsAsMenuItems = CarMapper.mapCars(mRootView, cars, carOptionses);
         menues.get(AppMenuFactory.MenuItems.AVTO.id).setInsertedMenu(carsAsMenuItems);
         return menues;
+    }
+
+    private void showStartFragment(List<Car> cars) {
+        mGetCarsOptions.execute()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(carOptionses -> {
+                            mRootView.loadData(joinCarsAndMenuItems(mMenu, cars, carOptionses));
+                            mRootView.getLvMenu().expandGroup(AppMenuFactory.MenuItems.AVTO.id);
+                            if (cars.size()>0)
+                                startAvtoFragment(getLatestCar(carOptionses));
+                            else
+                                mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));},
+                        e -> { mRootView.loadData(mMenu);
+                            mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString());});
     }
 
     private CarOptions getLatestCar(List<CarOptions> cars) {

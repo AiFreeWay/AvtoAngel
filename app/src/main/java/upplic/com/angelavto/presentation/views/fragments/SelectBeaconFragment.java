@@ -15,8 +15,8 @@ import upplic.com.angelavto.presentation.view_controllers.FmtSelectBeaconControl
 
 public class SelectBeaconFragment extends BaseFragment<FmtSelectBeaconController> {
 
-    @BindView(R.id.v_select_beacon_btn_select_beacon)
-    Button mBtnSelectBeacon;
+    @BindView(R.id.v_select_beacon_btn_start_app)
+    Button mBtnStartApp;
     @BindView(R.id.v_select_beacon_btn_open_shop)
     Button mBtnOpenShop;
 
@@ -32,8 +32,8 @@ public class SelectBeaconFragment extends BaseFragment<FmtSelectBeaconController
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtSelectBeaconController(this);
-        mBtnSelectBeacon.setOnClickListener(v -> mViewController.startMainActivity());
-        mBtnSelectBeacon.setOnClickListener(v -> mViewController.showBeaconsShopFragment());
+        mBtnStartApp.setOnClickListener(v -> mViewController.startMainActivity());
+        mBtnOpenShop.setOnClickListener(v -> mViewController.showBeaconsShopFragment());
         mViewController.start();
     }
 }

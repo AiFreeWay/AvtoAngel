@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     ProgressView mPvProgress;
     @BindView(R.id.fmt_create_car_spn_beacon_type)
     Spinner mSpnBeaconType;
+    @BindView(R.id.fmt_create_car_srl_swipe)
+    SwipeRefreshLayout mSrlSwipe;
 
     private PhoneNumberTextWatcher mPhoneNumberMask;
     private int mColorOnButtonEnabled;
@@ -65,6 +68,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
         mEtPhone.addTextChangedListener(mPhoneNumberMask);
         mBtnCreateCar.setOnClickListener(v -> doOnCreateCar());
+        mSrlSwipe.setOnRefreshListener(this::refresh);
         mViewController.start();
     }
 
@@ -76,6 +80,13 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         } catch (NullPointerException e) {
 
         }
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        getBaseActivity().refresh();
+        mViewController.start();
     }
 
     public void truncateFields() {

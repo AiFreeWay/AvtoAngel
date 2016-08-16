@@ -32,6 +32,10 @@ public abstract class BaseActivity<VC> extends AppCompatActivity {
         return mComponent;
     }
 
+    public void refresh() {
+
+    }
+
     public VC getViewController() {
         return mViewController;
     }

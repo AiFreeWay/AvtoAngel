@@ -25,4 +25,8 @@ public abstract class BaseFragment<VC> extends Fragment {
     public ActivityComponent getActivityComponent() {
         return getBaseActivity().getActivityComponent();
     }
+
+    public void refresh() {
+
+    }
 }

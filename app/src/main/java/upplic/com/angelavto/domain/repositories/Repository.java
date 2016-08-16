@@ -21,11 +21,13 @@ public interface Repository {
     Observable<RegistrationResult> registration(RegistrationDomain registrationDomain);
     Observable<LoginResult> login(LoginDomain loginDomain);
 
-
-    Observable<CarOptions> upsertCarDB(Car car);
-    Observable<List<CarOptions>> getCarsDB();
-    void deleteCarDB(Car car);
-    void updateCarDBFromNetwork(List<Car> cars);
+    Observable<CarOptions> updateCarOptions(CarOptions carOptions);
+    Observable<List<CarOptions>> getCarsOptions();
+    void upsertCarOptions(Car car);
+    void updateCarOptionsEditTime(int id);
+    void deleteCarOptions(int id);
+    void  deleteAllCarOptions();
+    void updateCarOptionsFromNetwork(List<Car> cars);
 
     Observable<List<Car>> getCarsNetworkEmit();
     Observable<List<Car>> getCarsNetwork();

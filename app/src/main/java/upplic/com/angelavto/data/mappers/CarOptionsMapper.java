@@ -1,6 +1,8 @@
 package upplic.com.angelavto.data.mappers;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,15 @@ public class CarOptionsMapper {
         return carDB;
     }
 
+    public static CarOptionsTableEntity mapCarOptions(CarOptions carOptions) {
+        CarOptionsTableEntity carDB = new CarOptionsTableEntity();
+        carDB.setId(carOptions.getId());
+        carDB.setTitle(carOptions.getTitle());
+        carDB.setNotification(carOptions.isNotification());
+        carDB.setEditDate(System.nanoTime());
+        return carDB;
+    }
+
     public static List<CarOptions> mapCarOptions(List<CarOptionsTableEntity> carsFromDB) {
         List<CarOptions> cars = new ArrayList<>();
         for (CarOptionsTableEntity car : carsFromDB)
@@ -30,6 +41,7 @@ public class CarOptionsMapper {
         carOptions.setId(carDB.getId());
         carOptions.setTitle(carDB.getTitle());
         carOptions.setEditDate(carDB.getEditDate());
+        carOptions.setNotification(carDB.getNotification());
         return carOptions;
     }
 }

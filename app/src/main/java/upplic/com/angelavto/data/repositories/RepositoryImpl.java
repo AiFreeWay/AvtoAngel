@@ -12,8 +12,7 @@ import javax.inject.Singleton;
 import rx.Observable;
 import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.SqliteController;
-import upplic.com.angelavto.data.db_store.table_controllers.CarDBController;
-import upplic.com.angelavto.data.db_store.tables.CarOptionsTableEntity;
+import upplic.com.angelavto.data.db_store.table_controllers.CarOptionsDBController;
 import upplic.com.angelavto.data.mappers.BeaconsMapper;
 import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mappers.CarOptionsMapper;
@@ -38,12 +37,12 @@ public class RepositoryImpl implements Repository {
 
     private NetworkController mNetworkController;
     private ReplaySubject<List<Car>> mCarSubject;
-    private CarDBController mCarDBController;
+    private CarOptionsDBController mCarOptionsDBController;
 
     @Inject
     public RepositoryImpl(Context context) {
         SqliteController dBStore = new SqliteController(context);
-        mCarDBController = dBStore.getCarDBController();
+        mCarOptionsDBController = dBStore.getCarDBController();
         mNetworkController = new NetworkController();
         mCarSubject = ReplaySubject.create();
     }
@@ -52,6 +51,42 @@ public class RepositoryImpl implements Repository {
     public Observable<List<Beacon>> getBeacons() {
         return mNetworkController.getBeacons()
                 .flatMap(beaconsResponse -> Observable.just(BeaconsMapper.mapBeacons(beaconsResponse)));
+    }
+
+    @Override
+    public void upsertCarOptions(Car car) {
+        mCarOptionsDBController.upsertCarOptionsFromNetwork(car);
+    }
+
+    @Override
+    public void updateCarOptionsEditTime(int id) {
+        mCarOptionsDBController.updateCarOptionsEditTime(id);
+    }
+
+    @Override
+    public Observable<CarOptions> updateCarOptions(CarOptions carOptions) {
+        return mCarOptionsDBController.updateCarOptions(carOptions)
+                .flatMap(carOptionsTableEntity -> Observable.just(CarOptionsMapper.mapCarOptions(carOptionsTableEntity)));
+    }
+
+    @Override
+    public Observable<List<CarOptions>> getCarsOptions() {
+        return Observable.just(CarOptionsMapper.mapCarOptions(mCarOptionsDBController.getCarOptions()));
+    }
+
+    @Override
+    public void updateCarOptionsFromNetwork(List<Car> cars) {
+        mCarOptionsDBController.upsertCarOptionsFromNetwork(cars);
+    }
+
+    @Override
+    public void deleteCarOptions(int id) {
+        mCarOptionsDBController.deleteCarOptions(id);
+    }
+
+    @Override
+    public void deleteAllCarOptions() {
+        mCarOptionsDBController.deleteAllCarOptions();
     }
 
     @Override
@@ -74,27 +109,6 @@ public class RepositoryImpl implements Repository {
     public Observable<Car> getCarDetailNetwork(int id) {
         return mNetworkController.getCarDetail(getToken(), id)
                 .flatMap(getCarDetailResponse -> Observable.just(CarMapper.mapCarDetailFromNetwork(getCarDetailResponse)));
-    }
-
-    @Override
-    public Observable<CarOptions> upsertCarDB(Car car) {
-        return mCarDBController.upsertCar(car)
-                .flatMap(carOptionsTableEntity -> Observable.just(CarOptionsMapper.mapCarOptions(carOptionsTableEntity)));
-    }
-
-    @Override
-    public Observable<List<CarOptions>> getCarsDB() {
-        return Observable.just(CarOptionsMapper.mapCarOptions(mCarDBController.getCars()));
-    }
-
-    @Override
-    public void deleteCarDB(Car car) {
-        mCarDBController.deleteCar(car);
-    }
-
-    @Override
-    public void updateCarDBFromNetwork(List<Car> cars) {
-        mCarDBController.updateCarDBFromNetwork(cars);
     }
 
     @Override

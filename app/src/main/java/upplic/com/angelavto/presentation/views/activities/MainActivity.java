@@ -75,6 +75,12 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         return true;
     }
 
+    @Override
+    public void refresh() {
+        super.refresh();
+        mViewController.start();
+    }
+
     public int getFragmentsBodyResId() {
         return R.id.ac_main_fl_fragments;
     }

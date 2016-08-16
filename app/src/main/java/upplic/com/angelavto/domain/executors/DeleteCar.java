@@ -23,7 +23,7 @@ public class DeleteCar implements Interactor1<DeleteCarResult, Car> {
     public Observable<DeleteCarResult> execute(Car data) {
         return mRepository.deleteCarNetwork(data)
                 .map(deleteCarResult -> {
-                    mRepository.deleteCarDB(data);
+                    mRepository.deleteCarOptions(data.getId());
                     mRepository.getCarsNetworkEmit().subscribe();
                     return deleteCarResult;});
     }

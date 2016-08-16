@@ -21,7 +21,8 @@ public class SelectBeaconActivity extends BaseActivity<AcSelectBeaconCtrl> {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        finish();
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+            mViewController.popBack();
         return true;
     }
 

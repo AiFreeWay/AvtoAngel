@@ -20,29 +20,29 @@ import upplic.com.angelavto.presentation.wrappers.FragmentHandleMemento;
 
 public class CarMapper {
 
-    public static List<AppMenuItem> mapCars(Context context, List<Car> cars) {
+    public static List<AppMenuItem> mapCars(Context context, List<Car> cars, List<CarOptions> carOptionses) {
         ArrayList<AppMenuItem> joinMenu = new ArrayList<AppMenuItem>();
         for (Car car : cars)
-            joinMenu.add(mapCars(context, car));
+            joinMenu.add(mapCars(context, car, carOptionses));
         return joinMenu;
     }
 
-    public static AppMenuItem mapCars(Context context, Car car) {
+    public static AppMenuItem mapCars(Context context, Car car, List<CarOptions> carOptionses) {
         int drawable;
         if (car.isStatus())
             drawable = R.drawable.ic_lock_green;
         else
             drawable = R.drawable.ic_lock_red;
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(AvtoFragment.CAR_OPTIONS_TAG, mapCar(car));
-        return new AppMenuItem(car.getTitle(), drawable, new FragmentHandleMemento(FragmentsFactory.Fragments.AVTO, bundle, AbstractHundleMemento.MenuHandlers.FRAGMENT));
-    }
+        CarOptions findedCarOptions = null;
+        for (CarOptions carOptions : carOptionses)
+            if (carOptions.getId() == car.getId()) {
+                findedCarOptions = carOptions;
+                break;
+            }
 
-    private static CarOptions mapCar(Car car) {
-        CarOptions carOptions = new CarOptions();
-        carOptions.setId(car.getId());
-        carOptions.setTitle(car.getTitle());
-        return carOptions;
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AvtoFragment.CAR_OPTIONS_TAG, findedCarOptions);
+        return new AppMenuItem(car.getTitle(), drawable, new FragmentHandleMemento(FragmentsFactory.Fragments.AVTO, bundle, AbstractHundleMemento.MenuHandlers.FRAGMENT));
     }
 }

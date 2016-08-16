@@ -97,4 +97,10 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
     public CarOptions getCarOptions() {
         return mCarOptions;
     }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        mViewController.initCarDetail();
+    }
 }

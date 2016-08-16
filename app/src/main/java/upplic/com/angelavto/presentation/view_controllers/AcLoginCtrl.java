@@ -2,6 +2,7 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import com.orhanobut.hawk.Hawk;
 

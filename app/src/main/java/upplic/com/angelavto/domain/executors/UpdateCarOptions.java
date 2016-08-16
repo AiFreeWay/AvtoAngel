@@ -1,25 +1,24 @@
 package upplic.com.angelavto.domain.executors;
 
+
 import javax.inject.Inject;
 
 import rx.Observable;
 import upplic.com.angelavto.domain.interactors.Interactor1;
-import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.domain.models.UpsertCarResult;
+import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.domain.repositories.Repository;
 
-
-public class UpdateCar implements Interactor1<UpsertCarResult, Car> {
+public class UpdateCarOptions implements Interactor1<CarOptions, CarOptions> {
 
     private Repository mRepository;
 
     @Inject
-    public UpdateCar(Repository repository){
+    public UpdateCarOptions(Repository repository){
         mRepository = repository;
     }
 
     @Override
-    public Observable<UpsertCarResult> execute(Car data) {
-        return mRepository.upsertCarNetwork(data);
+    public Observable<CarOptions> execute(CarOptions data) {
+        return mRepository.updateCarOptions(data);
     }
 }
