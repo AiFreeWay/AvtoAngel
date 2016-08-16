@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import upplic.com.angelavto.domain.executors.CheckKey;
 import upplic.com.angelavto.domain.executors.CreateCar;
 import upplic.com.angelavto.domain.executors.DeleteAllCarOptions;
 import upplic.com.angelavto.domain.executors.DeleteCar;
@@ -50,6 +51,7 @@ public class ActivityModule {
     public static final String REGISTRATION = "registration";
     public static final String LOGIN = "login";
     public static final String DELETE_ALL_CAR_OPTIONS = "deleteallcaroptions";
+    public static final String CHECK_KEY = "checkkey";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -154,5 +156,11 @@ public class ActivityModule {
     @Named(LOGIN)
     public Interactor1<LoginResult, LoginDomain> provaideLogin(Login login) {
         return login;
+    }
+
+    @Provides
+    @Named(CHECK_KEY)
+    public Interactor0<Boolean> provideCheckKey(CheckKey checkKey) {
+        return checkKey;
     }
 }

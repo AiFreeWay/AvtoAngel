@@ -1,5 +1,6 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,8 +40,6 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     ProgressView mPvProgress;
     @BindView(R.id.fmt_create_car_spn_beacon_type)
     Spinner mSpnBeaconType;
-    @BindView(R.id.fmt_create_car_srl_swipe)
-    SwipeRefreshLayout mSrlSwipe;
 
     private PhoneNumberTextWatcher mPhoneNumberMask;
     private int mColorOnButtonEnabled;
@@ -68,7 +67,6 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
         mEtPhone.addTextChangedListener(mPhoneNumberMask);
         mBtnCreateCar.setOnClickListener(v -> doOnCreateCar());
-        mSrlSwipe.setOnRefreshListener(this::refresh);
         mViewController.start();
     }
 
@@ -81,6 +79,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
 
         }
     }
+
 
     @Override
     public void refresh() {

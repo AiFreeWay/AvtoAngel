@@ -13,6 +13,7 @@ import upplic.com.angelavto.presentation.view_controllers.FmtAvtoDriveCtrl;
 import upplic.com.angelavto.presentation.view_controllers.FmtBeaconsShopCtrl;
 import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
 import upplic.com.angelavto.presentation.view_controllers.FmtGetCodeCtrl;
+import upplic.com.angelavto.presentation.view_controllers.FmtMapCtrl;
 import upplic.com.angelavto.presentation.view_controllers.FmtSelectBeaconController;
 
 
@@ -30,4 +31,5 @@ public interface ActivityComponent {
     void inject(AcEditAvtoCtrl viewController);
     void inject(FmtGetCodeCtrl viewController);
     void inject(FmtAvtoDriveCtrl viewController);
+    void inject(FmtMapCtrl viewController);
 }

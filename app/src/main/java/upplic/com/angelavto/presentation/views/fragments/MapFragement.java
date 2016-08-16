@@ -16,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.di.components.ActivityComponent;
 import upplic.com.angelavto.presentation.view_controllers.FmtMapCtrl;
 import upplic.com.angelavto.presentation.views.activities.BaseActivity;
@@ -26,6 +27,7 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
     MapView mMvMap;
 
     private GoogleMap mMap;
+    private AvtoFragment mParentFragment;
 
     @Nullable
     @Override
@@ -38,9 +40,16 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mParentFragment = (AvtoFragment) getParentFragment();
         mViewController = new FmtMapCtrl(this);
         mMvMap.onCreate(savedInstanceState);
         mMvMap.getMapAsync(this::startMap);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mViewController.stop();
     }
 
     @Override
@@ -69,6 +78,10 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
 
     public GoogleMap getMap() {
         return mMap;
+    }
+
+    public Car getCar() {
+        return mParentFragment.getCar();
     }
 
     private void startMap(GoogleMap map) {

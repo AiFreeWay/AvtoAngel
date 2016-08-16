@@ -1,11 +1,15 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
 
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;

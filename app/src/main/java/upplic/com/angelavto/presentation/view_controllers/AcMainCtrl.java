@@ -49,6 +49,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     Interactor0<List<Car>> mGetCars;
     @Inject @Named(ActivityModule.GET_CAR_OPTIONS)
     Interactor0<List<CarOptions>> mGetCarsOptions;
+    @Inject @Named(ActivityModule.CHECK_KEY)
+    Interactor0<Boolean> mCheckKey;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
@@ -64,6 +66,13 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     @Override
     public void start() {
+        mCheckKey.execute()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            if (!result)
+                                mRootView.showDialog();},
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
         Hawk.put(LoginActivity.FIRTS_START, true);
         mMenu = mAppMenuFactory.getMenu();
         checkCarsCount();

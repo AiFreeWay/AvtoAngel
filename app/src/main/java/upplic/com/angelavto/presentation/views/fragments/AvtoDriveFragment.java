@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
 
     public void initStatusButton() {
         mBtnStatus.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button));
-        if (mParentFragment.getCar().isStatus()) {
+        if (getCar().isStatus()) {
             mBtnStatus.setTextColor(mColorGreen);
             mBtnStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock_green, 0, 0, 0);
         } else {
@@ -99,7 +100,7 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     }
     public void initNotificationButton() {
         mBtnNotification.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button));
-        if (mParentFragment.getCarOptions().isNotification()) {
+        if (getCarOptions().isNotification()) {
             mBtnNotification.setTextColor(mColorGreen);
             mBtnNotification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_notifications_green, 0, 0, 0);
         } else {

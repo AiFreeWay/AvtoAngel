@@ -54,8 +54,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
                     String message = "Настройки для '"+car.getTitle()+"' изменены.";
-                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
-                    mRootView.initStatusButton();})
+                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
     }

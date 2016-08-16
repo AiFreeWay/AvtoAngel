@@ -112,6 +112,12 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Observable<Boolean> checkKey() {
+        return mNetworkController.checkKey(getToken())
+                .flatMap(checkKeyResponse -> Observable.just(checkKeyResponse.getResult()));
+    }
+
+    @Override
     public Observable<List<Car>> getCarsNetworkEmit() {
         return mNetworkController.getCars(getToken())
                 .flatMap(getCarsResponse -> {

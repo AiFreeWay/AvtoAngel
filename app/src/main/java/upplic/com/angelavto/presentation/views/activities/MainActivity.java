@@ -15,6 +15,8 @@ import android.widget.ListView;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
+import com.orhanobut.hawk.Hawk;
+import com.rey.material.app.Dialog;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     private MaterialMenuIconToolbar mMenuDrawer;
     private MultyExListViewAdapter<AppMenuItem, AppMenuItem> mAdapter;
+    private Dialog mRestartDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,16 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         setContentView(R.layout.ac_main);
         ButterKnife.bind(this);
         initToolbar();
+        mRestartDialog = new Dialog(this, R.style.login_dialog)
+                .title(R.string.token_bad)
+                .titleColor(ContextCompat.getColor(this, R.color.slate_gray))
+                .positiveActionTextColor(ContextCompat.getColor(this, R.color.green_jungle_krayola))
+                .cancelable(false)
+                .positiveAction(R.string.exit)
+                .positiveActionClickListener(v -> {
+                    Hawk.remove(LoginActivity.API_KEY_TAG);
+                    Hawk.remove(LoginActivity.FIRTS_START);
+                    this.finish();});
         mViewController = new AcMainCtrl(this);
         mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));
         mElvMenu.addHeaderView(getHeaderView());
@@ -110,6 +123,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    public void showDialog() {
+        mRestartDialog.show();
     }
 
     private void initToolbar() {

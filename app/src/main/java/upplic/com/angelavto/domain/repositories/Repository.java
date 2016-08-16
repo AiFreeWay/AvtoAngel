@@ -34,4 +34,5 @@ public interface Repository {
     Observable<UpsertCarResult> upsertCarNetwork(Car car);
     Observable<DeleteCarResult> deleteCarNetwork(Car car);
     Observable<Car> getCarDetailNetwork(int id);
+    Observable<Boolean> checkKey();
 }
