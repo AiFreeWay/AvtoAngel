@@ -54,8 +54,7 @@ public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
         mDeleteCar.execute(car)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnCompleted(this::backToMainActivity)
-                .subscribe(deleteCarResult -> {},
+                .subscribe(deleteCarResult -> backToMainActivity(),
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGarageCtrl: hundleClick error "+e.toString()));
     }
 
