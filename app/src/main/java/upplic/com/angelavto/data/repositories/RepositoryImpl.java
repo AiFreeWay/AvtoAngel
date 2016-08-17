@@ -27,6 +27,7 @@ import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
+import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.domain.repositories.Repository;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
@@ -115,6 +116,12 @@ public class RepositoryImpl implements Repository {
     public Observable<Boolean> checkKey() {
         return mNetworkController.checkKey(getToken())
                 .flatMap(checkKeyResponse -> Observable.just(checkKeyResponse.getResult()));
+    }
+
+    @Override
+    public Observable<Status> setStatus(Status status) {
+        return mNetworkController.setStatus(getToken(), status)
+                .flatMap(setStatusResponse -> Observable.just(setStatusResponse.getResult()));
     }
 
     @Override

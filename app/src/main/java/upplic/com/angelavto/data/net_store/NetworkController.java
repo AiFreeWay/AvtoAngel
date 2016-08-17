@@ -17,10 +17,12 @@ import upplic.com.angelavto.data.net_store.requests_entityes.CheckKeyRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.DeleteCarRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarDetailRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarsRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.SetStatusRequest;
 import upplic.com.angelavto.data.net_store.response_entityes.BeaconsResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.CheckKeyResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.DeleteCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarDetailResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.SetStatusResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.UpsertCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarsResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.LoginResponse;
@@ -28,6 +30,7 @@ import upplic.com.angelavto.data.net_store.response_entityes.RegistrationRespons
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
+import upplic.com.angelavto.domain.models.Status;
 
 
 public class NetworkController {
@@ -88,5 +91,9 @@ public class NetworkController {
 
     public Observable<CheckKeyResponse> checkKey(String key) {
         return mApiController.checkKey(new CheckKeyRequest(key));
+    }
+
+    public Observable<SetStatusResponse> setStatus(String key, Status status) {
+        return mApiController.setStatus(new SetStatusRequest(key, status));
     }
 }

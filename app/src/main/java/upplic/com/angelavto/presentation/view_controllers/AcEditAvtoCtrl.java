@@ -59,10 +59,6 @@ public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
     }
 
     private void backToMainActivity() {
-        Intent intent = new Intent(mRootView, MainActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mRootView.startActivity(intent);
         mRootView.finish();
     }
 }

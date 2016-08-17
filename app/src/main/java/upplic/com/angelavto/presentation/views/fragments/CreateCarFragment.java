@@ -80,7 +80,6 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         }
     }
 
-
     @Override
     public void refresh() {
         super.refresh();
@@ -113,7 +112,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     }
 
     public void loadData(List<Beacon> beacons) {
-        mAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, beacons);
+        mAdapter = new ArrayAdapter<>(getBaseActivity().getApplicationContext(), R.layout.v_spinner_item, beacons);
         mSpnBeaconType.setAdapter(mAdapter);
     }
 

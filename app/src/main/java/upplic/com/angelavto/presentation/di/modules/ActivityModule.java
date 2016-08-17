@@ -17,6 +17,7 @@ import upplic.com.angelavto.domain.executors.GetBeacons;
 import upplic.com.angelavto.domain.executors.GetCarsOptions;
 import upplic.com.angelavto.domain.executors.Login;
 import upplic.com.angelavto.domain.executors.Registration;
+import upplic.com.angelavto.domain.executors.SetStatus;
 import upplic.com.angelavto.domain.executors.UpdateCar;
 import upplic.com.angelavto.domain.executors.UpdateCarOptions;
 import upplic.com.angelavto.domain.interactors.Interactor0;
@@ -29,6 +30,7 @@ import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
+import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
@@ -52,6 +54,7 @@ public class ActivityModule {
     public static final String LOGIN = "login";
     public static final String DELETE_ALL_CAR_OPTIONS = "deleteallcaroptions";
     public static final String CHECK_KEY = "checkkey";
+    public static final String SET_STATUS = "setstatus";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -162,5 +165,11 @@ public class ActivityModule {
     @Named(CHECK_KEY)
     public Interactor0<Boolean> provideCheckKey(CheckKey checkKey) {
         return checkKey;
+    }
+
+    @Provides
+    @Named(SET_STATUS)
+    public Interactor1<Status, Status> provideSetStatus(SetStatus setStatus) {
+        return setStatus;
     }
 }

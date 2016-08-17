@@ -41,7 +41,7 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
     }
 
     public void initCarDetail() {
-        mGetCarDetal.execute(mRootView.getCarOptions().getId())
+       mGetCarDetal.execute(mRootView.getCarOptions().getId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(car -> {mRootView.setCatDetail(car);

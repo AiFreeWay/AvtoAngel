@@ -17,6 +17,7 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
+import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
@@ -107,6 +108,31 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     public void showFragmet(FragmentsFactory.Fragments fragmentIndifinder) {
         mRouter.show(mFragmentsFactory.getFragment(fragmentIndifinder));
+    }
+
+    public void updateMenuItem(Car car) {
+        List<AppMenuItem> menuItems = mRootView.getData();
+        for (AppMenuItem item : menuItems) {
+            if (item.getExpannableList().size()>0) {
+                findAndChangeMenuItem(car, item);
+                mRootView.getAdapter().notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
+    private void findAndChangeMenuItem(Car car, AppMenuItem menuItem) {
+        int drawable;
+        if (car.isStatus())
+            drawable = R.drawable.ic_lock_green;
+        else
+            drawable = R.drawable.ic_lock_red;
+        for (AppMenuItem item : menuItem.getExpannableList()) {
+            if (item.getTitle().equals(car.getTitle())) {
+                item.setDrawable(drawable);
+                break;
+            }
+        }
     }
 
     private void hundleFragment(FragmentHandleMemento fragmentHandleMemento) {

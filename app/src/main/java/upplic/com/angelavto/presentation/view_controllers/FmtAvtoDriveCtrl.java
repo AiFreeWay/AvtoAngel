@@ -13,16 +13,17 @@ import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
-import upplic.com.angelavto.domain.models.UpsertCarResult;
+import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
+import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
 
 public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
 
-    @Inject @Named(ActivityModule.UPDATE_CAR)
-    Interactor1<UpsertCarResult, Car> mUpdateCar;
+    @Inject @Named(ActivityModule.SET_STATUS)
+    Interactor1<Status, Status> mSetStatus;
     @Inject @Named(ActivityModule.UPDATE_CAR_OPTIONS)
     Interactor1<CarOptions, CarOptions> mUpdateCarDB;
 
@@ -49,12 +50,15 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
     public void changeState() {
         Car car = mRootView.getCar();
         car.setStatus(!car.isStatus());
-        mUpdateCar.execute(car)
+        Status status = new Status(car.getId(), car.isStatus(), car.isRecord());
+        mSetStatus.execute(status)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
                     String message = "Настройки для '"+car.getTitle()+"' изменены.";
-                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();})
+                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
+                    notifyMenuItem(car);
+                    mRootView.initStatusButton();})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
     }
@@ -71,5 +75,11 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                     mRootView.initNotificationButton();})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeNotification error "+e.toString()));
+    }
+
+    private void notifyMenuItem(Car car) {
+        ((MainActivity) mRootView.getParentFragment().getActivity())
+                .getViewController()
+                .updateMenuItem(car);
     }
 }

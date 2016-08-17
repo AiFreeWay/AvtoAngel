@@ -94,6 +94,11 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         mViewController.start();
     }
 
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+    }
+
     public int getFragmentsBodyResId() {
         return R.id.ac_main_fl_fragments;
     }
@@ -119,6 +124,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     public void loadData(List<AppMenuItem> menu) {
         mAdapter.loadData(menu);
+    }
+
+    public List<AppMenuItem> getData() {
+        return mAdapter.getData();
     }
 
     public Toolbar getToolbar() {

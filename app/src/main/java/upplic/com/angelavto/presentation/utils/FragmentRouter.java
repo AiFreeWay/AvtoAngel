@@ -24,7 +24,7 @@ public class FragmentRouter {
             FragmentTransaction transaction = mFragmentManager.beginTransaction();
             transaction.replace(mViewId, fragment);
             transaction.addToBackStack(BACK_STACK_TAG);
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
         }
     }
 
