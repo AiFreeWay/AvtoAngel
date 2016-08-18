@@ -1,5 +1,7 @@
 package upplic.com.angelavto.domain.executors;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -24,10 +26,7 @@ public class CreateCar implements Interactor1<UpsertCarResult, Car> {
                 .flatMap(isExists -> {
                     if (isExists)
                         return Observable.just(new UpsertCarResult());
-                    return mRepository.upsertCarNetwork(data)
-                            .map(upsertCarResult -> {
-                                upsertCarToDB(data);
-                                return upsertCarResult;});});
+                    return mRepository.upsertCarNetwork(data);});
     }
 
     private Observable<Boolean> checkExistsCar(Car car) {
@@ -37,15 +36,5 @@ public class CreateCar implements Interactor1<UpsertCarResult, Car> {
                         if ((car.getTitle().equals(carNetwork.getTitle())))
                             return Observable.just(true);
                     return Observable.just(false);});
-    }
-
-    private void upsertCarToDB(Car car) {
-        mRepository.getCarsNetwork()
-                .subscribe(cars -> {
-                    for (Car carNetwork : cars)
-                        if ((car.getTitle().equals(carNetwork.getTitle()))) {
-                            mRepository.upsertCarOptions(carNetwork);
-                            break;}})
-                .unsubscribe();
     }
 }

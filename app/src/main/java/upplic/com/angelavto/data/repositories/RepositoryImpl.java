@@ -5,6 +5,7 @@ import android.content.Context;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -128,9 +129,13 @@ public class RepositoryImpl implements Repository {
     public Observable<List<Car>> getCarsNetworkEmit() {
         return mNetworkController.getCars(getToken())
                 .flatMap(getCarsResponse -> {
-                    mCarSubject.onNext(CarMapper.mapCarsFromNetwork(getCarsResponse));
-                    return mCarSubject;
-                });
+                    List<Car> cars = CarMapper.mapCarsFromNetwork(getCarsResponse);
+                    return Observable.just(cars);})
+                .map(cars -> { updateCarOptionsFromNetwork(cars); return cars;})
+                .delay(500, TimeUnit.MILLISECONDS)
+                .flatMap(cars -> {
+                    mCarSubject.onNext(cars);
+                    return mCarSubject;});
     }
 
     @Override

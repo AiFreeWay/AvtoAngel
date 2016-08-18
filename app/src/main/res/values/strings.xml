@@ -27,7 +27,7 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="input">Ввести</string>
-    <string name="want_exit">Выйти из приложения?</string>
+    <string name="want_exit">Выйти из профиля?</string>
     <string name="token_bad">Не дейсвительный ключ, нужно переавторизоваться.</string>
     <string name="exit">Выйти</string>
     <string name="show_on_map">Показать на карте</string>

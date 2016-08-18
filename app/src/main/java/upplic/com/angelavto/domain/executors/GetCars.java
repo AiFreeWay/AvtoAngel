@@ -1,6 +1,8 @@
 package upplic.com.angelavto.domain.executors;
 
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,8 +24,6 @@ public class GetCars implements Interactor0<List<Car>> {
     @Override
     public Observable<List<Car>> execute() {
         return mRepository.getCarsNetworkEmit()
-                .map(cars -> { mRepository.updateCarOptionsFromNetwork(cars);
-                    return cars;})
                 .cache();
     }
 }
