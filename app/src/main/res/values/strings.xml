@@ -41,6 +41,7 @@
     <string name="delete_confirm">Удалить машину?</string>
     <string name="save_confirm">Сохранить изменения?</string>
     <string name="edit">Редактирование</string>
+    <string name="record_log">Журнал передвижений</string>
     <string name="no_cars_in_garage">Нет машин в гараже</string>
     <string name="security_on">Защита</string>
     <string name="configuration_changed">Настройки изменились</string>

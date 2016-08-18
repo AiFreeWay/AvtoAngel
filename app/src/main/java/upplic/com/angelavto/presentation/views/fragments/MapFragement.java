@@ -3,10 +3,12 @@ package upplic.com.angelavto.presentation.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -25,6 +27,8 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
 
     @BindView(R.id.fmt_map_mv_map)
     MapView mMvMap;
+    @BindView(R.id.fmt_map_btn_record)
+    Button mBtnRecord;
 
     private GoogleMap mMap;
     private AvtoFragment mParentFragment;
@@ -44,6 +48,7 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
         mViewController = new FmtMapCtrl(this);
         mMvMap.onCreate(savedInstanceState);
         mMvMap.getMapAsync(this::startMap);
+        mBtnRecord.setOnClickListener(v -> mViewController.changeRecord());
     }
 
     @Override
@@ -76,12 +81,27 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
         mMvMap.onLowMemory();
     }
 
+    public void notifyFragment() {
+        if (getCar() != null)
+            initRecordButton();
+    }
+
     public GoogleMap getMap() {
         return mMap;
     }
 
     public Car getCar() {
         return mParentFragment.getCar();
+    }
+
+    public void initRecordButton() {
+        if (getCar().isRecord()) {
+            mBtnRecord.setTextColor(ContextCompat.getColor(getContext(), R.color.marron));
+            mBtnRecord.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_stop, 0, 0, 0);
+        } else {
+            mBtnRecord.setTextColor(ContextCompat.getColor(getContext(), R.color.grideperlevy));
+            mBtnRecord.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_camera, 0, 0, 0);
+        }
     }
 
     private void startMap(GoogleMap map) {

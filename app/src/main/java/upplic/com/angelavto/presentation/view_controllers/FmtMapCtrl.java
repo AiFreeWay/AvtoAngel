@@ -3,6 +3,7 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -24,15 +25,17 @@ import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
 public class FmtMapCtrl extends ViewController<MapFragement> {
 
-    @Inject
-    @Named(ActivityModule.GET_CAR_DETAIL)
+    @Inject @Named(ActivityModule.GET_CAR_DETAIL)
     Interactor1<Car, Integer> mGetCarDetal;
+    @Inject @Named(ActivityModule.SET_STATUS)
+    Interactor1<Status, Status> mSetStatus;
 
     private Polyline mRoute;
     private Subscription mInterval;
@@ -59,6 +62,25 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     public void stop() {
         if (mInterval != null)
             mInterval.unsubscribe();
+    }
+
+    public void changeRecord() {
+        Car car = mRootView.getCar();
+        car.setRecord(!car.isRecord());
+        Status status = new Status(car.getId(), car.isStatus(), car.isRecord());
+        mSetStatus.execute(status)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnCompleted(() -> {
+                    String message;
+                    if (car.isRecord())
+                        message = "Запись включена";
+                    else
+                        message = "Запись закончена";
+                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
+                    mRootView.initRecordButton();})
+                .subscribe(aVoid -> {},
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
     }
 
     private void drawRoute(Car car) {

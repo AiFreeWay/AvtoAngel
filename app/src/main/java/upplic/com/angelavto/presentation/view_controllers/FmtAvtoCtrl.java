@@ -14,11 +14,13 @@ import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
+import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
 
 public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
 
     private final int AVTO_DRIVE_FRAGMENT = 0;
+    private final int MAP_FRAGMENT = 1;
 
     @Inject @Named(ActivityModule.GET_CAR_DETAIL)
     Interactor1<Car, Integer> mGetCarDetal;
@@ -45,11 +47,12 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(car -> {mRootView.setCatDetail(car);
-                            notifyAvtoDriveFragment();},
+                            notifyFragments();},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: start error "+e.toString()));
     }
 
-    private void notifyAvtoDriveFragment() {
+    private void notifyFragments() {
         ((AvtoDriveFragment) mFactory.getFragments().get(AVTO_DRIVE_FRAGMENT)).notifyFragment();
+        ((MapFragement) mFactory.getFragments().get(MAP_FRAGMENT)).notifyFragment();
     }
 }
