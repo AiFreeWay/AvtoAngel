@@ -15,6 +15,8 @@ import upplic.com.angelavto.domain.executors.GetCarDetail;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetBeacons;
 import upplic.com.angelavto.domain.executors.GetCarsOptions;
+import upplic.com.angelavto.domain.executors.GetRecordDetail;
+import upplic.com.angelavto.domain.executors.GetRecords;
 import upplic.com.angelavto.domain.executors.Login;
 import upplic.com.angelavto.domain.executors.Registration;
 import upplic.com.angelavto.domain.executors.SetStatus;
@@ -28,6 +30,7 @@ import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
+import upplic.com.angelavto.domain.models.Record;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
 import upplic.com.angelavto.domain.models.Status;
@@ -55,6 +58,8 @@ public class ActivityModule {
     public static final String DELETE_ALL_CAR_OPTIONS = "deleteallcaroptions";
     public static final String CHECK_KEY = "checkkey";
     public static final String SET_STATUS = "setstatus";
+    public static final String GET_RECORDS = "getrecords";
+    public static final String GET_RECORD_DETAIL = "getrecorddetail";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -171,5 +176,17 @@ public class ActivityModule {
     @Named(SET_STATUS)
     public Interactor1<Status, Status> provideSetStatus(SetStatus setStatus) {
         return setStatus;
+    }
+
+    @Provides
+    @Named(GET_RECORDS)
+    public Interactor1<List<Record>, Integer> provideGetRecords(GetRecords getRecords) {
+        return getRecords;
+    }
+
+    @Provides
+    @Named(GET_RECORD_DETAIL)
+    public Interactor1<Record, Integer> provideGetRecordDetail(GetRecordDetail getRecordDetail) {
+        return getRecordDetail;
     }
 }

@@ -1,10 +1,15 @@
 package upplic.com.angelavto.presentation.adapters.view_binders;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +37,15 @@ public class RecordBinder implements AbstractBinder<Record> {
         if (view == null)
             view = mLayoutInflater.inflate(R.layout.v_record, mParent, false);
         ButterKnife.bind(this, view);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            Date date = formatter.parse(data.getTimeStart());
+            formatter.applyPattern("dd-mm-yyyy в HH:mm");
+            mTvTitle.setText(formatter.format(date));
+        } catch (ParseException e) {
 
+        }
+        view.setOnClickListener(v -> mViewController.openRecordReoute(data));
         return view;
     }
 }

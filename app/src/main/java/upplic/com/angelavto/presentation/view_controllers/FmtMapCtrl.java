@@ -1,6 +1,7 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.views.activities.RecordsActivity;
 import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
 public class FmtMapCtrl extends ViewController<MapFragement> {
@@ -81,6 +83,15 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                     mRootView.initRecordButton();})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
+    }
+
+    public void openRecordActivity() {
+        Car car = getRootView().getCar();
+        if (car != null) {
+            Intent intent = new Intent(mRootView.getContext(), RecordsActivity.class);
+            intent.putExtra(RecordsActivity.CAR_ID_KEY, car.getId());
+            mRootView.startActivity(intent);
+        }
     }
 
     private void drawRoute(Car car) {

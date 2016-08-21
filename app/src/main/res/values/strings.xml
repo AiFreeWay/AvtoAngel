@@ -57,4 +57,5 @@
     <string name="code_must_be_correct">Код должен состоять из 4 символов</string>
     <string name="beacon_type">Тип маяка</string>
     <string name="cant_final_execute">Не удалось завершить операцию, пожалуйста повторите</string>
+    <string name="enr_route">Конец маршрута</string>
 </resources>

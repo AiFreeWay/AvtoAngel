@@ -29,6 +29,8 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
     MapView mMvMap;
     @BindView(R.id.fmt_map_btn_record)
     Button mBtnRecord;
+    @BindView(R.id.fmt_map_btn_log)
+    Button mBtnLog;
 
     private GoogleMap mMap;
     private AvtoFragment mParentFragment;
@@ -49,6 +51,7 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
         mMvMap.onCreate(savedInstanceState);
         mMvMap.getMapAsync(this::startMap);
         mBtnRecord.setOnClickListener(v -> mViewController.changeRecord());
+        mBtnLog.setOnClickListener(v -> mViewController.openRecordActivity());
     }
 
     @Override

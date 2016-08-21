@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.orhanobut.hawk.Hawk;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,7 @@ import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
+import upplic.com.angelavto.domain.models.Record;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
 import upplic.com.angelavto.domain.models.Status;
@@ -123,6 +125,18 @@ public class RepositoryImpl implements Repository {
     public Observable<Status> setStatus(Status status) {
         return mNetworkController.setStatus(getToken(), status)
                 .flatMap(setStatusResponse -> Observable.just(setStatusResponse.getResult()));
+    }
+
+    @Override
+    public Observable<List<Record>> getRecords(int carId) {
+        return mNetworkController.getRecords(getToken(), carId)
+                .flatMap(getCarsResponse -> Observable.just(Arrays.<Record>asList(getCarsResponse.getResult())));
+    }
+
+    @Override
+    public Observable<Record> getRecordDetail(int id) {
+        return mNetworkController.getRecordDetail(getToken(), id)
+                .flatMap(getCarsResponse -> Observable.just(getCarsResponse.getResult()));
     }
 
     @Override

@@ -10,6 +10,7 @@ import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
+import upplic.com.angelavto.domain.models.Record;
 import upplic.com.angelavto.domain.models.RegistrationDomain;
 import upplic.com.angelavto.domain.models.RegistrationResult;
 import upplic.com.angelavto.domain.models.Status;
@@ -37,4 +38,6 @@ public interface Repository {
     Observable<Car> getCarDetailNetwork(int id);
     Observable<Boolean> checkKey();
     Observable<Status> setStatus(Status status);
+    Observable<List<Record>> getRecords(int carId);
+    Observable<Record> getRecordDetail(int id);
 }

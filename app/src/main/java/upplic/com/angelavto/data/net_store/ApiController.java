@@ -9,6 +9,8 @@ import upplic.com.angelavto.data.net_store.requests_entityes.BeaconsRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.CheckKeyRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.DeleteCarRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarDetailRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordDetailRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordsRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.SetStatusRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.UpsertCarRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarsRequest;
@@ -18,6 +20,8 @@ import upplic.com.angelavto.data.net_store.response_entityes.BeaconsResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.CheckKeyResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.DeleteCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarDetailResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.GetRecordDetailResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.GetRecordsResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.SetStatusResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.UpsertCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarsResponse;
@@ -62,4 +66,12 @@ public interface ApiController {
     @Headers( "Content-Type: application/json" )
     @POST(NetworkController.API_EXTENSIONS)
     Observable<SetStatusResponse> setStatus(@Body SetStatusRequest body);
+
+    @Headers( "Content-Type: application/json" )
+    @POST(NetworkController.API_EXTENSIONS)
+    Observable<GetRecordsResponse> getRecords(@Body GetRecordsRequest body);
+
+    @Headers( "Content-Type: application/json" )
+    @POST(NetworkController.API_EXTENSIONS)
+    Observable<GetRecordDetailResponse> getRecordDetail(@Body GetRecordDetailRequest body);
 }
