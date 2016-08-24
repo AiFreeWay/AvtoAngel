@@ -95,6 +95,12 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        mViewController.stop();
+    }
+
+    @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
     }

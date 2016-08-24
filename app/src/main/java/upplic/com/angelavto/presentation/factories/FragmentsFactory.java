@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
+import upplic.com.angelavto.presentation.views.fragments.AboutFragment;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
 import upplic.com.angelavto.presentation.views.fragments.BeaconsShopFragment;
@@ -24,6 +25,7 @@ public class FragmentsFactory {
         mFragmentsList.add(Fragments.BEACONS_SHOP.id, new BeaconsShopFragment());
         mFragmentsList.add(Fragments.SELECT_BEACON.id, new SelectBeaconFragment());
         mFragmentsList.add(Fragments.CRAETE_CAR.id, new CreateCarFragment());
+        mFragmentsList.add(Fragments.ABOUT.id, new AboutFragment());
 
         for (BaseFragment fragment : mFragmentsList)
             addBundle(fragment);
@@ -41,7 +43,8 @@ public class FragmentsFactory {
         BEACONS_SHOP(0),
         SELECT_BEACON(1),
         CRAETE_CAR(2),
-        AVTO(3);
+        ABOUT(3),
+        AVTO(4);
 
         public int id;
         Fragments(int id) {

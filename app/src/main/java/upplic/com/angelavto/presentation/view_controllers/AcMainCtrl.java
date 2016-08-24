@@ -10,15 +10,19 @@ import android.view.LayoutInflater;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.app.AngelAvto;
@@ -52,17 +56,20 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     Interactor0<List<CarOptions>> mGetCarsOptions;
     @Inject @Named(ActivityModule.CHECK_KEY)
     Interactor0<Boolean> mCheckKey;
+    @Inject @Named(ActivityModule.CHECK_ALARM)
+    Interactor0<List<Alarm>> mCheckAlarm;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
     private List<AppMenuItem> mMenu;
+    private Subscription mInterval;
 
     public AcMainCtrl(MainActivity view) {
         super(view);
         mLayoutInflater = (LayoutInflater) mRootView.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRootView.getActivityComponent()
                 .inject(this);
-        mRouter = mRouterBilder.getRouter(mRootView.getFragmentsBodyResId());
+        mRouter = mRouterBilder.getRouter(mRootView.getFragmentsBodyResId(), mRootView.getSupportFragmentManager());
     }
 
     @Override
@@ -121,6 +128,11 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         }
     }
 
+    public void stop() {
+        if (mInterval != null)
+            mInterval.unsubscribe();
+    }
+
     private void findAndChangeMenuItem(Car car, AppMenuItem menuItem) {
         int drawable;
         if (car.isStatus())
@@ -161,7 +173,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showStartFragment,
                         e -> {showStartFragment(null);
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString());});
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: checkCarsCount error "+e.toString());});
     }
 
     private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars, List<CarOptions> carOptionses) {
@@ -180,10 +192,24 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                             if (cars.size()>0)
                                 startAvtoFragment(getLatestCar(carOptionses));
                             else
-                                mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));},
+                                mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
+                            startAlarmChecking();},
                         e -> { mRootView.loadData(mMenu);
                             mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: start error "+e.toString());});
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: showStartFragment error "+e.toString());});
+    }
+
+    private void startAlarmChecking() {
+        mInterval = Observable.interval(1, TimeUnit.SECONDS)
+                .flatMap(aLong -> mCheckAlarm.execute())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::checkAlarm,
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: startAlarmChecking error "+e.toString()));
+    }
+
+    private void checkAlarm(List<Alarm> alarms) {
+        Log.d("++++", "checkAlarm: subby");
     }
 
     private CarOptions getLatestCar(List<CarOptions> cars) {

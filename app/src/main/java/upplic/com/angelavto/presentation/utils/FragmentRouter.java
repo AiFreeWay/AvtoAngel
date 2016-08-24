@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import upplic.com.angelavto.presentation.app.AngelAvto;
+
 public class FragmentRouter {
 
     private final String BACK_STACK_TAG;
@@ -21,10 +23,14 @@ public class FragmentRouter {
 
     public void show(Fragment fragment) {
         if (!isFragmentShowNow(fragment)) {
-            FragmentTransaction transaction = mFragmentManager.beginTransaction();
-            transaction.replace(mViewId, fragment);
-            transaction.addToBackStack(BACK_STACK_TAG);
-            transaction.commitAllowingStateLoss();
+            try {
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                transaction.replace(mViewId, fragment);
+                transaction.addToBackStack(BACK_STACK_TAG);
+                transaction.commitAllowingStateLoss();
+            } catch (Exception e) {
+                Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "FragmentRouter show error: "+e.toString());
+            }
         }
     }
 
@@ -55,20 +61,8 @@ public class FragmentRouter {
 
     public static class RouterBilder {
 
-        private int mLastViewId;
-        private FragmentRouter mLastRouter;
-        private FragmentManager mFragmentManager;
-
-        public RouterBilder(FragmentManager fragmentManager) {
-            mFragmentManager = fragmentManager;
-        }
-
-        public FragmentRouter getRouter(int viewId) {
-            if (mLastViewId != viewId || mLastRouter == null) {
-                mLastViewId = viewId;
-                mLastRouter = new FragmentRouter(viewId, mFragmentManager);
-            }
-            return mLastRouter;
+        public FragmentRouter getRouter(int viewId, FragmentManager fragmentManager) {
+            return new FragmentRouter(viewId, fragmentManager);
         }
     }
 }

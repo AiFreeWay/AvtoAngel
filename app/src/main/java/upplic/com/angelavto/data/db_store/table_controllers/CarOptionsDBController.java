@@ -57,11 +57,11 @@ public class CarOptionsDBController {
 
     }
 
-    public void deleteAllCarOptions() {
-        mDataStore.delete(CarOptionsTableEntity.class)
+    public Observable<Integer> deleteAllCarOptions() {
+        return mDataStore.delete(CarOptionsTableEntity.class)
                 .get()
                 .toSingle()
-                .subscribe();
+                .toObservable();
     }
 
     public void updateCarOptionsEditTime(int id) {

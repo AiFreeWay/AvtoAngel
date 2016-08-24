@@ -11,7 +11,9 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.view_controllers.FmtSelectBeaconController;
+import upplic.com.angelavto.presentation.views.activities.SelectBeaconActivity;
 
 public class SelectBeaconFragment extends BaseFragment<FmtSelectBeaconController> {
 
@@ -35,5 +37,9 @@ public class SelectBeaconFragment extends BaseFragment<FmtSelectBeaconController
         mBtnStartApp.setOnClickListener(v -> mViewController.startMainActivity());
         mBtnOpenShop.setOnClickListener(v -> mViewController.showBeaconsShopFragment());
         mViewController.start();
+    }
+
+    public FragmentRouter getRouter() {
+        return  ((SelectBeaconActivity) getActivity()).getRouter();
     }
 }

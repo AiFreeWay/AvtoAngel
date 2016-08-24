@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import upplic.com.angelavto.domain.executors.CheckAlarm;
 import upplic.com.angelavto.domain.executors.CheckKey;
 import upplic.com.angelavto.domain.executors.CreateCar;
 import upplic.com.angelavto.domain.executors.DeleteAllCarOptions;
@@ -24,6 +25,7 @@ import upplic.com.angelavto.domain.executors.UpdateCar;
 import upplic.com.angelavto.domain.executors.UpdateCarOptions;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
+import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.CarOptions;
@@ -60,6 +62,7 @@ public class ActivityModule {
     public static final String SET_STATUS = "setstatus";
     public static final String GET_RECORDS = "getrecords";
     public static final String GET_RECORD_DETAIL = "getrecorddetail";
+    public static final String CHECK_ALARM = "check_alarm";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -68,7 +71,7 @@ public class ActivityModule {
     private LoginViewPagerFactory mLoginViewPagerFactory;
 
     public ActivityModule(BaseActivity activity) {
-        mRouterBilder = new FragmentRouter.RouterBilder(activity.getSupportFragmentManager());
+        mRouterBilder = new FragmentRouter.RouterBilder();
         mFragmentsFactory = new FragmentsFactory();
         mAppMenuFactory = new AppMenuFactory(activity);
         mAvtoViewPagerFactoryBuilder = new AvtoViewPagerFactory.Builder();
@@ -188,5 +191,11 @@ public class ActivityModule {
     @Named(GET_RECORD_DETAIL)
     public Interactor1<Record, Integer> provideGetRecordDetail(GetRecordDetail getRecordDetail) {
         return getRecordDetail;
+    }
+
+    @Provides
+    @Named(CHECK_ALARM)
+    public Interactor0<List<Alarm>> provideCheckAlarm(CheckAlarm checkAlarm) {
+        return checkAlarm;
     }
 }

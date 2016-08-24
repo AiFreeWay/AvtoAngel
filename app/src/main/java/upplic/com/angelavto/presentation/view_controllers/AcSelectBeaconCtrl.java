@@ -31,19 +31,29 @@ public class AcSelectBeaconCtrl extends ViewController<SelectBeaconActivity> {
         super(view);
         mRootView.getActivityComponent()
                 .inject(this);
-        mRouter = mRouterBilder.getRouter(mRootView.getFragmentsBodyResId());
+        mRouter = mRouterBilder.getRouter(mRootView.getFragmentsBodyResId(), mRootView.getSupportFragmentManager());
     }
 
     @Override
     public void start() {
         mDeleteAllCarOptions.execute()
                 .subscribeOn(Schedulers.newThread())
-                .subscribe();
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aVoid -> showStartFragment(),
+                        e -> {showStartFragment();
+                            Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl start error: "+e.toString());});
+    }
+
+    private void showStartFragment() {
         mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.SELECT_BEACON));
     }
 
     public void popBack() {
         if (!mRouter.back())
             mRootView.finish();
+    }
+
+    public FragmentRouter getRouter() {
+        return  mRouter;
     }
 }

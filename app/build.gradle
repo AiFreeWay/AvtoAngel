@@ -11,8 +11,10 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
+        versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -30,11 +32,22 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
+    packagingOptions {
+        exclude 'LICENSE.TXT'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //test
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile 'com.android.support:support-annotations:23.4.0'
+    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.1') {
+        exclude group: 'javax.inject'
+    }
 
     //Google
     compile 'com.android.support:appcompat-v7:23.4.0'

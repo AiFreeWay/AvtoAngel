@@ -10,6 +10,7 @@ import com.orhanobut.hawk.Hawk;
 import com.rey.material.app.Dialog;
 
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.view_controllers.AcSelectBeaconCtrl;
 
 
@@ -32,5 +33,9 @@ public class SelectBeaconActivity extends BaseActivity<AcSelectBeaconCtrl> {
 
     public int getFragmentsBodyResId() {
         return R.id.ac_select_beacon_fl_fragments;
+    }
+
+    public FragmentRouter getRouter() {
+        return  mViewController.getRouter();
     }
 }

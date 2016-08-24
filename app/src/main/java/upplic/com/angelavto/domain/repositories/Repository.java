@@ -4,6 +4,7 @@ import java.util.List;
 
 import rx.Observable;
 import upplic.com.angelavto.data.db_store.tables.CarOptionsTableEntity;
+import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
@@ -25,10 +26,10 @@ public interface Repository {
 
     Observable<CarOptions> updateCarOptions(CarOptions carOptions);
     Observable<List<CarOptions>> getCarsOptions();
+    Observable<Integer>  deleteAllCarOptions();
     void upsertCarOptions(Car car);
     void updateCarOptionsEditTime(int id);
     void deleteCarOptions(int id);
-    void  deleteAllCarOptions();
     void updateCarOptionsFromNetwork(List<Car> cars);
 
     Observable<List<Car>> getCarsNetworkEmit();
@@ -40,4 +41,5 @@ public interface Repository {
     Observable<Status> setStatus(Status status);
     Observable<List<Record>> getRecords(int carId);
     Observable<Record> getRecordDetail(int id);
+    Observable<List<Alarm>> checkAlarm();
 }

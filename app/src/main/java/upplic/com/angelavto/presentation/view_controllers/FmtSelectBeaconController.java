@@ -26,7 +26,7 @@ public class FmtSelectBeaconController extends ViewController<SelectBeaconFragme
         mAcitity = (SelectBeaconActivity) mRootView.getBaseActivity();
         mRootView.getActivityComponent()
                 .inject(this);
-        mRouter = mRouterBilder.getRouter(mAcitity.getFragmentsBodyResId());
+        mRouter = mRootView.getRouter();
     }
 
     @Override
@@ -39,6 +39,7 @@ public class FmtSelectBeaconController extends ViewController<SelectBeaconFragme
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mRootView.startActivity(intent);
+        mAcitity.finish();
     }
 
     public void showBeaconsShopFragment() {

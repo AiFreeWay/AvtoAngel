@@ -13,6 +13,7 @@ import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mappers.LoginMapper;
 import upplic.com.angelavto.data.mappers.RegistrationMapper;
 import upplic.com.angelavto.data.net_store.requests_entityes.BeaconsRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.CheckAlarmRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.CheckKeyRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.DeleteCarRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarDetailRequest;
@@ -21,6 +22,7 @@ import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordDetailRequ
 import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordsRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.SetStatusRequest;
 import upplic.com.angelavto.data.net_store.response_entityes.BeaconsResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.CheckAlarmResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.CheckKeyResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.DeleteCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarDetailResponse;
@@ -107,5 +109,9 @@ public class NetworkController {
 
     public Observable<GetRecordDetailResponse> getRecordDetail(String key, int id) {
         return mApiController.getRecordDetail(new GetRecordDetailRequest(key, id));
+    }
+
+    public Observable<CheckAlarmResponse> checkAlarm(String key) {
+        return mApiController.checkAlarm(new CheckAlarmRequest(key));
     }
 }

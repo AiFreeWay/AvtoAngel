@@ -21,6 +21,7 @@ import upplic.com.angelavto.data.mappers.CarOptionsMapper;
 import upplic.com.angelavto.data.mappers.LoginMapper;
 import upplic.com.angelavto.data.mappers.RegistrationMapper;
 import upplic.com.angelavto.data.net_store.NetworkController;
+import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
@@ -89,8 +90,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void deleteAllCarOptions() {
-        mCarOptionsDBController.deleteAllCarOptions();
+    public Observable<Integer> deleteAllCarOptions() {
+        return mCarOptionsDBController.deleteAllCarOptions();
     }
 
     @Override
@@ -137,6 +138,12 @@ public class RepositoryImpl implements Repository {
     public Observable<Record> getRecordDetail(int id) {
         return mNetworkController.getRecordDetail(getToken(), id)
                 .flatMap(getCarsResponse -> Observable.just(getCarsResponse.getResult()));
+    }
+
+    @Override
+    public Observable<List<Alarm>> checkAlarm() {
+        return mNetworkController.checkAlarm(getToken())
+                .flatMap(checkAlarmResponse -> Observable.just(Arrays.<Alarm>asList(checkAlarmResponse.getResult())));
     }
 
     @Override

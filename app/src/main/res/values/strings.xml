@@ -58,4 +58,5 @@
     <string name="beacon_type">Тип маяка</string>
     <string name="cant_final_execute">Не удалось завершить операцию, пожалуйста повторите</string>
     <string name="enr_route">Конец маршрута</string>
+    <string name="about">О программе</string>
 </resources>

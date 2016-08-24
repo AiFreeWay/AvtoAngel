@@ -67,7 +67,12 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
     private void endLogin(LoginResult loginResult) {
         Hawk.putObservable(LoginActivity.API_KEY_TAG, loginResult.getKey())
             .subscribeOn(Schedulers.newThread())
-            .subscribe();
+            .subscribe(aBoolean -> startActivity(),
+                    e -> { startActivity();
+                        Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGetCodeCtrl endLogin error: "+e.toString());});
+    }
+
+    private void startActivity() {
         Intent intent = new Intent(mRootView.getBaseActivity(), SelectBeaconActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
