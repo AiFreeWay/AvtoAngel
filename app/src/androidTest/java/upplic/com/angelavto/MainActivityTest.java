@@ -22,7 +22,8 @@ public class MainActivityTest {
     @Rule public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
     @Test
-    public void something() {
+    public void testMainActivityController() {
+
         onView(withId(R.id.ac_main_fl_fragments))
                 .check(ViewAssertions.matches(isDisplayed()));
     }
