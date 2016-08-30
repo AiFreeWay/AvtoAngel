@@ -1,123 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grideperlevy"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:id="@+id/fmt_create_cat_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grideperlevy">
 
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:paddingBottom="10dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingTop="20dp"
-            android:gravity="center"
-            android:text="@string/add_car_to_garage"
-            android:textColor="@color/slate_gray"
-            android:textSize="19sp" />
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="20dp"
+        android:text="@string/add_car_to_garage"
+        android:textColor="@color/slate_gray"
+        android:textSize="19sp" />
 
-        <com.rey.material.widget.ProgressView
-            android:id="@+id/fmt_create_car_pv_progress"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            app:pv_autostart="false"
-            app:pv_circular="false"
-            app:pv_progressMode="indeterminate"
-            app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/fmt_create_car_pv_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:pv_autostart="false"
+        app:pv_circular="false"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/fmt_create_car_il_car"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fmt_create_car_il_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="15dp"
+        android:theme="@style/CarCreateEditText">
+
+        <EditText
+            android:id="@+id/fmt_create_car_et_car"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="15dp"
-            android:theme="@style/CarCreateEditText">
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/car_title"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:nextFocusForward="@+id/fmt_create_car_et_phone"
+            android:textColor="@color/slate_gray" />
 
-            <EditText
-                android:id="@+id/fmt_create_car_et_car"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/car_title"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"
-                android:nextFocusForward="@+id/fmt_create_car_et_phone"
-                android:textColor="@color/slate_gray" />
+    </android.support.design.widget.TextInputLayout>
 
-        </android.support.design.widget.TextInputLayout>
+    <com.rey.material.widget.Spinner
+        android:id="@+id/fmt_create_car_spn_beacon_type"
+        style="@style/Material.Widget.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/fmt_create_car_il_phone"
+        android:layout_alignLeft="@+id/fmt_create_car_il_phone"
+        android:layout_alignRight="@+id/fmt_create_car_il_phone"
+        android:layout_alignStart="@+id/fmt_create_car_il_phone"
+        android:layout_below="@+id/fmt_create_car_il_phone"
+        android:layout_marginTop="15dp"
+        app:rd_style="@style/Material.Drawable.Ripple.Wave"
+        app:spn_label="@string/beacon_type"
+        app:spn_labelEnable="true"
+        app:spn_labelTextColor="@color/green_jungle_krayola" />
 
-        <com.rey.material.widget.Spinner
-            android:id="@+id/fmt_create_car_spn_beacon_type"
-            style="@style/Material.Widget.Spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignEnd="@+id/fmt_create_car_il_phone"
-            android:layout_alignLeft="@+id/fmt_create_car_il_phone"
-            android:layout_alignRight="@+id/fmt_create_car_il_phone"
-            android:layout_alignStart="@+id/fmt_create_car_il_phone"
-            android:layout_below="@+id/fmt_create_car_il_phone"
-            android:layout_marginTop="15dp"
-            app:rd_style="@style/Material.Drawable.Ripple.Wave"
-            app:spn_label="@string/beacon_type"
-            app:spn_labelEnable="true"
-            app:spn_labelTextColor="@color/green_jungle_krayola" />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fmt_create_car_il_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fmt_create_car_il_car"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:theme="@style/CarCreateEditText">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/fmt_create_car_il_phone"
+        <EditText
+            android:id="@+id/fmt_create_car_et_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/fmt_create_car_il_car"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:theme="@style/CarCreateEditText">
+            android:layout_below="@+id/fmt_create_car_et_car"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/phone"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:nextFocusForward="@+id/fmt_create_car_btn_create_car"
+            android:textColor="@color/slate_gray" />
+    </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/fmt_create_car_et_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fmt_create_car_et_car"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/phone"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"
-                android:nextFocusForward="@+id/fmt_create_car_btn_create_car"
-                android:textColor="@color/slate_gray" />
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/fmt_create_car_btn_create_car"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/selector_marengo_button"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/add"
-            android:textAllCaps="false"
-            android:textColor="@color/grideperlevy"
-            android:textSize="15sp" />
-    </RelativeLayout>
+    <Button
+        android:id="@+id/fmt_create_car_btn_create_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_marengo_button"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/add"
+        android:textAllCaps="false"
+        android:textColor="@color/grideperlevy"
+        android:textSize="15sp" />
+</RelativeLayout>

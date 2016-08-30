@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -148,10 +150,19 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         mRestartDialog.show();
     }
 
+    public void hideKeyboard() {
+        try {
+            mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+
+        }
+    }
+
     private void initToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-        mToolbar.setNavigationOnClickListener(v -> navigationClickHandler());
+        mToolbar.setNavigationOnClickListener(v -> { driveMenu();
+            hideKeyboard();});
         mMenuDrawer = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
             @Override
             public int getToolbarViewId() {
@@ -164,10 +175,5 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     private View getHeaderView() {
         return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_header, mElvMenu, false);
-    }
-
-    private void navigationClickHandler() {
-        driveMenu();
-        mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 }

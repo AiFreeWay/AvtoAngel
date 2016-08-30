@@ -1,11 +1,9 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +39,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     ProgressView mPvProgress;
     @BindView(R.id.fmt_create_car_spn_beacon_type)
     Spinner mSpnBeaconType;
+    @BindView(R.id.fmt_create_cat_root)
+    ViewGroup mVgRoot;
 
     private PhoneNumberTextWatcher mPhoneNumberMask;
     private int mColorOnButtonEnabled;
@@ -48,6 +48,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     private Drawable mDrawableOnButtonEnabled;
     private Drawable mDrawableOnButtonDisabled;
     private ArrayAdapter<Beacon> mAdapter;
+    private MainActivity mActivity;
 
     @Nullable
     @Override
@@ -61,6 +62,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtCreateCarCtrl(this);
+        mActivity = (MainActivity) getActivity();
         mPhoneNumberMask = new PhoneNumberTextWatcher(mEtPhone);
         mDrawableOnButtonEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button);
         mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_marengo_disabled);
@@ -68,6 +70,10 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
         mEtPhone.addTextChangedListener(mPhoneNumberMask);
         mBtnCreateCar.setOnClickListener(v -> doOnCreateCar());
+        mVgRoot.setOnTouchListener((view, motionEvent) -> {
+            mActivity.hideKeyboard();
+            return true;
+        });
         mViewController.start();
     }
 

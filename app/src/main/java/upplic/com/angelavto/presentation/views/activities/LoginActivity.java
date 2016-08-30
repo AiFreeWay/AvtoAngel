@@ -1,10 +1,13 @@
 package upplic.com.angelavto.presentation.views.activities;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.List;
 
@@ -23,20 +26,27 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
 
     @BindView(R.id.ac_login_vp_body)
     ViewPager mVpBody;
+    @BindView(R.id.ac_login_root)
+    ViewGroup mVgRoot;
 
     private LoginViewPagerAdapter mAdapter;
     private String mNubmer;
-
+    private InputMethodManager mInputMethodManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_login);
         ButterKnife.bind(this);
+        mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mAdapter = new LoginViewPagerAdapter(getSupportFragmentManager());
         mVpBody.setAdapter(mAdapter);
         mVpBody.setOnTouchListener((view, event) -> true);
         mViewController = new AcLoginCtrl(this);
+        mVgRoot.setOnTouchListener((view, motionEvent) -> {
+            mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            return true;
+        });
         mViewController.start();
     }
 

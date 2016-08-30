@@ -30,6 +30,8 @@ public class InputPhoneFragment extends BaseFragment {
     EditText mEtNumber;
     @BindView(R.id.fmt_input_phone_btn_continue)
     Button mBtnContinue;
+    @BindView(R.id.fmt_input_phone_root)
+    ViewGroup mVgRoot;
 
     private LoginActivity mActivity;
     private Drawable mDrawableOnButtonEnabled;
@@ -71,6 +73,10 @@ public class InputPhoneFragment extends BaseFragment {
         mEtNumber.addTextChangedListener(mPhoneNumberMask);
         mBtnContinue.setOnClickListener(v -> nextSlide());
         mEtNumber.setText(mActivity.getNubmer());
+        mVgRoot.setOnTouchListener((view, motionEvent) -> {
+            mInputMethodManager.hideSoftInputFromWindow(mEtNumber.getWindowToken(), 0);
+            return true;
+        });
     }
 
     private void nextSlide() {

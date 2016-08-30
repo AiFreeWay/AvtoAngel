@@ -59,6 +59,8 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     Button mBtnGetCode;
     @BindView(R.id.fmt_get_code_pv_progress)
     ProgressView mProgress;
+    @BindView(R.id.fmt_get_code_root)
+    ViewGroup mVgRoot;
 
     private LoginActivity mActivity;
     private Drawable mDrawableOnButtonEnterEnabled;
@@ -114,6 +116,10 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
         mBtnEnter.setOnClickListener(v -> mViewController.login());
         mBtnGetCode.setOnClickListener(v -> mViewController.registration());
+        mVgRoot.setOnTouchListener((view, motionEvent) -> {
+            mInputMethodManager.hideSoftInputFromWindow(mEtCode.getWindowToken(), 0);
+            return true;
+        });
     }
 
     @Override

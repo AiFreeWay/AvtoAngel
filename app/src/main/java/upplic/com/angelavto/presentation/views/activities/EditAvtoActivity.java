@@ -1,10 +1,13 @@
 package upplic.com.angelavto.presentation.views.activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,6 +38,8 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     Button mBtnDelete;
     @BindView(R.id.ac_edit_avto_btn_save)
     Button mBtnSave;
+    @BindView(R.id.ac_edit_avto_root)
+    ViewGroup mVgRoot;
 
     private Car mCar;
     private Dialog mMessageDialog;
@@ -42,6 +47,7 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     private int mColorMarron;
     private int mColorGreenJungleKrayola;
     private PhoneNumberTextWatcher mPhoneNumberMask;
+    private InputMethodManager mInputMethodManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         ButterKnife.bind(this);
 
         mCar = (Car) getIntent().getSerializableExtra(CAR_TAG);
+        mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mColorMarron = ContextCompat.getColor(this, R.color.marron);
         mColorGreenJungleKrayola = ContextCompat.getColor(this, R.color.green_jungle_krayola);
         mViewController = new AcEditAvtoCtrl(this);
@@ -62,6 +69,10 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         mEtPhone.setText(mCar.getTrackerNumber());
         mBtnDelete.setOnClickListener(v -> onDelete());
         mBtnSave.setOnClickListener(v -> onSave());
+        mVgRoot.setOnTouchListener((view, motionEvent) -> {
+            mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            return true;
+        });
         mMessageDialog = new Dialog(this, R.style.login_dialog)
                 .titleColor(ContextCompat.getColor(this, R.color.slate_gray))
                 .actionTextColor(mColorGreenJungleKrayola)
