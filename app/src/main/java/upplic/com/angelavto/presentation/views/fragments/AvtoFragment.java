@@ -66,7 +66,7 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         super.onStart();
         try {
             getBaseActivity().getSupportActionBar().setTitle(mCarOptions.getTitle());
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
 
         }
     }

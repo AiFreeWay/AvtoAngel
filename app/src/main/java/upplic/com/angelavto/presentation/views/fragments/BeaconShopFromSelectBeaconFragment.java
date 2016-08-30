@@ -11,7 +11,7 @@ public class BeaconShopFromSelectBeaconFragment extends BeaconsShopFragment {
         try {
             getBaseActivity().getSupportActionBar().setTitle(R.string.buy_beacon);
             getBaseActivity().getSupportActionBar().show();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
 
         }
     }

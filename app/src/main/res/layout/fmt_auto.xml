@@ -28,10 +28,11 @@
         android:id="@+id/fmt_avto_pv_progress"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         app:pv_autostart="false"
         app:pv_circular="false"
         app:pv_progressMode="indeterminate"
-        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="118dp" />
 </RelativeLayout>

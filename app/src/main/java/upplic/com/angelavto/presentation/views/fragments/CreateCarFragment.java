@@ -83,7 +83,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         try {
             getBaseActivity().getSupportActionBar().setTitle(R.string.add_car);
             ((MainActivity) getBaseActivity()).getToolbar().getMenu().clear();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
 
         }
     }

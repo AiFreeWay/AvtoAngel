@@ -1,6 +1,8 @@
 package upplic.com.angelavto.presentation.views.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -30,6 +32,7 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.presentation.adapters.MultyExListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
+import upplic.com.angelavto.presentation.receivers.NetworkStateReceiver;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
@@ -49,6 +52,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     private MultyExListViewAdapter<AppMenuItem, AppMenuItem> mAdapter;
     private Dialog mRestartDialog;
     private InputMethodManager mInputMethodManager;
+    private BroadcastReceiver mNetState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,9 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));
         mElvMenu.addHeaderView(getHeaderView());
         mElvMenu.setAdapter(mAdapter);
+        IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        mNetState = new NetworkStateReceiver(intent -> refresh());
+        registerReceiver(mNetState, intentFilter);
         mViewController.start();
     }
 
@@ -104,6 +111,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     public void onStop() {
         super.onStop();
         mViewController.stop();
+        unregisterReceiver(mNetState);
     }
 
     @Override

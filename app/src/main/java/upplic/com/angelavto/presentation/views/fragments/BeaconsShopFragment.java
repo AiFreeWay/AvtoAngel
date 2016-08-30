@@ -57,7 +57,7 @@ public class BeaconsShopFragment extends BaseFragment<FmtBeaconsShopCtrl> {
         try {
             getBaseActivity().getSupportActionBar().setTitle(R.string.buy_beacon);
             ((MainActivity) getBaseActivity()).getToolbar().getMenu().clear();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
 
         }
     }
