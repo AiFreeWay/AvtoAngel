@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/grideperlevy">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ac_select_beacon_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?attr/colorAccent"/>
+
     <FrameLayout
         android:id="@+id/ac_select_beacon_fl_fragments"
         android:layout_width="match_parent"

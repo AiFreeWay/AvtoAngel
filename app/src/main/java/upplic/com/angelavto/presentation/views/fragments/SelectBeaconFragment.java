@@ -39,6 +39,16 @@ public class SelectBeaconFragment extends BaseFragment<FmtSelectBeaconController
         mViewController.start();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            getBaseActivity().getSupportActionBar().hide();
+        } catch (NullPointerException e) {
+
+        }
+    }
+
     public FragmentRouter getRouter() {
         return  ((SelectBeaconActivity) getActivity()).getRouter();
     }

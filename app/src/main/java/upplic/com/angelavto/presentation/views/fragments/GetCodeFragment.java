@@ -1,17 +1,21 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +44,7 @@ import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
 
     private final int INTERVAL_LENGTH = 45;
+    private final int CODE_LENGTH = 4;
     private final Calendar CALENDAR = new GregorianCalendar();
 
     @BindView(R.id.fmt_login_tv_description)
@@ -64,6 +69,25 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     private Observable<Long> mTimer = Observable.interval(1, TimeUnit.SECONDS);
     private Subscription mTimerSubscription;
     private SimpleDateFormat mTimeFormatter = new SimpleDateFormat("mm:ss");
+    private InputMethodManager mInputMethodManager;
+
+    private TextWatcher mInputCodeWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (editable.length() == CODE_LENGTH)
+                mInputMethodManager.hideSoftInputFromWindow(mEtCode.getWindowToken(), 0);
+        }
+    };
 
     @Nullable
     @Override
@@ -79,11 +103,13 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         mActivity = (LoginActivity) getBaseActivity();
         mViewController = new FmtGetCodeCtrl(this);
 
+        mInputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mDrawableOnButtonEnterEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_green_button);
         mDrawableOnButtonEnterDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
         mColorGrideperlevy = ContextCompat.getColor(getContext(), R.color.grideperlevy);
         mColorSilverGrey = ContextCompat.getColor(getContext(), R.color.silver_gray);
         mColorMarengo = ContextCompat.getColor(getContext(), R.color.marengo);
+        mEtCode.addTextChangedListener(mInputCodeWatcher);
 
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
         mBtnEnter.setOnClickListener(v -> mViewController.login());

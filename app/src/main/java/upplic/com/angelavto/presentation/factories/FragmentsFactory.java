@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import upplic.com.angelavto.presentation.views.fragments.AboutFragment;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.fragments.BaseFragment;
+import upplic.com.angelavto.presentation.views.fragments.BeaconShopFromSelectBeaconFragment;
 import upplic.com.angelavto.presentation.views.fragments.BeaconsShopFragment;
 import upplic.com.angelavto.presentation.views.fragments.CreateCarFragment;
 import upplic.com.angelavto.presentation.views.fragments.SelectBeaconFragment;
@@ -26,6 +27,7 @@ public class FragmentsFactory {
         mFragmentsList.add(Fragments.SELECT_BEACON.id, new SelectBeaconFragment());
         mFragmentsList.add(Fragments.CRAETE_CAR.id, new CreateCarFragment());
         mFragmentsList.add(Fragments.ABOUT.id, new AboutFragment());
+        mFragmentsList.add(Fragments.BEACON_SHOP_FROM_SELECT_BEACON.id, new BeaconShopFromSelectBeaconFragment());
 
         for (BaseFragment fragment : mFragmentsList)
             addBundle(fragment);
@@ -44,7 +46,8 @@ public class FragmentsFactory {
         SELECT_BEACON(1),
         CRAETE_CAR(2),
         ABOUT(3),
-        AVTO(4);
+        BEACON_SHOP_FROM_SELECT_BEACON(4),
+        AVTO(5);
 
         public int id;
         Fragments(int id) {

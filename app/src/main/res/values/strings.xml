@@ -20,9 +20,9 @@
     <string name="garage">Мой гараж</string>
     <string name="cant_load_data">Не удалось загрузить данные</string>
     <string name="need_input_code">Нужно ввести код!</string>
-    <string name="add_car_to_garage">Добавить автомобиль в гараж</string>
+    <string name="add_car_to_garage">Добавить автомобиль в базу приложения</string>
     <string name="car_title">Название</string>
-    <string name="phone">Сим-карта в маяке</string>
+    <string name="phone">Номер сим-карты в маяке</string>
     <string name="add">Добавить</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>

@@ -43,6 +43,6 @@ public class FmtSelectBeaconController extends ViewController<SelectBeaconFragme
     }
 
     public void showBeaconsShopFragment() {
-        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.BEACONS_SHOP));
+        mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.BEACON_SHOP_FROM_SELECT_BEACON));
     }
 }

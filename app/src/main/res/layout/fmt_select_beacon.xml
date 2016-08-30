@@ -10,60 +10,62 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="17dp"
-        android:src="@drawable/beacon"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="40dp"
+        android:src="@drawable/beacon" />
 
     <TextView
+        android:id="@+id/fmt_select_beacon_tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fmt_select_beacon_im_livering"
+        android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:paddingBottom="10dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:paddingTop="20dp"
         android:text="@string/fmt_login_description"
-        android:id="@+id/fmt_select_beacon_tv_description"
-        android:layout_gravity="center_horizontal"
         android:textColor="@color/slate_gray"
-        android:textSize="15sp"
-        android:layout_below="@+id/fmt_select_beacon_im_livering"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/v_select_beacon_btn_open_shop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector_marengo_button"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:layout_marginRight="30dp"
-        android:text="@string/i_have_not_beacon"
-        android:textAllCaps="false"
-        android:textColor="@color/grideperlevy"
-        android:textSize="15sp"
-        android:layout_above="@+id/v_select_beacon_btn_start_app"
-        android:layout_alignLeft="@+id/v_select_beacon_btn_start_app"
-        android:layout_alignStart="@+id/v_select_beacon_btn_start_app" />
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/v_select_beacon_btn_start_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_green_button"
+        android:layout_above="@+id/v_select_beacon_btn_open_shop"
+        android:layout_alignLeft="@+id/v_select_beacon_btn_open_shop"
+        android:layout_alignStart="@+id/v_select_beacon_btn_open_shop"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/selector_marengo_button"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
+        android:text="@string/i_have_beacon"
+        android:textAllCaps="false"
+        android:textColor="@color/grideperlevy"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/v_select_beacon_btn_open_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
-        android:text="@string/i_have_beacon"
+        android:background="@drawable/selector_green_button"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/i_have_not_beacon"
         android:textAllCaps="false"
         android:textColor="@color/grideperlevy"
-        android:textSize="15sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="15sp" />
+
+
 </RelativeLayout>
