@@ -26,6 +26,7 @@ import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.utils.PhoneNumberTextWatcher;
 import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
+import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 
 public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
@@ -75,6 +76,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         super.onStart();
         try {
             getBaseActivity().getSupportActionBar().setTitle(R.string.add_car);
+            ((MainActivity) getBaseActivity()).getToolbar().getMenu().clear();
         } catch (NullPointerException e) {
 
         }

@@ -46,9 +46,12 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
        mGetCarDetal.execute(mRootView.getCarOptions().getId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
+               .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(car -> {mRootView.setCatDetail(car);
+                            mRootView.showStopLoad();
                             notifyFragments();},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: start error "+e.toString()));
+                        e -> { mRootView.showStopLoad();
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: start error "+e.toString());});
     }
 
     private void notifyFragments() {

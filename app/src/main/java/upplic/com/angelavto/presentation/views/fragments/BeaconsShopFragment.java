@@ -20,6 +20,7 @@ import upplic.com.angelavto.presentation.adapters.MultyListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.BeaconShopBinder;
 import upplic.com.angelavto.presentation.view_controllers.FmtBeaconsShopCtrl;
 import upplic.com.angelavto.presentation.view_controllers.ViewController;
+import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 
 public class BeaconsShopFragment extends BaseFragment<FmtBeaconsShopCtrl> {
@@ -55,6 +56,7 @@ public class BeaconsShopFragment extends BaseFragment<FmtBeaconsShopCtrl> {
         super.onStart();
         try {
             getBaseActivity().getSupportActionBar().setTitle(R.string.buy_beacon);
+            ((MainActivity) getBaseActivity()).getToolbar().getMenu().clear();
         } catch (NullPointerException e) {
 
         }

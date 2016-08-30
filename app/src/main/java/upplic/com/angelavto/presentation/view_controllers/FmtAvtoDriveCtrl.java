@@ -1,9 +1,7 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
-
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,6 +17,7 @@ import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
+
 
 public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
 
@@ -47,32 +46,28 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
         }
     }
 
-    public void changeState() {
+    public void changeState(boolean isChecked) {
         Car car = mRootView.getCar();
-        car.setStatus(!car.isStatus());
+        car.setStatus(isChecked);
         Status status = new Status(car.getId(), car.isStatus(), car.isRecord());
         mSetStatus.execute(status)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
-                    String message = "Настройки для '"+car.getTitle()+"' изменены.";
-                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
                     notifyMenuItem(car);
-                    mRootView.initStatusButton();})
+                    mRootView.setStatusValue(isChecked);})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
     }
 
-    public void changeNotification() {
+    public void changeNotification(boolean isChecked) {
         CarOptions carOptions = mRootView.getCarOptions();
-        carOptions.setNotification(!carOptions.isNotification());
+        carOptions.setNotification(isChecked);
         mUpdateCarDB.execute(carOptions)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
-                    String message = "Настройки для '"+carOptions.getTitle()+"' изменены.";
-                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
-                    mRootView.initNotificationButton();})
+                    mRootView.setNotificationValue(isChecked);})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeNotification error "+e.toString()));
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
+import com.rey.material.widget.ProgressView;
 
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
     ViewPager mVpBody;
     @BindView(R.id.fmt_avto_tl_tabs)
     TabLayout mTlTabs;
+    @BindView(R.id.fmt_avto_pv_progress)
+    ProgressView mPvProgress;
 
     private CarOptions mCarOptions;
     private Car mCar;
@@ -68,6 +71,12 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         }
     }
 
+    @Override
+    public void refresh() {
+        super.refresh();
+        mViewController.initCarDetail();
+    }
+
     public void loadData(List<TabLayout.Tab> tabs, List<Fragment> fragments) {
         mAdapter.loadData(tabs, fragments);
     }
@@ -98,9 +107,11 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         return mCarOptions;
     }
 
-    @Override
-    public void refresh() {
-        super.refresh();
-        mViewController.initCarDetail();
+    public void showStartLoad() {
+        mPvProgress.start();
+    }
+
+    public void showStopLoad() {
+        mPvProgress.stop();
     }
 }

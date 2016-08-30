@@ -29,6 +29,7 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.RecordsActivity;
 import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
@@ -90,6 +91,15 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
         if (car != null) {
             Intent intent = new Intent(mRootView.getContext(), RecordsActivity.class);
             intent.putExtra(RecordsActivity.CAR_ID_KEY, car.getId());
+            mRootView.startActivity(intent);
+        }
+    }
+
+    public void openEditAvtoActivity() {
+        Car car = mRootView.getCar();
+        if (car != null) {
+            Intent intent = new Intent(getRootView().getContext(), EditAvtoActivity.class);
+            intent.putExtra(EditAvtoActivity.CAR_TAG, car);
             mRootView.startActivity(intent);
         }
     }

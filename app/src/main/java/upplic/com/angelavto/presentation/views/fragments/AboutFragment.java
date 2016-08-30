@@ -16,6 +16,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 public class AboutFragment extends BaseFragment {
 
@@ -48,6 +49,7 @@ public class AboutFragment extends BaseFragment {
         super.onStart();
         try {
             getBaseActivity().getSupportActionBar().setTitle(R.string.about);
+            ((MainActivity) getBaseActivity()).getToolbar().getMenu().clear();
         } catch (NullPointerException e) {
 
         }

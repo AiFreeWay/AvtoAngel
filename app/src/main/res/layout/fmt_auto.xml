@@ -13,7 +13,6 @@
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/gray_box"
-        android:layout_below="@+id/fmt_avto_toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -24,4 +23,15 @@
         android:layout_below="@+id/fmt_avto_tl_tabs"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/fmt_avto_pv_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:pv_autostart="false"
+        app:pv_circular="false"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
 </RelativeLayout>
