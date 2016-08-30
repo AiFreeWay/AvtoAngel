@@ -1,5 +1,6 @@
 package upplic.com.angelavto.presentation.views.activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -44,6 +46,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     private MaterialMenuIconToolbar mMenuDrawer;
     private MultyExListViewAdapter<AppMenuItem, AppMenuItem> mAdapter;
     private Dialog mRestartDialog;
+    private InputMethodManager mInputMethodManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         setContentView(R.layout.ac_main);
         ButterKnife.bind(this);
         initToolbar();
+        mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mRestartDialog = new Dialog(this, R.style.login_dialog)
                 .title(R.string.token_bad)
                 .titleColor(ContextCompat.getColor(this, R.color.slate_gray))
@@ -147,7 +151,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     private void initToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-        mToolbar.setNavigationOnClickListener(v -> driveMenu());
+        mToolbar.setNavigationOnClickListener(v -> navigationClickHandler());
         mMenuDrawer = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
             @Override
             public int getToolbarViewId() {
@@ -160,5 +164,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     private View getHeaderView() {
         return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_header, mElvMenu, false);
+    }
+
+    private void navigationClickHandler() {
+        driveMenu();
+        mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 }
