@@ -52,8 +52,9 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
 
     @Override
     public void start() {
-        mInterval = Observable.interval(1, TimeUnit.SECONDS)
+        mInterval = Observable.interval(3, TimeUnit.SECONDS)
                 .flatMap(aLong -> mGetCarDetal.execute(mRootView.getCar().getId()))
+                .distinct()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(car -> {

@@ -1,7 +1,9 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
+
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +19,6 @@ import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
-
 
 public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
 
@@ -46,28 +47,40 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
         }
     }
 
-    public void changeState(boolean isChecked) {
+    public void changeState() {
         Car car = mRootView.getCar();
-        car.setStatus(isChecked);
+        car.setStatus(!car.isStatus());
         Status status = new Status(car.getId(), car.isStatus(), car.isRecord());
         mSetStatus.execute(status)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
+                    String message = null;
+                    if (car.isStatus())
+                        message = "Защита для '"+car.getTitle()+"' включена.";
+                    else
+                        message = "Защита для '"+car.getTitle()+"' отключена.";
+                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
                     notifyMenuItem(car);
-                    mRootView.setStatusValue(isChecked);})
+                    mRootView.initStatusButton();})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
     }
 
-    public void changeNotification(boolean isChecked) {
+    public void changeNotification() {
         CarOptions carOptions = mRootView.getCarOptions();
-        carOptions.setNotification(isChecked);
+        carOptions.setNotification(!carOptions.isNotification());
         mUpdateCarDB.execute(carOptions)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
-                    mRootView.setNotificationValue(isChecked);})
+                    String message = null;
+                    if (carOptions.isNotification())
+                        message = "Оповещения для '"+carOptions.getTitle()+"' включены.";
+                    else
+                        message = "Оповещения для '"+carOptions.getTitle()+"' отключены.";
+                    Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
+                    mRootView.initNotificationButton();})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeNotification error "+e.toString()));
     }

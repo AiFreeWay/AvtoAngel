@@ -8,16 +8,12 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -34,7 +30,6 @@ import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.receivers.NetworkStateReceiver;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
-import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
 public class MainActivity extends BaseActivity<AcMainCtrl> {
@@ -82,10 +77,19 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(mNetState);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mMenuDrawer.syncState(savedInstanceState);
-
     }
 
     @Override
@@ -111,7 +115,6 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     public void onStop() {
         super.onStop();
         mViewController.stop();
-        unregisterReceiver(mNetState);
     }
 
     @Override

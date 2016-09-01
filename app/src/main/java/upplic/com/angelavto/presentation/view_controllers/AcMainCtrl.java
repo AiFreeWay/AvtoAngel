@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.orhanobut.hawk.Hawk;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -201,7 +202,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     private void startAlarmChecking() {
-        mInterval = Observable.interval(1, TimeUnit.SECONDS)
+        mInterval = Observable.interval(3, TimeUnit.SECONDS)
                 .flatMap(aLong -> mCheckAlarm.execute())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -210,7 +211,6 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     private void checkAlarm(List<Alarm> alarms) {
-        Log.d("++++", "checkAlarm: subby");
     }
 
     private CarOptions getLatestCar(List<CarOptions> cars) {

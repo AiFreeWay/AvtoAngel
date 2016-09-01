@@ -1,7 +1,6 @@
 package upplic.com.angelavto.presentation.factories;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 
@@ -11,16 +10,9 @@ import com.rey.material.app.Dialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.domain.interactors.Interactor0;
-import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.views.activities.BaseActivity;
-import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
 import upplic.com.angelavto.presentation.wrappers.ActionHundleMemento;
