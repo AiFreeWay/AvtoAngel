@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.maskedphoneedittext.MaskedPhoneEditText;
 import com.rey.material.widget.ProgressView;
 import com.rey.material.widget.Spinner;
 
@@ -33,8 +34,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     Button mBtnCreateCar;
     @BindView(R.id.fmt_create_car_et_car)
     EditText mEtTitle;
-    @BindView(R.id.fmt_create_car_et_phone)
-    EditText mEtPhone;
+    @BindView(R.id.fmt_create_car_cv_phone)
+    MaskedPhoneEditText mEtPhone;
     @BindView(R.id.fmt_create_car_pv_progress)
     ProgressView mPvProgress;
     @BindView(R.id.fmt_create_car_spn_beacon_type)
@@ -63,12 +64,10 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtCreateCarCtrl(this);
         mActivity = (MainActivity) getActivity();
-        mPhoneNumberMask = new PhoneNumberTextWatcher(mEtPhone);
         mDrawableOnButtonEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button);
         mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_marengo_disabled);
         mColorOnButtonEnabled = ContextCompat.getColor(getContext(), R.color.grideperlevy);
         mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
-        mEtPhone.addTextChangedListener(mPhoneNumberMask);
         mBtnCreateCar.setOnClickListener(v -> doOnCreateCar());
         mVgRoot.setOnTouchListener((view, motionEvent) -> {
             mActivity.hideKeyboard();
@@ -126,7 +125,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
 
     private void doOnCreateCar() {
         String title = mEtTitle.getText().toString();
-        String phone = mEtPhone.getText().toString();
+        String phone = mEtPhone.getText();
         if (title.isEmpty() || phone.isEmpty() || phone.length() != PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH)
             Toast.makeText(getContext(), R.string.need_fill_fields, Toast.LENGTH_SHORT).show();
         else
@@ -136,7 +135,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     private Car getCar() {
         Car car = new Car();
         car.setTitle(mEtTitle.getText().toString());
-        car.setTrackerNumber(mEtPhone.getText().toString());
+        car.setTrackerNumber(mEtPhone.getText());
         int beaconType = mAdapter.getItem(mSpnBeaconType.getSelectedItemPosition()).getId();
         car.setTrackerType(beaconType);
         return car;

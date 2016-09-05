@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/autoangel_android.iml" filepath="$PROJECT_DIR$/autoangel_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maskedphoneedittext/maskedphoneedittext.iml" filepath="$PROJECT_DIR$/maskedphoneedittext/maskedphoneedittext.iml" />
     </modules>
   </component>
 </project>
