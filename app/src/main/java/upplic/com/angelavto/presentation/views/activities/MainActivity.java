@@ -27,12 +27,15 @@ import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.presentation.adapters.MultyExListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
+import upplic.com.angelavto.presentation.models.Alarm;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.receivers.NetworkStateReceiver;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 
 public class MainActivity extends BaseActivity<AcMainCtrl> {
+
+    public static final String ALARM_TAG = "alarmmain";
 
     @BindView(R.id.ac_main_toolbar)
     Toolbar mToolbar;
@@ -48,12 +51,14 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     private Dialog mRestartDialog;
     private InputMethodManager mInputMethodManager;
     private BroadcastReceiver mNetState;
+    private Alarm mAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_main);
         ButterKnife.bind(this);
+        mAlarm = (Alarm) getIntent().getSerializableExtra(ALARM_TAG) ;
         initToolbar();
         mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mRestartDialog = new Dialog(this, R.style.login_dialog)
@@ -157,7 +162,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         return mToolbar;
     }
 
-    public void showDialog() {
+    public void showInvalidKeyDialog() {
         mRestartDialog.show();
     }
 
@@ -167,6 +172,10 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         } catch (Exception e) {
 
         }
+    }
+
+    public Alarm getAlarm() {
+        return mAlarm;
     }
 
     private void initToolbar() {

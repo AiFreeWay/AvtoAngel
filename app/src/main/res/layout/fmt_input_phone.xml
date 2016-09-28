@@ -2,26 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fmt_input_phone_root"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:paddingLeft="23dp"
     android:paddingRight="23dp">
 
-
-    <EditText
+    <com.example.maskedphoneedittext.MaskedPhoneEditText
         android:id="@+id/fmt_input_phone_et_number"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:drawableLeft="@drawable/ic_phone_gray"
-        android:drawablePadding="15dp"
-        android:fontFamily="sans-serif-light"
-        android:hint="@string/phone_number_input"
-        android:inputType="phone"
-        android:lines="1"
-        android:background="@drawable/edit_text_background"
-        android:maxLines="1"
-        android:textSize="19sp" />
+        app:hint="@string/phone_number"
+        app:drawableLeft="@drawable/ic_phone_gray"
+        app:fontFamily="sans-serif-light"
+        app:templateFontSize="21sp"
+        app:textFontSize="19sp"
+        app:drawablePadding="15dp" />
 
     <Button
         android:id="@+id/fmt_input_phone_btn_continue"

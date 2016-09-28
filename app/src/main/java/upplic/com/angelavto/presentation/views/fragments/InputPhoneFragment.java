@@ -1,6 +1,5 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -16,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.maskedphoneedittext.MaskedPhoneEditText;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action0;
@@ -27,7 +28,7 @@ import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 public class InputPhoneFragment extends BaseFragment {
 
     @BindView(R.id.fmt_input_phone_et_number)
-    EditText mEtNumber;
+    MaskedPhoneEditText mEtNumber;
     @BindView(R.id.fmt_input_phone_btn_continue)
     Button mBtnContinue;
     @BindView(R.id.fmt_input_phone_root)
@@ -38,10 +39,9 @@ public class InputPhoneFragment extends BaseFragment {
     private Drawable mDrawableOnButtonDisabled;
     private int mColorOnButtonEnabled;
     private int mColorOnButtonDisabled;
-    private PhoneNumberTextWatcher mPhoneNumberMask;
     private InputMethodManager mInputMethodManager;
 
-    private PhoneNumberTextWatcher.AfterTextChangeListener mActionWather = editable -> {
+    private com.example.maskedphoneedittext.PhoneNumberTextWatcher.AfterTextChangeListener mActionWather = editable -> {
         if (editable.length() == PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH) {
             enabledButton();
             mInputMethodManager.hideSoftInputFromWindow(mEtNumber.getWindowToken(), 0);
@@ -67,10 +67,7 @@ public class InputPhoneFragment extends BaseFragment {
         mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
         mColorOnButtonEnabled = ContextCompat.getColor(getContext(), R.color.grideperlevy);
         mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
-        mPhoneNumberMask = new PhoneNumberTextWatcher(mEtNumber);
-
-        mPhoneNumberMask.setAfterTextChangeListener(mActionWather);
-        mEtNumber.addTextChangedListener(mPhoneNumberMask);
+        mEtNumber.setAfterTextChangeListener(mActionWather);
         mBtnContinue.setOnClickListener(v -> nextSlide());
         mEtNumber.setText(mActivity.getNubmer());
         mVgRoot.setOnTouchListener((view, motionEvent) -> {

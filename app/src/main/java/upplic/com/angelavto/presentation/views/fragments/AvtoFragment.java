@@ -22,6 +22,7 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.adapters.ViewPagerTabsAdapter;
+import upplic.com.angelavto.presentation.models.Alarm;
 import upplic.com.angelavto.presentation.view_controllers.FmtAvtoCtrl;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
@@ -29,6 +30,7 @@ import upplic.com.angelavto.presentation.views.activities.MainActivity;
 public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
 
     public static final String CAR_OPTIONS_TAG = "carrr";
+    public static final String ALARM_TAG = "alarmcar";
 
     @BindView(R.id.fmt_avto_vp_body)
     ViewPager mVpBody;
@@ -41,6 +43,7 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
     private Car mCar;
     private ViewPagerTabsAdapter mAdapter;
     private MainActivity mActivity;
+    private Alarm mAlarm;
 
     @Nullable
     @Override
@@ -56,8 +59,13 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         mViewController = new FmtAvtoCtrl(this);
         mActivity = (MainActivity) getActivity();
         mCarOptions  = (CarOptions) getArguments().getSerializable(CAR_OPTIONS_TAG);
+        mAlarm  = (Alarm) getArguments().getSerializable(ALARM_TAG);
         mAdapter = new ViewPagerTabsAdapter(getChildFragmentManager(), mTlTabs, mVpBody);
         mVpBody.setAdapter(mAdapter);
+        if (mAlarm != null)
+            setDangerState();
+        else
+            setNormalState();
         mViewController.start();
     }
 

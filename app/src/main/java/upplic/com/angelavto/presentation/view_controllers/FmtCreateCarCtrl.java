@@ -42,7 +42,7 @@ public class FmtCreateCarCtrl extends ViewController<CreateCarFragment> {
                 .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(products -> {mRootView.loadData(products);
                             mRootView.showSuccesLoad();},
-                        e -> { mRootView.showDeniedLoad(R.string.cant_load_data);
+                        e -> { mRootView.showDeniedLoad();
                             Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtCreateCarCtrl: start error "+e.toString());});
     }
 
@@ -58,7 +58,7 @@ public class FmtCreateCarCtrl extends ViewController<CreateCarFragment> {
                                 Toast.makeText(mRootView.getContext(), R.string.create_car_success, Toast.LENGTH_SHORT).show();
                             } else
                                 Toast.makeText(mRootView.getContext(), R.string.car_exists, Toast.LENGTH_SHORT).show();},
-                        e -> { mRootView.showDeniedLoad(R.string.cant_final_execute);
+                        e -> { mRootView.showDeniedLoad();
                             Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtCreateCarCtrl: addCar error "+e.toString());});
     }
 }

@@ -147,6 +147,11 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Observable sendGcmToken(String token) {
+        return mNetworkController.sendGcmToken(getToken(), token);
+    }
+
+    @Override
     public Observable<List<Car>> getCarsNetworkEmit() {
         return mNetworkController.getCars(getToken())
                 .flatMap(getCarsResponse -> {

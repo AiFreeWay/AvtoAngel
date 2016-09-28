@@ -4,6 +4,7 @@ package upplic.com.angelavto.presentation.app;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;

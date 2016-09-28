@@ -113,7 +113,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         mBtnCreateCar.setTextColor(mColorOnButtonEnabled);
     }
 
-    public void showDeniedLoad(int messageResiId) {
+    public void showDeniedLoad() {
         Toast.makeText(getContext(), R.string.cant_load_data, Toast.LENGTH_SHORT).show();
         mPvProgress.stop();
     }

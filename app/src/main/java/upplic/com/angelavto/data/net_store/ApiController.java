@@ -12,6 +12,7 @@ import upplic.com.angelavto.data.net_store.requests_entityes.DeleteCarRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarDetailRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordDetailRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordsRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.SendGcmTokenRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.SetStatusRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.UpsertCarRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarsRequest;
@@ -24,6 +25,7 @@ import upplic.com.angelavto.data.net_store.response_entityes.DeleteCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarDetailResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetRecordDetailResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetRecordsResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.SendGcmTokenResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.SetStatusResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.UpsertCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarsResponse;
@@ -80,4 +82,8 @@ public interface ApiController {
     @Headers( "Content-Type: application/json" )
     @POST(NetworkController.API_EXTENSIONS)
     Observable<CheckAlarmResponse> checkAlarm(@Body CheckAlarmRequest body);
+
+    @Headers( "Content-Type: application/json" )
+    @POST(NetworkController.API_EXTENSIONS)
+    Observable<SendGcmTokenResponse> sendGcmToken(@Body SendGcmTokenRequest body);
 }

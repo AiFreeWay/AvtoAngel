@@ -28,16 +28,19 @@ public class AcLoginCtrl extends ViewController<LoginActivity> {
 
     @Override
     public void start() {
-        if (Hawk.contains(LoginActivity.FIRTS_START))
-            startActivity(MainActivity.class);
-        else if (Hawk.contains(LoginActivity.API_KEY_TAG))
-            startActivity(SelectBeaconActivity.class);
+        Intent intent = null;
+        if (Hawk.contains(LoginActivity.FIRTS_START)) {
+            intent = getStartActivityIntent(MainActivity.class);
+            if (mRootView.getAlarm() != null)
+                intent.putExtra(MainActivity.ALARM_TAG, mRootView.getAlarm());
+        } else if (Hawk.contains(LoginActivity.API_KEY_TAG))
+            intent = getStartActivityIntent(SelectBeaconActivity.class);
+        mRootView.startActivity(intent);
     }
 
-    private void startActivity(Class<? extends Activity> activityClass) {
-        Intent intent = new Intent(mRootView, activityClass)
+    private Intent getStartActivityIntent(Class<? extends Activity> activityClass) {
+        return new Intent(mRootView, activityClass)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mRootView.startActivity(intent);
     }
 }

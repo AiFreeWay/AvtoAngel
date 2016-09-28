@@ -6,30 +6,27 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.inputmethod.InputMethodManager;
 
 import com.orhanobut.hawk.Hawk;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.Interactor0;
-import upplic.com.angelavto.domain.models.Alarm;
+
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.mappers.CarMapper;
+import upplic.com.angelavto.presentation.models.Alarm;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
@@ -58,8 +55,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     Interactor0<List<CarOptions>> mGetCarsOptions;
     @Inject @Named(ActivityModule.CHECK_KEY)
     Interactor0<Boolean> mCheckKey;
-    @Inject @Named(ActivityModule.CHECK_ALARM)
-    Interactor0<List<Alarm>> mCheckAlarm;
+    @Inject @Named(ActivityModule.SEND_GCM_TOKEN)
+    Interactor0<Void> mSendGcmToken;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
@@ -81,8 +78,13 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                             if (!result)
-                                mRootView.showDialog();},
+                                mRootView.showInvalidKeyDialog();},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
+        mSendGcmToken.execute()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aVoid -> {}, e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
+
         Hawk.put(LoginActivity.FIRTS_START, true);
         mMenu = mAppMenuFactory.getMenu();
         checkCarsCount();
@@ -191,27 +193,19 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .subscribe(carOptionses -> {
                             mRootView.loadData(joinCarsAndMenuItems(mMenu, cars, carOptionses));
                             mRootView.getLvMenu().expandGroup(AppMenuFactory.MenuItems.AVTO.id);
-                            if (cars.size()>0)
-                                startAvtoFragment(getLatestCar(carOptionses));
-                            else
-                                mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
-                            startAlarmChecking();},
+                            if (cars.size()>0) {
+                                if (mRootView.getAlarm() != null)
+                                    startAvtoFragment(findAlarmendCar(carOptionses), mRootView.getAlarm());
+                                else
+                                    startAvtoFragment(getLatestCar(carOptionses));
+                            } else
+                                mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));},
                         e -> { mRootView.loadData(mMenu);
                             mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
                             Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: showStartFragment error "+e.toString());});
     }
 
-    private void startAlarmChecking() {
-        mInterval = Observable.interval(3, TimeUnit.SECONDS)
-                .flatMap(aLong -> mCheckAlarm.execute())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::checkAlarm,
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: startAlarmChecking error "+e.toString()));
-    }
 
-    private void checkAlarm(List<Alarm> alarms) {
-    }
 
     private CarOptions getLatestCar(List<CarOptions> cars) {
         CarOptions latestCar = new CarOptions();
@@ -221,9 +215,27 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         return latestCar;
     }
 
+    private CarOptions findAlarmendCar(List<CarOptions> cars) {
+        CarOptions latestCar = new CarOptions();
+        Alarm alarm = mRootView.getAlarm();
+        for (CarOptions car : cars)
+            if (car.getId() == alarm.getCarId()) {
+                latestCar = car;
+                break;
+            }
+        return latestCar;
+    }
+
     private void startAvtoFragment(CarOptions car) {
         Fragment fragment = mFragmentsFactory.getFragment(FragmentsFactory.Fragments.AVTO);
         fragment.getArguments().putSerializable(AvtoFragment.CAR_OPTIONS_TAG, car);
+        mRouter.show(fragment);
+    }
+
+    private void startAvtoFragment(CarOptions car, Alarm alarm) {
+        Fragment fragment = mFragmentsFactory.getFragment(FragmentsFactory.Fragments.AVTO);
+        fragment.getArguments().putSerializable(AvtoFragment.CAR_OPTIONS_TAG, car);
+        fragment.getArguments().putSerializable(AvtoFragment.ALARM_TAG, alarm);
         mRouter.show(fragment);
     }
 }

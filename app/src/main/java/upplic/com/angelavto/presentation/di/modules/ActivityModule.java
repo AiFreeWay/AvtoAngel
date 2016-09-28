@@ -19,6 +19,7 @@ import upplic.com.angelavto.domain.executors.GetCarsOptions;
 import upplic.com.angelavto.domain.executors.GetRecordDetail;
 import upplic.com.angelavto.domain.executors.GetRecords;
 import upplic.com.angelavto.domain.executors.Login;
+import upplic.com.angelavto.domain.executors.RegisterPushToken;
 import upplic.com.angelavto.domain.executors.Registration;
 import upplic.com.angelavto.domain.executors.SetStatus;
 import upplic.com.angelavto.domain.executors.UpdateCar;
@@ -62,7 +63,8 @@ public class ActivityModule {
     public static final String SET_STATUS = "setstatus";
     public static final String GET_RECORDS = "getrecords";
     public static final String GET_RECORD_DETAIL = "getrecorddetail";
-    public static final String CHECK_ALARM = "check_alarm";
+    public static final String CHECK_ALARM = "checkalarm";
+    public static final String SEND_GCM_TOKEN = "sendgcmtoken";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -197,5 +199,11 @@ public class ActivityModule {
     @Named(CHECK_ALARM)
     public Interactor0<List<Alarm>> provideCheckAlarm(CheckAlarm checkAlarm) {
         return checkAlarm;
+    }
+
+    @Provides
+    @Named(SEND_GCM_TOKEN)
+    public Interactor0<Void> provideRegisterPushToken(RegisterPushToken registerPushToken) {
+        return registerPushToken;
     }
 }

@@ -65,40 +65,34 @@
         style="@style/Material.Widget.Spinner"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignEnd="@+id/fmt_create_car_il_phone"
-        android:layout_alignLeft="@+id/fmt_create_car_il_phone"
-        android:layout_alignRight="@+id/fmt_create_car_il_phone"
-        android:layout_alignStart="@+id/fmt_create_car_il_phone"
-        android:layout_below="@+id/fmt_create_car_il_phone"
+        android:layout_alignEnd="@+id/fmt_create_car_cv_phone"
+        android:layout_alignLeft="@+id/fmt_create_car_cv_phone"
+        android:layout_alignRight="@+id/fmt_create_car_cv_phone"
+        android:layout_alignStart="@+id/fmt_create_car_cv_phone"
+        android:layout_below="@+id/fmt_create_car_cv_phone"
         android:layout_marginTop="15dp"
         app:rd_style="@style/Material.Drawable.Ripple.Wave"
         app:spn_label="@string/beacon_type"
         app:spn_labelEnable="true"
         app:spn_labelTextColor="@color/green_jungle_krayola" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fmt_create_car_il_phone"
+
+    <com.example.maskedphoneedittext.MaskedPhoneEditText
+        android:id="@+id/fmt_create_car_cv_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/fmt_create_car_il_car"
+        android:layout_alignLeft="@+id/fmt_create_car_il_car"
+        android:layout_alignRight="@+id/fmt_create_car_il_car"
+        android:layout_alignStart="@+id/fmt_create_car_il_car"
         android:layout_below="@+id/fmt_create_car_il_car"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="10dp"
-        android:theme="@style/CarCreateEditText">
-
-        <com.example.maskedphoneedittext.MaskedPhoneEditText
-            android:id="@+id/fmt_create_car_cv_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hint="Номер сим-карты в маяке"
-            app:hintColor="@color/green_jungle_krayola"
-            android:layout_below="@+id/fmt_create_car_et_car"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/edit_text_background"
-            android:nextFocusForward="@+id/fmt_create_car_btn_create_car"/>
-    </android.support.design.widget.TextInputLayout>
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_background"
+        android:nextFocusForward="@+id/fmt_create_car_btn_create_car"
+        app:hint="@string/phone"
+        app:hintColor="@color/green_jungle_krayola"
+        app:templateFontSize="21sp"
+        app:textFontSize="19sp" />
 
     <Button
         android:id="@+id/fmt_create_car_btn_create_car"

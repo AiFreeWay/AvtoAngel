@@ -14,6 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.presentation.models.Alarm;
 import upplic.com.angelavto.presentation.adapters.LoginViewPagerAdapter;
 import upplic.com.angelavto.presentation.view_controllers.AcLoginCtrl;
 
@@ -23,6 +24,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
     public static final int GET_CODE_SLIDE_POSITION = 1;
     public static final String API_KEY_TAG = "apikey";
     public static final String FIRTS_START = "first_start";
+    public static final String ALARM_TAG = "alarm";
 
     @BindView(R.id.ac_login_vp_body)
     ViewPager mVpBody;
@@ -32,12 +34,14 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
     private LoginViewPagerAdapter mAdapter;
     private String mNubmer;
     private InputMethodManager mInputMethodManager;
+    private Alarm mAlarm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_login);
         ButterKnife.bind(this);
+        mAlarm = (Alarm) getIntent().getSerializableExtra(ALARM_TAG) ;
         mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mAdapter = new LoginViewPagerAdapter(getSupportFragmentManager());
         mVpBody.setAdapter(mAdapter);
@@ -45,8 +49,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         mViewController = new AcLoginCtrl(this);
         mVgRoot.setOnTouchListener((view, motionEvent) -> {
             mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            return true;
-        });
+            return true;});
         mViewController.start();
     }
 
@@ -61,5 +64,9 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
 
     public String getNubmer() {
         return mNubmer;
+    }
+
+    public Alarm getAlarm() {
+        return mAlarm;
     }
 }

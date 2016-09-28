@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/edit_text_background">
 
     <TextView
         android:id="@+id/v_maskedphone_tv_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
         android:lines="1"
         android:background="@android:color/transparent"
         android:maxLines="1"
         android:visibility="invisible"
         android:paddingTop="0dp"
-        android:textSize="19sp"
+        android:textSize="21sp"
         android:layout_gravity="left|top"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toRightOf="@+id/v_maskedphone_iv_image"
+        android:layout_toEndOf="@+id/v_maskedphone_iv_image" />
 
     <EditText
         android:id="@+id/v_maskedphone_et_number"
@@ -30,6 +29,14 @@
         android:maxLines="1"
         android:textSize="19sp"
         android:layout_gravity="left|top"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/v_maskedphone_iv_image"
+        android:layout_toEndOf="@+id/v_maskedphone_iv_image" />
+
+    <ImageView
+        android:id="@+id/v_maskedphone_iv_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
