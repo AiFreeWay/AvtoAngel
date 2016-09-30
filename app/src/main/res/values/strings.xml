@@ -7,7 +7,7 @@
     <string name="ac_select_beacon_Description">Ввести номер телефона</string>
     <string name="fmt_login_input_phone">Введите номер</string>
     <string name="fmt_get_code_description">Мы выслали код подтверждения на ваш номер</string>
-    <string name="fmt_login_description">Для работы приложения необходимо наличе GPS/GSM - маяка, позволяющего поддерживать связь между вашим автомобилем исмартфоном.</string>
+    <string name="fmt_login_description">Для работы приложения необходимо наличе GPS/GSM - маяка, позволяющего поддерживать связь между вашим автомобилем и смартфоном.</string>
     <string name="phone_number">Номер телефона</string>
     <string name="phone_number_input">Введите номер телефона</string>
     <string name="enter">Войти</string>
@@ -60,4 +60,7 @@
     <string name="enr_route">Конец маршрута</string>
     <string name="about">О программе</string>
     <string name="warning">Внимание</string>
+    <string name="imei">IMEI маяка</string>
+    <string name="input_car_title">Введите название машины</string>
+    <string name="input_imei">Введите imei маяка</string>
 </resources>

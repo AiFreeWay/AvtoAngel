@@ -3,6 +3,7 @@ package upplic.com.angelavto.presentation.views.fragments;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.maskedphoneedittext.MaskedPhoneEditText;
 import com.rey.material.widget.ProgressView;
 import com.rey.material.widget.Spinner;
 
@@ -32,10 +32,14 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
 
     @BindView(R.id.fmt_create_car_btn_create_car)
     Button mBtnCreateCar;
+    @BindView(R.id.fmt_create_car_il_car)
+    TextInputLayout mIlCar;
+    @BindView(R.id.fmt_create_car_il_imei)
+    TextInputLayout mIlImei;
     @BindView(R.id.fmt_create_car_et_car)
     EditText mEtTitle;
-    @BindView(R.id.fmt_create_car_cv_phone)
-    MaskedPhoneEditText mEtPhone;
+    @BindView(R.id.fmt_create_car_et_imei)
+    EditText mEtImei;
     @BindView(R.id.fmt_create_car_pv_progress)
     ProgressView mPvProgress;
     @BindView(R.id.fmt_create_car_spn_beacon_type)
@@ -43,7 +47,6 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     @BindView(R.id.fmt_create_cat_root)
     ViewGroup mVgRoot;
 
-    private PhoneNumberTextWatcher mPhoneNumberMask;
     private int mColorOnButtonEnabled;
     private int mColorOnButtonDisabled;
     private Drawable mDrawableOnButtonEnabled;
@@ -88,6 +91,12 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        hideTextInputLayoutsErrors();
+    }
+
+    @Override
     public void refresh() {
         super.refresh();
         getBaseActivity().refresh();
@@ -96,7 +105,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
 
     public void truncateFields() {
         mEtTitle.setText("");
-        mEtPhone.setText("");
+        mEtImei.setText("");
+        hideTextInputLayoutsErrors();
     }
 
     public void showStartLoad() {
@@ -124,20 +134,33 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     }
 
     private void doOnCreateCar() {
+        hideTextInputLayoutsErrors();
         String title = mEtTitle.getText().toString();
-        String phone = mEtPhone.getText();
-        if (title.isEmpty() || phone.isEmpty() || phone.length() != PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH)
-            Toast.makeText(getContext(), R.string.need_fill_fields, Toast.LENGTH_SHORT).show();
-        else
+        String phone = mEtImei.getText().toString();
+        boolean isFieldFalid = true;
+        if (title.isEmpty()) {
+            mIlCar.setError(getString(R.string.input_car_title));
+            isFieldFalid = false;
+        }
+        if (phone.isEmpty()) {
+            mIlImei.setError(getString(R.string.input_imei));
+            isFieldFalid = false;
+        }
+        if (isFieldFalid)
             mViewController.addCar(getCar());
     }
 
     private Car getCar() {
         Car car = new Car();
         car.setTitle(mEtTitle.getText().toString());
-        car.setTrackerNumber(mEtPhone.getText());
+        car.setTrackerNumber(mEtImei.getText().toString());
         int beaconType = mAdapter.getItem(mSpnBeaconType.getSelectedItemPosition()).getId();
         car.setTrackerType(beaconType);
         return car;
+    }
+
+    private void hideTextInputLayoutsErrors() {
+        mIlCar.setError(null);
+        mIlImei.setError(null);
     }
 }

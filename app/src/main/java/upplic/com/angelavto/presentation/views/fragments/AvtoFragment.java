@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
+import com.orhanobut.hawk.Hawk;
 import com.rey.material.widget.ProgressView;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
 
     public static final String CAR_OPTIONS_TAG = "carrr";
     public static final String ALARM_TAG = "alarmcar";
+    public static final String ALARM_WARNING_TAG = "alarmcar";
 
     @BindView(R.id.fmt_avto_vp_body)
     ViewPager mVpBody;
@@ -63,9 +65,9 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         mAdapter = new ViewPagerTabsAdapter(getChildFragmentManager(), mTlTabs, mVpBody);
         mVpBody.setAdapter(mAdapter);
         if (mAlarm != null)
+            mViewController.putWarningToHawk();
+        else if (Hawk.contains(ALARM_WARNING_TAG))
             setDangerState();
-        else
-            setNormalState();
         mViewController.start();
     }
 
@@ -109,6 +111,10 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
 
     public Car getCar() {
         return mCar;
+    }
+
+    public Alarm getAlarm() {
+        return mAlarm;
     }
 
     public CarOptions getCarOptions() {

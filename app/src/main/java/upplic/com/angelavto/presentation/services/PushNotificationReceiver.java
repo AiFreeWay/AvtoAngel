@@ -39,7 +39,6 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
     private void showNotification(RemoteMessage notiffication) {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         String title = notiffication.getData().get(TITLE_KEY);
-        Log.d("++++", "showNotification: "+notiffication.getData());
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(getString(R.string.warning))

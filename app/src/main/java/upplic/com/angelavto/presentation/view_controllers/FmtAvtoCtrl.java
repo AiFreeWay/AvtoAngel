@@ -2,6 +2,8 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 import android.util.Log;
 
+import com.orhanobut.hawk.Hawk;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,6 +38,15 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
         mFactory = mFactoryBuilder.build(mRootView.getTlTabs());
     }
 
+    public void putWarningToHawk() {
+        Hawk.putObservable(AvtoFragment.ALARM_WARNING_TAG, true)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(isPut -> mRootView.setDangerState(),
+                        e -> { mRootView.showStopLoad();
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: putWarningToHawk error "+e.toString());});
+    }
+
     @Override
     public void start() {
         mRootView.loadData(mFactory.getTabs(), mFactory.getFragments());
@@ -51,7 +62,7 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
                             mRootView.showStopLoad();
                             notifyFragments();},
                         e -> { mRootView.showStopLoad();
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: start error "+e.toString());});
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: initCarDetail error "+e.toString());});
     }
 
     private void notifyFragments() {

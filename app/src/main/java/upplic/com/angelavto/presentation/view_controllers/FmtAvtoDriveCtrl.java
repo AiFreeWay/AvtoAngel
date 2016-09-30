@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,6 +21,7 @@ import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
+import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 
 public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
 
@@ -83,6 +86,12 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                     mRootView.initNotificationButton();})
                 .subscribe(aVoid -> {},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeNotification error "+e.toString()));
+    }
+
+    public void offAlarm() {
+        Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
+        ((AvtoFragment) mRootView.getParentFragment()).setNormalState();
+        mRootView.initAlarmOffButton();
     }
 
     private void notifyMenuItem(Car car) {

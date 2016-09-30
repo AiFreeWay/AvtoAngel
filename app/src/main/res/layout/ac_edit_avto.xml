@@ -23,7 +23,8 @@
         android:layout_marginTop="20dp"
         android:background="@color/white"
         android:paddingTop="15dp"
-        android:theme="@style/CarCreateEditText">
+        theme="@style/CarCreateEditText"
+        android:textColorHint="@color/green_jungle_krayola">
 
         <EditText
             android:id="@+id/ac_edit_avto_et_car_title"
@@ -51,7 +52,8 @@
         android:background="@color/white"
         android:paddingBottom="20dp"
         android:paddingTop="15dp"
-        android:theme="@style/CarCreateEditText">
+        theme="@style/CarCreateEditText"
+        android:textColorHint="@color/green_jungle_krayola">
 
         <EditText
             android:id="@+id/ac_edit_avto_et_phone"
@@ -59,7 +61,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:fontFamily="sans-serif-light"
-            android:hint="@string/phone"
+            android:hint="@string/imei"
             android:inputType="text"
             android:lines="1"
             android:maxLines="1"

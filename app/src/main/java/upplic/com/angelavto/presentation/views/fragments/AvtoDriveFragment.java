@@ -1,12 +1,8 @@
 package upplic.com.angelavto.presentation.views.fragments;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.orhanobut.hawk.Hawk;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +32,8 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     Button mBtnNotification;
     @BindView(R.id.fmt_avto_drive_btn_update)
     Button mBtnUpdate;
+    @BindView(R.id.fmt_avto_drive_btn_alarm_off)
+    Button mBtnAlarmOff;
 
     private int mColorMarron;
     private int mColorGreen;
@@ -54,11 +54,15 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         setHasOptionsMenu(true);
         mViewController = new FmtAvtoDriveCtrl(this);
         mParentFragment = (AvtoFragment) getParentFragment();
+        if (mParentFragment.getAlarm() != null)
+            mTvWarning.setText(mParentFragment.getAlarm().getTitle());
         mColorMarron = ContextCompat.getColor(getContext(), R.color.marron);
         mColorGreen = ContextCompat.getColor(getContext(), R.color.green_jungle_krayola);
         mBtnStatus.setOnClickListener(v -> mViewController.changeState());
         mBtnNotification.setOnClickListener(v -> mViewController.changeNotification());
         mBtnUpdate.setOnClickListener(v -> refresh());
+        mBtnAlarmOff.setOnClickListener(v -> mViewController.offAlarm());
+        initAlarmOffButton();
     }
 
     @Override
@@ -110,6 +114,7 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
             mBtnStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock_red, 0, 0, 0);
         }
     }
+
     public void initNotificationButton() {
         mBtnNotification.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button));
         if (getCarOptions().isNotification()) {
@@ -118,6 +123,20 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         } else {
             mBtnNotification.setTextColor(mColorMarron);
             mBtnNotification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_notifications_red, 0, 0, 0);
+        }
+    }
+
+    public void initAlarmOffButton() {
+        if (Hawk.contains(AvtoFragment.ALARM_WARNING_TAG)) {
+            mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marron_button));
+            mBtnAlarmOff.setOnClickListener(v -> mViewController.offAlarm());
+            mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm_white, 0, 0, 0);
+        } else {
+            mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_marron_disabled));
+            mBtnAlarmOff.setOnClickListener(v -> {});
+            mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.silver_gray));
+            mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm, 0, 0, 0);
         }
     }
 }

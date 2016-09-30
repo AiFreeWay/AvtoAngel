@@ -2,6 +2,7 @@ package upplic.com.angelavto.presentation.views.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
                 .positiveActionClickListener(v -> {
                     Hawk.remove(LoginActivity.API_KEY_TAG);
                     Hawk.remove(LoginActivity.FIRTS_START);
-                    this.finish();});
+                    startLoginActivity();});
         mViewController = new AcMainCtrl(this);
         mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));
         mElvMenu.addHeaderView(getHeaderView());
@@ -195,5 +196,12 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
 
     private View getHeaderView() {
         return mViewController.getLayoutInflater().inflate(R.layout.v_app_menu_header, mElvMenu, false);
+    }
+
+    private void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
