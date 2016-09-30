@@ -107,7 +107,7 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
 
         mInputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mDrawableOnButtonEnterEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_green_button);
-        mDrawableOnButtonEnterDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
+        mDrawableOnButtonEnterDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_disabled);
         mColorGrideperlevy = ContextCompat.getColor(getContext(), R.color.grideperlevy);
         mColorSilverGrey = ContextCompat.getColor(getContext(), R.color.silver_gray);
         mColorMarengo = ContextCompat.getColor(getContext(), R.color.marengo);
@@ -153,6 +153,10 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         enabledButtonEnter();
         mEtCode.setEnabled(true);
         mProgress.start();
+    }
+
+    public void setCode(String code) {
+        mEtCode.setText(code);
     }
 
     public void showToast(int stringRes) {

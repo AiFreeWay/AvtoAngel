@@ -2,7 +2,7 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
+import upplic.com.angelavto.presentation.views.fragments.GetCodeFragment;
 
 import com.orhanobut.hawk.Hawk;
 
@@ -16,6 +16,8 @@ import upplic.com.angelavto.presentation.views.activities.SelectBeaconActivity;
 
 public class AcLoginCtrl extends ViewController<LoginActivity> {
 
+    private static final int GET_CODE_FRAGMENT_INDEX = 1;
+
     @Inject
     LoginViewPagerFactory mFactory;
 
@@ -28,16 +30,20 @@ public class AcLoginCtrl extends ViewController<LoginActivity> {
 
     @Override
     public void start() {
-        Intent intent;
         if (Hawk.contains(LoginActivity.FIRTS_START)) {
-            intent = getStartActivityIntent(MainActivity.class);
+            Intent intent = getStartActivityIntent(MainActivity.class);
             if (mRootView.getAlarm() != null)
                 intent.putExtra(MainActivity.ALARM_TAG, mRootView.getAlarm());
             mRootView.startActivity(intent);
         } else if (Hawk.contains(LoginActivity.API_KEY_TAG)) {
-            intent = getStartActivityIntent(SelectBeaconActivity.class);
+            Intent intent = getStartActivityIntent(SelectBeaconActivity.class);
             mRootView.startActivity(intent);
         }
+    }
+
+    public void setCode(String code) {
+        GetCodeFragment  getCodeFragment = (GetCodeFragment) mFactory.getFragments().get(GET_CODE_FRAGMENT_INDEX);
+        getCodeFragment.setCode(code);
     }
 
     private Intent getStartActivityIntent(Class<? extends Activity> activityClass) {

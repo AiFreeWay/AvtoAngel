@@ -43,7 +43,7 @@
         android:background="@drawable/selector_marengo_button"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="@string/i_have_beacon"
+        android:text="@string/enter_to_application"
         android:textAllCaps="false"
         android:textColor="@color/grideperlevy"
         android:textSize="15sp" />

@@ -21,18 +21,14 @@ public class RegisterPushToken implements Interactor0 {
 
     @Override
     public Observable execute() {
-        Observable.OnSubscribe<String> observer = new Observable.OnSubscribe<String>() {
-
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                try {
-                    String token = FirebaseInstanceId.getInstance().getToken();
-                    subscriber.onNext(token);
-                } catch (Exception e) {
-                    subscriber.onError(e);
-                } finally {
-                    subscriber.onCompleted();
-                }
+        Observable.OnSubscribe<String> observer = subscriber -> {
+            try {
+                String token = FirebaseInstanceId.getInstance().getToken();
+                subscriber.onNext(token);
+            } catch (Exception e) {
+                subscriber.onError(e);
+            } finally {
+                subscriber.onCompleted();
             }
         };
         return Observable.create(observer)

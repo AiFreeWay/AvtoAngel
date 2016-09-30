@@ -18,6 +18,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
+import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 
@@ -61,7 +62,6 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
     private List<AppMenuItem> mMenu;
-    private Subscription mInterval;
 
     public AcMainCtrl(MainActivity view) {
         super(view);
@@ -133,8 +133,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     public void stop() {
-        if (mInterval != null)
-            mInterval.unsubscribe();
+
     }
 
     private void findAndChangeMenuItem(Car car, AppMenuItem menuItem) {

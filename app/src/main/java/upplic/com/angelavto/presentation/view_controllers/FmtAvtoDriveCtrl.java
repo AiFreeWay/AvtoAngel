@@ -79,9 +79,9 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                 .doOnCompleted(() -> {
                     String message = null;
                     if (carOptions.isNotification())
-                        message = "Оповещения для '"+carOptions.getTitle()+"' включены.";
+                        message = "Оповещения об охране для '"+carOptions.getTitle()+"' включены.";
                     else
-                        message = "Оповещения для '"+carOptions.getTitle()+"' отключены.";
+                        message = "Оповещения об охране для для '"+carOptions.getTitle()+"' отключены.";
                     Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
                     mRootView.initNotificationButton();})
                 .subscribe(aVoid -> {},

@@ -63,4 +63,5 @@
     <string name="imei">IMEI маяка</string>
     <string name="input_car_title">Введите название машины</string>
     <string name="input_imei">Введите imei маяка</string>
+    <string name="enter_to_application">Войти в приложение</string>
 </resources>

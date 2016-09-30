@@ -38,7 +38,7 @@ public class AboutFragment extends BaseFragment {
         colorText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.green_jungle_krayola)), 0 ,colorText.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         mTvDescription.setText("Приложение разработанно IT компанией");
         mTvDescription.append(colorText);
-        SpannableString colorText2 = new SpannableString(" по всем вопросам обращайтесь по электронной почте xxxxxxx@xxxx.xxx");
+        SpannableString colorText2 = new SpannableString(" www.upplic.com");
         colorText2.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.slate_gray)), 0 ,colorText2.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         mTvDescription.append(colorText2);
 

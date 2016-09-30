@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.presentation.utils.PhoneNumberTextWatcher;
 import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 

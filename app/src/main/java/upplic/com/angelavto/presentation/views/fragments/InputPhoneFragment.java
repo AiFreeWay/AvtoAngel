@@ -64,7 +64,7 @@ public class InputPhoneFragment extends BaseFragment {
 
         mInputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mDrawableOnButtonEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_green_button);
-        mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_green_disabled);
+        mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_disabled);
         mColorOnButtonEnabled = ContextCompat.getColor(getContext(), R.color.grideperlevy);
         mColorOnButtonDisabled = ContextCompat.getColor(getContext(), R.color.silver_gray);
         mEtNumber.setAfterTextChangeListener(mActionWather);

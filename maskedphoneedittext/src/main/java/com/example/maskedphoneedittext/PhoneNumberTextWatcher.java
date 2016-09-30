@@ -44,10 +44,6 @@ public class PhoneNumberTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if (mEditText.getText().length() > 0)
-            mTextView.setVisibility(View.VISIBLE);
-        else
-            mTextView.setVisibility(View.INVISIBLE);
         if (mAfterTextChangeListener != null)
             mAfterTextChangeListener.execute(editable);
     }

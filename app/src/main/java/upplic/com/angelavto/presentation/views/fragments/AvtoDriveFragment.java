@@ -133,7 +133,7 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
             mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
             mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm_white, 0, 0, 0);
         } else {
-            mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_marron_disabled));
+            mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_disabled));
             mBtnAlarmOff.setOnClickListener(v -> {});
             mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.silver_gray));
             mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm, 0, 0, 0);

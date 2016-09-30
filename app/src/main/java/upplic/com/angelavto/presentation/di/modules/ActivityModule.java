@@ -16,6 +16,7 @@ import upplic.com.angelavto.domain.executors.GetCarDetail;
 import upplic.com.angelavto.domain.executors.GetCars;
 import upplic.com.angelavto.domain.executors.GetBeacons;
 import upplic.com.angelavto.domain.executors.GetCarsOptions;
+import upplic.com.angelavto.domain.executors.GetCarsWithoutSubject;
 import upplic.com.angelavto.domain.executors.GetRecordDetail;
 import upplic.com.angelavto.domain.executors.GetRecords;
 import upplic.com.angelavto.domain.executors.Login;
@@ -50,6 +51,7 @@ public class ActivityModule {
 
     public static final String GET_BEACONS = "getbeacons";
     public static final String GET_CARS = "getcars";
+    public static final String GET_CARS_WITHOUT_SUBJECT = "getcarswithoutsubject";
     public static final String GET_CAR_OPTIONS = "getcarsoptions";
     public static final String CREATE_CAR = "createcar";
     public static final String UPDATE_CAR = "updatecar";
@@ -118,6 +120,12 @@ public class ActivityModule {
     }
 
     @Provides
+    @Named(GET_CARS_WITHOUT_SUBJECT)
+    public Interactor0<List<Car>> provideGetCarsWihtoutSubject(GetCarsWithoutSubject getCars) {
+        return getCars;
+    }
+
+    @Provides
     @Named(GET_CAR_OPTIONS)
     public Interactor0<List<CarOptions>> provideGetCarsOptions(GetCarsOptions getCarsOptions) {
         return getCarsOptions;
@@ -155,7 +163,7 @@ public class ActivityModule {
 
     @Provides
     @Named(DELETE_ALL_CAR_OPTIONS)
-    public Interactor0 provideDeleteAllCarOptions(DeleteAllCarOptions deleteAllCarOptions) {
+    public Interactor0<Integer> provideDeleteAllCarOptions(DeleteAllCarOptions deleteAllCarOptions) {
         return deleteAllCarOptions;
     }
 

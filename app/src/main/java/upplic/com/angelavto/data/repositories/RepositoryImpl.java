@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
+import rx.subjects.PublishSubject;
 import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.SqliteController;
 import upplic.com.angelavto.data.db_store.table_controllers.CarOptionsDBController;
@@ -41,7 +42,7 @@ import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 public class RepositoryImpl implements Repository {
 
     private NetworkController mNetworkController;
-    private ReplaySubject<List<Car>> mCarSubject;
+    private PublishSubject<List<Car>> mCarSubject;
     private CarOptionsDBController mCarOptionsDBController;
 
     @Inject
@@ -49,7 +50,7 @@ public class RepositoryImpl implements Repository {
         SqliteController dBStore = new SqliteController(context);
         mCarOptionsDBController = dBStore.getCarDBController();
         mNetworkController = new NetworkController();
-        mCarSubject = ReplaySubject.create();
+        mCarSubject = PublishSubject.create();
     }
 
     @Override

@@ -1,23 +1,27 @@
 package upplic.com.angelavto.domain.executors;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
 import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.repositories.Repository;
 
 
-public class DeleteAllCarOptions implements Interactor0<Integer> {
+public class GetCarsWithoutSubject implements Interactor0<List<Car>> {
 
     private Repository mRepository;
 
     @Inject
-    public DeleteAllCarOptions(Repository repository){
+    public GetCarsWithoutSubject(Repository repository){
         mRepository = repository;
     }
 
     @Override
-    public Observable<Integer> execute() {
-        return mRepository.deleteAllCarOptions();
+    public Observable<List<Car>> execute() {
+        return mRepository.getCarsNetwork()
+                .cache();
     }
 }

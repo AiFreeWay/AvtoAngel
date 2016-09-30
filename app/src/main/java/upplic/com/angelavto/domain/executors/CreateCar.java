@@ -33,7 +33,7 @@ public class CreateCar implements Interactor1<UpsertCarResult, Car> {
         return mRepository.getCarsNetwork()
                 .flatMap(cars -> {
                     for (Car carNetwork : cars)
-                        if ((car.getTitle().equals(carNetwork.getTitle())))
+                        if (car.getTitle().equals(carNetwork.getTitle()))
                             return Observable.just(true);
                     return Observable.just(false);});
     }

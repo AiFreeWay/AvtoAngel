@@ -2,6 +2,7 @@ package upplic.com.angelavto.presentation.factories;
 
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import com.orhanobut.hawk.Hawk;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
+import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 import upplic.com.angelavto.presentation.views.activities.BaseActivity;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
@@ -43,12 +45,15 @@ public class AppMenuFactory {
                     .title(R.string.want_exit)
                     .titleColor(ContextCompat.getColor(mActivity, R.color.slate_gray))
                     .actionTextColor(ContextCompat.getColor(mActivity, R.color.green_jungle_krayola))
+                    .positiveActionTextColor(ContextCompat.getColor(mActivity, R.color.marron))
                     .positiveAction(R.string.yes)
                     .negativeAction(R.string.no)
                     .positiveActionClickListener(v -> {
                         Hawk.remove(LoginActivity.API_KEY_TAG);
                         Hawk.remove(LoginActivity.FIRTS_START);
-                        startLoginActivity();})
+                        removeAllFragments();
+                        startLoginActivity();
+                        mActivity.finish();})
                     .negativeActionClickListener(v -> mExitDialog.dismiss());
         return mExitDialog;
     }
@@ -58,6 +63,14 @@ public class AppMenuFactory {
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mActivity.startActivity(intent);
+    }
+
+    private void removeAllFragments() {
+        for (Fragment fragment : mActivity.getSupportFragmentManager().getFragments())
+         mActivity.getSupportFragmentManager()
+                 .beginTransaction()
+                 .remove(fragment)
+                 .commit();
     }
 
     public List<AppMenuItem> getMenu() {
