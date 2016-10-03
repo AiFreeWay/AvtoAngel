@@ -165,12 +165,16 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
     }
 
     private void onChangeInterval(Long time) {
-        if (time == INTERVAL_LENGTH)
-            mTimerSubscription.unsubscribe();
-        else {
-            int remainingTime = INTERVAL_LENGTH-time.intValue();
-            String timeText = intToMinuteAndSeconds(remainingTime);
-            appendColorText(R.string.repeated, timeText, mTvPepeatedResponse);
+        try {
+            if (time == INTERVAL_LENGTH)
+                mTimerSubscription.unsubscribe();
+            else {
+                int remainingTime = INTERVAL_LENGTH - time.intValue();
+                String timeText = intToMinuteAndSeconds(remainingTime);
+                appendColorText(R.string.repeated, timeText, mTvPepeatedResponse);
+            }
+        } catch (Exception e) {
+
         }
     }
 
