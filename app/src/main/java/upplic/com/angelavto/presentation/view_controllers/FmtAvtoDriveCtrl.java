@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
@@ -29,6 +30,8 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
     Interactor1<Status, Status> mSetStatus;
     @Inject @Named(ActivityModule.UPDATE_CAR_OPTIONS)
     Interactor1<CarOptions, CarOptions> mUpdateCarDB;
+    @Inject @Named(ActivityModule.OFF_ALARM)
+    Interactor0<String> mOffAlarm;
 
     public FmtAvtoDriveCtrl(AvtoDriveFragment view) {
         super(view);
@@ -89,9 +92,14 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
     }
 
     public void offAlarm() {
-        Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
-        ((AvtoFragment) mRootView.getParentFragment()).setNormalState();
-        mRootView.initAlarmOffButton();
+        mOffAlarm.execute()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
+                            ((AvtoFragment) mRootView.getParentFragment()).setNormalState();
+                            mRootView.initAlarmOffButton();},
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: offAlarm error "+e.toString()));
     }
 
     private void notifyMenuItem(Car car) {

@@ -20,6 +20,7 @@ import upplic.com.angelavto.data.net_store.requests_entityes.GetCarDetailRequest
 import upplic.com.angelavto.data.net_store.requests_entityes.GetCarsRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordDetailRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordsRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.OffAlarmRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.SendGcmTokenRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.SetStatusRequest;
 import upplic.com.angelavto.data.net_store.response_entityes.BeaconsResponse;
@@ -29,6 +30,7 @@ import upplic.com.angelavto.data.net_store.response_entityes.DeleteCarResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetCarDetailResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetRecordDetailResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.GetRecordsResponse;
+import upplic.com.angelavto.data.net_store.response_entityes.OffAlarmResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.SendGcmTokenResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.SetStatusResponse;
 import upplic.com.angelavto.data.net_store.response_entityes.UpsertCarResponse;
@@ -119,5 +121,9 @@ public class NetworkController {
 
     public Observable<SendGcmTokenResponse> sendGcmToken(String key, String token) {
         return mApiController.sendGcmToken(new SendGcmTokenRequest(key, token));
+    }
+
+    public Observable<OffAlarmResponse> offAlarm(String key) {
+        return mApiController.offAlarm(new OffAlarmRequest(key));
     }
 }

@@ -20,6 +20,7 @@ import upplic.com.angelavto.domain.executors.GetCarsWithoutSubject;
 import upplic.com.angelavto.domain.executors.GetRecordDetail;
 import upplic.com.angelavto.domain.executors.GetRecords;
 import upplic.com.angelavto.domain.executors.Login;
+import upplic.com.angelavto.domain.executors.OffAlarm;
 import upplic.com.angelavto.domain.executors.RegisterPushToken;
 import upplic.com.angelavto.domain.executors.Registration;
 import upplic.com.angelavto.domain.executors.SetStatus;
@@ -67,6 +68,7 @@ public class ActivityModule {
     public static final String GET_RECORD_DETAIL = "getrecorddetail";
     public static final String CHECK_ALARM = "checkalarm";
     public static final String SEND_GCM_TOKEN = "sendgcmtoken";
+    public static final String OFF_ALARM = "offalarm";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -211,7 +213,13 @@ public class ActivityModule {
 
     @Provides
     @Named(SEND_GCM_TOKEN)
-    public Interactor0<Void> provideRegisterPushToken(RegisterPushToken registerPushToken) {
+    public Interactor0<String> provideRegisterPushToken(RegisterPushToken registerPushToken) {
         return registerPushToken;
+    }
+
+    @Provides
+    @Named(OFF_ALARM)
+    public Interactor0<String> provideOffAlarm(OffAlarm offAlarm) {
+        return offAlarm;
     }
 }

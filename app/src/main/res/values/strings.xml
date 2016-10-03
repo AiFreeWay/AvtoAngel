@@ -51,7 +51,7 @@
     <string name="record">Запись</string>
     <string name="log">Журнал</string>
     <string name="location_not_found">Местоположение не определено</string>
-    <string name="distance_not_found">Растояние не определено</string>
+    <string name="distance_not_found">Раcстояние не определено</string>
     <string name="cannot_send_code">Не удалось отправить сообщение</string>
     <string name="error_autorization">Ошибка авторизации</string>
     <string name="code_must_be_correct">Код должен состоять из 4 символов</string>
@@ -64,4 +64,6 @@
     <string name="input_car_title">Введите название машины</string>
     <string name="input_imei">Введите imei маяка</string>
     <string name="enter_to_application">Войти в приложение</string>
+    <string name="about_application">Приложение поможет уберечь ваш автомобиль от угона, благодаря отслеживанию его местоположения через GPS маяк.</string>
+    <string name="sms_limit">Превышен лимит входа 5 смс в день</string>
 </resources>

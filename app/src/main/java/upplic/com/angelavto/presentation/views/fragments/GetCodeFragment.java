@@ -122,21 +122,6 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        disabledButtonEnter();
-        mEtCode.setEnabled(false);
-        mEtCode.setText("");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mTimerSubscription != null)
-            mTimerSubscription.unsubscribe();
-    }
-
     public void doOnSendCode() {
         Toast.makeText(getContext(), R.string.input_code_message, Toast.LENGTH_SHORT).show();
         mTimerSubscription = mTimer
@@ -169,6 +154,14 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
 
     public LoginDomain getLoginModel() {
         return new LoginDomain(mActivity.getNubmer(), mEtCode.getText().toString());
+    }
+
+    public void reload() {
+        disabledButtonEnter();
+        mEtCode.setEnabled(false);
+        mEtCode.setText("");
+        if (mTimerSubscription != null)
+            mTimerSubscription.unsubscribe();
     }
 
     private void onChangeInterval(Long time) {

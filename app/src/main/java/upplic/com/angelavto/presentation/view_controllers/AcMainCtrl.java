@@ -57,7 +57,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     @Inject @Named(ActivityModule.CHECK_KEY)
     Interactor0<Boolean> mCheckKey;
     @Inject @Named(ActivityModule.SEND_GCM_TOKEN)
-    Interactor0<Void> mSendGcmToken;
+    Interactor0<String> mSendGcmToken;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;

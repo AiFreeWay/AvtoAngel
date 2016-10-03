@@ -1,27 +1,23 @@
 package upplic.com.angelavto.domain.executors;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 import upplic.com.angelavto.domain.interactors.Interactor0;
-import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.repositories.Repository;
 
-
-public class GetCars implements Interactor0<List<Car>> {
+public class OffAlarm implements Interactor0<String> {
 
     private Repository mRepository;
 
     @Inject
-    public GetCars(Repository repository){
+    public OffAlarm(Repository repository) {
         mRepository = repository;
     }
 
     @Override
-    public Observable<List<Car>> execute() {
-        return mRepository.getCarsNetworkEmit()
-                .cache();
+    public Observable<String> execute() {
+        return mRepository.offAlarm();
     }
 }

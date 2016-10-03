@@ -10,11 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00000000"
-        android:layout_marginBottom="200dp"
         android:clickable="true"
         map:uiCompass="true"
         map:uiZoomControls="true"
-        map:zOrderOnTop="true" />
+        map:zOrderOnTop="true"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/fmt_map_tv_location" />
 
     <Button
         android:id="@+id/fmt_map_btn_record"
@@ -55,19 +56,6 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/fmt_map_tv_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:text="@string/location_not_found"
-        android:textColor="@color/slate_gray"
-        android:textSize="19sp"
-        android:layout_above="@+id/fmt_map_btn_record"
-        android:layout_alignLeft="@+id/fmt_map_btn_record"
-        android:layout_alignStart="@+id/fmt_map_btn_record"
-        android:layout_marginBottom="100dp" />
-
-    <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,8 +63,21 @@
         android:text="@string/distance_not_found"
         android:textColor="@color/silver_gray"
         android:textSize="17sp"
+        android:layout_marginBottom="12dp"
         android:layout_above="@+id/fmt_map_btn_record"
         android:layout_alignLeft="@+id/fmt_map_btn_record"
-        android:layout_alignStart="@+id/fmt_map_btn_record"
-        android:layout_marginBottom="70dp"/>
+        android:layout_alignStart="@+id/fmt_map_btn_record" />
+
+    <TextView
+        android:id="@+id/fmt_map_tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/location_not_found"
+        android:textColor="@color/slate_gray"
+        android:textSize="19sp"
+        android:layout_marginBottom="13dp"
+        android:layout_above="@+id/textView2"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
 </RelativeLayout>

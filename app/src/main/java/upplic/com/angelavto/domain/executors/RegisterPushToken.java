@@ -10,7 +10,7 @@ import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.repositories.Repository;
 
 
-public class RegisterPushToken implements Interactor0 {
+public class RegisterPushToken implements Interactor0<String> {
 
     private Repository mRepository;
 
@@ -20,7 +20,7 @@ public class RegisterPushToken implements Interactor0 {
     }
 
     @Override
-    public Observable execute() {
+    public Observable<String> execute() {
         Observable.OnSubscribe<String> observer = subscriber -> {
             try {
                 String token = FirebaseInstanceId.getInstance().getToken();

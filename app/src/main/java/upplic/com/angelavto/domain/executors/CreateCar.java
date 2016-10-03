@@ -1,7 +1,5 @@
 package upplic.com.angelavto.domain.executors;
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
 import rx.Observable;

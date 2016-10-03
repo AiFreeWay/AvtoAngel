@@ -42,5 +42,6 @@ public interface Repository {
     Observable<List<Record>> getRecords(int carId);
     Observable<Record> getRecordDetail(int id);
     Observable<List<Alarm>> checkAlarm();
-    Observable sendGcmToken(String token);
+    Observable<String> sendGcmToken(String token);
+    Observable<String> offAlarm();
 }

@@ -46,6 +46,11 @@ public class AcLoginCtrl extends ViewController<LoginActivity> {
         getCodeFragment.setCode(code);
     }
 
+    public void reloadGetCodeFragment() {
+        GetCodeFragment getCodeFragment = (GetCodeFragment) mFactory.getFragments().get(GET_CODE_FRAGMENT_INDEX);
+        getCodeFragment.reload();
+    }
+
     private Intent getStartActivityIntent(Class<? extends Activity> activityClass) {
         return new Intent(mRootView, activityClass)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
