@@ -33,10 +33,14 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     Toolbar mToolbar;
     @BindView(R.id.ac_edit_avto_til_car_title)
     TextInputLayout mIlCar;
-    @BindView(R.id.ac_edit_avto_til_phone)
+    @BindView(R.id.ac_edit_avto_til_imei)
     TextInputLayout mIlImei;
+    @BindView(R.id.ac_edit_avto_til_phone)
+    TextInputLayout mIlPhone;
     @BindView(R.id.ac_edit_avto_et_car_title)
     EditText mEtCarTitle;
+    @BindView(R.id.ac_edit_avto_et_imei)
+    EditText mEtImei;
     @BindView(R.id.ac_edit_avto_et_phone)
     EditText mEtPhone;
     @BindView(R.id.ac_edit_avto_btn_delete)
@@ -52,6 +56,7 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     private int mColorMarron;
     private int mColorGreenJungleKrayola;
     private InputMethodManager mInputMethodManager;
+    private PhoneNumberTextWatcher mPhoneNumberTextWatcher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,17 +69,19 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         mColorMarron = ContextCompat.getColor(this, R.color.marron);
         mColorGreenJungleKrayola = ContextCompat.getColor(this, R.color.green_jungle_krayola);
         mViewController = new AcEditAvtoCtrl(this);
+        mPhoneNumberTextWatcher = new PhoneNumberTextWatcher(mEtPhone);
 
         initToolbar();
         getSupportActionBar().setTitle(R.string.edit);
+        mEtPhone.addTextChangedListener(mPhoneNumberTextWatcher);
         mEtCarTitle.setText(mCar.getTitle());
-        mEtPhone.setText(mCar.getTrackerNumber());
+        mEtImei.setText(mCar.getTrackerImei());
+        mEtPhone.setText(mCar.getTrackerPhone());
         mBtnDelete.setOnClickListener(v -> onDelete());
         mBtnSave.setOnClickListener(v -> onSave());
         mVgRoot.setOnTouchListener((view, motionEvent) -> {
             mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            return true;
-        });
+            return true;});
         mMessageDialog = new Dialog(this, R.style.login_dialog)
                 .titleColor(ContextCompat.getColor(this, R.color.slate_gray))
                 .actionTextColor(mColorGreenJungleKrayola)
@@ -121,21 +128,27 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
 
     private Car updateCarFromFields() {
         mCar.setTitle(mEtCarTitle.getText().toString());
-        mCar.setTrackerNumber(mEtPhone.getText().toString());
+        mCar.setTrackerImei(mEtImei.getText().toString());
+        mCar.setTrackerPhone(mEtPhone.getText().toString());
         return mCar;
     }
 
     private boolean isFieldsCorrect() {
         hideTextInputLayoutsErrors();
         String title = mEtCarTitle.getText().toString();
+        String imei = mEtImei.getText().toString();
         String phone = mEtPhone.getText().toString();
         boolean isFieldFalid = true;
         if (title.isEmpty()) {
             mIlCar.setError(getString(R.string.input_car_title));
             isFieldFalid = false;
         }
-        if (phone.isEmpty()) {
+        if (imei.isEmpty()) {
             mIlImei.setError(getString(R.string.input_imei));
+            isFieldFalid = false;
+        }
+        if (phone.isEmpty() || phone.length() != PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH) {
+            mIlPhone.setError(getString(R.string.input_phone));
             isFieldFalid = false;
         }
         return isFieldFalid;
@@ -144,5 +157,6 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
     private void hideTextInputLayoutsErrors() {
         mIlCar.setError(null);
         mIlImei.setError(null);
+        mIlPhone.setError(null);
     }
 }

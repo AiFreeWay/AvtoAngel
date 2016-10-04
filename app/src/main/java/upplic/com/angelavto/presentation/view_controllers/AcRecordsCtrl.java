@@ -43,6 +43,8 @@ public class AcRecordsCtrl extends ViewController<RecordsActivity> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(records -> {mRootView.loadData(records);
+                            if (records.size() == 0)
+                                mRootView.showEmptyRecords();
                             mRootView.showSuccesLoad();},
                         e -> { Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcRecordsCtrl: start error "+e.toString());
                             mRootView.showDeniedLoad();});

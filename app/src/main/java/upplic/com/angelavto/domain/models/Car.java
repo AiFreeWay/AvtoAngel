@@ -9,7 +9,8 @@ public class Car implements Serializable {
     private String title;
     private boolean status;
     private boolean record;
-    private String trackerNumber;
+    private String trackerPhone;
+    private String trackerImei;
     private int trackerType;
     private double lat;
     private double lon;
@@ -17,20 +18,22 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(int id, String title, boolean status, String trackerNumber, int trackerType) {
+    public Car(int id, String title, boolean status, String trackerPhone, String trackerImei, int trackerType) {
         this.id = id;
         this.title = title;
         this.status = status;
-        this.trackerNumber = trackerNumber;
+        this.trackerPhone = trackerPhone;
+        this.trackerImei = trackerImei;
         this.trackerType = trackerType;
     }
 
-    public Car(int id, String title, boolean status, boolean record, String trackerNumber, int trackerType) {
+    public Car(int id, String title, boolean status, boolean record, String trackerPhone, String trackerImei, int trackerType) {
         this.id = id;
         this.title = title;
         this.status = status;
         this.record = record;
-        this.trackerNumber = trackerNumber;
+        this.trackerPhone = trackerPhone;
+        this.trackerImei = trackerImei;
         this.trackerType = trackerType;
     }
 
@@ -66,12 +69,20 @@ public class Car implements Serializable {
         this.record = record;
     }
 
-    public String getTrackerNumber() {
-        return trackerNumber;
+    public String getTrackerPhone() {
+        return trackerPhone;
     }
 
-    public void setTrackerNumber(String trackerNumber) {
-        this.trackerNumber = trackerNumber;
+    public void setTrackerPhone(String trackerPhone) {
+        this.trackerPhone = trackerPhone;
+    }
+
+    public String getTrackerImei() {
+        return trackerImei;
+    }
+
+    public void setTrackerImei(String trackerImei) {
+        this.trackerImei = trackerImei;
     }
 
     public int getTrackerType() {

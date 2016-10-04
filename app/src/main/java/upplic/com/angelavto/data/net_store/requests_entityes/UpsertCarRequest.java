@@ -12,7 +12,7 @@ public class UpsertCarRequest extends BaseRequest {
     }
 
     public UpsertCarRequest(String key, Car car) {
-        car.setTrackerNumber(cleanNumber(car.getTrackerNumber()));
+        car.setTrackerPhone(cleanNumber(car.getTrackerPhone()));
         params = new Params(key, car);
     }
 

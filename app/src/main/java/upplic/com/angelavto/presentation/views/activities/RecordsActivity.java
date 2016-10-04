@@ -66,6 +66,7 @@ public class RecordsActivity extends BaseActivity<AcRecordsCtrl> {
 
     public void showStartLoad() {
         mTvError.setVisibility(View.INVISIBLE);
+        mTvError.setText(R.string.cant_load_data);
         mPvProgress.start();
     }
 
@@ -75,6 +76,12 @@ public class RecordsActivity extends BaseActivity<AcRecordsCtrl> {
 
     public void showDeniedLoad() {
         mTvError.setVisibility(View.VISIBLE);
+        mPvProgress.stop();
+    }
+
+    public void showEmptyRecords() {
+        mTvError.setVisibility(View.VISIBLE);
+        mTvError.setText(R.string.empty_recods);
         mPvProgress.stop();
     }
 

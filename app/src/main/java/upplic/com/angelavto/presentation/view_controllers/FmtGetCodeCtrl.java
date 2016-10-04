@@ -57,6 +57,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(registrationResult -> mRootView.doOnSendCode(),
                         e -> { mRootView.showToast(R.string.cannot_send_code);
+                            decrementSmsCount();
                             Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGetCodeCtrl: registration error "+e.toString());});
     }
 
@@ -126,5 +127,10 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
         CALENDAR.setTimeInMillis(System.currentTimeMillis());
         int currentDay = CALENDAR.get(Calendar.DAY_OF_YEAR);
         return lastSmsDay == currentDay;
+    }
+
+    private void decrementSmsCount() {
+        int smsCount = Hawk.get(SMS_COUNT_TAG);
+        Hawk.put(SMS_COUNT_TAG, --smsCount);
     }
 }

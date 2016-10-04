@@ -2,6 +2,8 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +38,11 @@ import upplic.com.angelavto.presentation.views.fragments.MapFragement;
 
 public class FmtMapCtrl extends ViewController<MapFragement> {
 
+    private static final int ONLY_ADDRESS = 0;
+    private static final int AREA = 2;
+    private static final int CITY = 1;
+    private static final int STREET_HOUSE = 0;
+
     @Inject @Named(ActivityModule.GET_CAR_DETAIL)
     Interactor1<Car, Integer> mGetCarDetal;
     @Inject @Named(ActivityModule.SET_STATUS)
@@ -43,11 +51,13 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     private Polyline mRoute;
     private Subscription mInterval;
     private Marker mMarker;
+    private Geocoder mGeocoder;
 
     public FmtMapCtrl(MapFragement view) {
         super(view);
         mRootView.getActivityComponent()
                 .inject(this);
+        mGeocoder = new Geocoder(mRootView.getContext());
     }
 
     @Override
@@ -61,6 +71,14 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                             if (!(car.getLat() == 0 || car.getLon() == 0)) {
                                 drawRoute(car);}},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtMapCtrl: start error "+e.toString()));
+    }
+
+    public void restart() {
+        if (mRootView.getMap() != null) {
+            if (mInterval != null)
+                mInterval.unsubscribe();
+            start();
+        }
     }
 
     public void stop() {
@@ -110,6 +128,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
             createRote(car);
         else
             update(car);
+        setLocation();
     }
 
     private void createRote(Car car) {
@@ -132,5 +151,17 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
         points.add(currentPosition);
         mRoute.setPoints(points);
         mMarker.setPosition(currentPosition);
+    }
+
+    private void setLocation() {
+        String location = null;
+        try {
+            List<Address> addresses = mGeocoder.getFromLocation(mMarker.getPosition().latitude, mMarker.getPosition().longitude, 3);
+            Address address = addresses.get(ONLY_ADDRESS);
+            location = address.getAddressLine(AREA)+", "+address.getAddressLine(CITY)+", "+address.getAddressLine(STREET_HOUSE);
+        } catch (IOException e) {
+
+        }
+        mRootView.setLocation(location);
     }
 }

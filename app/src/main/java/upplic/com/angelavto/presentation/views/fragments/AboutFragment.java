@@ -34,13 +34,16 @@ public class AboutFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SpannableString colorText = new SpannableString(" Upplic");
-        colorText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.green_jungle_krayola)), 0 ,colorText.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        mTvDescription.setText("Приложение разработанно IT компанией");
+        mTvDescription.setText("");
+        SpannableString colorText = new SpannableString("Приложение разработано IT компанией");
+        colorText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.slate_gray)), 0 ,colorText.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         mTvDescription.append(colorText);
-        SpannableString colorText2 = new SpannableString(" www.upplic.com");
-        colorText2.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.slate_gray)), 0 ,colorText2.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        SpannableString colorText2 = new SpannableString(" Upplic");
+        colorText2.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.green_jungle_krayola)), 0 ,colorText2.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         mTvDescription.append(colorText2);
+        SpannableString colorText3 = new SpannableString(" www.upplic.com");
+        colorText3.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.slate_gray)), 0 ,colorText3.length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        mTvDescription.append(colorText3);
 
     }
 

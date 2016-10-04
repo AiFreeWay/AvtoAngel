@@ -57,7 +57,7 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
        mGetCarDetal.execute(mRootView.getCarOptions().getId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-               .doOnSubscribe(mRootView::showStartLoad)
+                .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(car -> {mRootView.setCatDetail(car);
                             mRootView.showStopLoad();
                             notifyFragments();},

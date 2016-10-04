@@ -63,7 +63,9 @@
     <string name="imei">IMEI маяка</string>
     <string name="input_car_title">Введите название машины</string>
     <string name="input_imei">Введите imei маяка</string>
+    <string name="input_phone">Введите номер сим-карты в маяке</string>
     <string name="enter_to_application">Войти в приложение</string>
     <string name="about_application">Приложение поможет уберечь ваш автомобиль от угона, благодаря отслеживанию его местоположения через GPS маяк.</string>
     <string name="sms_limit">Превышен лимит входа 5 смс в день</string>
+    <string name="empty_recods">Нет записей в журнале</string>
 </resources>

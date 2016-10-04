@@ -12,20 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.presentation.di.components.ActivityComponent;
 import upplic.com.angelavto.presentation.view_controllers.FmtMapCtrl;
-import upplic.com.angelavto.presentation.views.activities.BaseActivity;
-import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
 public class MapFragement extends BaseFragment<FmtMapCtrl> {
 
@@ -35,6 +31,10 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
     Button mBtnRecord;
     @BindView(R.id.fmt_map_btn_log)
     Button mBtnLog;
+    @BindView(R.id.fmt_map_tv_location)
+    TextView mTvLocation;
+    @BindView(R.id.fmt_map_tv_distance)
+    TextView mTvDistance;
 
     private GoogleMap mMap;
     private AvtoFragment mParentFragment;
@@ -81,6 +81,7 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
     public void onResume() {
         super.onResume();
         mMvMap.onResume();
+        mViewController.restart();
     }
 
     @Override
@@ -122,6 +123,16 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
             mBtnRecord.setTextColor(ContextCompat.getColor(getContext(), R.color.grideperlevy));
             mBtnRecord.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_camera, 0, 0, 0);
         }
+    }
+
+    public void setLocation(String location) {
+        if (location != null)
+            mTvLocation.setText(location);
+    }
+
+    public void setDistance(String distance) {
+        if (distance != null)
+            mTvDistance.setText(distance);
     }
 
     private void startMap(GoogleMap map) {

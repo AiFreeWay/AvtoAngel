@@ -43,7 +43,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(getString(R.string.warning))
                 .setContentText(title)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(getActionIntent(notiffication));
 

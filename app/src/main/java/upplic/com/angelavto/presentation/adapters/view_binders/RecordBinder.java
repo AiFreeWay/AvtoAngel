@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,9 +39,10 @@ public class RecordBinder implements AbstractBinder<Record> {
             view = mLayoutInflater.inflate(R.layout.v_record, mParent, false);
         ButterKnife.bind(this, view);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
         try {
             Date date = formatter.parse(data.getTimeStart());
-            formatter.applyPattern("dd-mm-yyyy в HH:mm");
+            formatter.applyPattern("dd-MM-yyyy в HH:mm");
             mTvTitle.setText(formatter.format(date));
         } catch (ParseException e) {
 

@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.presentation.utils.PhoneNumberTextWatcher;
 import upplic.com.angelavto.presentation.view_controllers.FmtCreateCarCtrl;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
@@ -35,10 +36,14 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     TextInputLayout mIlCar;
     @BindView(R.id.fmt_create_car_il_imei)
     TextInputLayout mIlImei;
+    @BindView(R.id.fmt_create_car_il_phone)
+    TextInputLayout mIlPhone;
     @BindView(R.id.fmt_create_car_et_car)
     EditText mEtTitle;
     @BindView(R.id.fmt_create_car_et_imei)
     EditText mEtImei;
+    @BindView(R.id.fmt_create_car_et_phone)
+    EditText mEtPhone;
     @BindView(R.id.fmt_create_car_pv_progress)
     ProgressView mPvProgress;
     @BindView(R.id.fmt_create_car_spn_beacon_type)
@@ -50,6 +55,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     private int mColorOnButtonDisabled;
     private Drawable mDrawableOnButtonEnabled;
     private Drawable mDrawableOnButtonDisabled;
+    private PhoneNumberTextWatcher mPhoneNumberTextWatcher;
     private ArrayAdapter<Beacon> mAdapter;
     private MainActivity mActivity;
 
@@ -66,6 +72,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
         super.onActivityCreated(savedInstanceState);
         mViewController = new FmtCreateCarCtrl(this);
         mActivity = (MainActivity) getActivity();
+        mPhoneNumberTextWatcher = new PhoneNumberTextWatcher(mEtPhone);
+        mEtPhone.addTextChangedListener(mPhoneNumberTextWatcher);
         mDrawableOnButtonEnabled = ContextCompat.getDrawable(getContext(), R.drawable.selector_marengo_button);
         mDrawableOnButtonDisabled = ContextCompat.getDrawable(getContext(), R.drawable.button_marengo_disabled);
         mColorOnButtonEnabled = ContextCompat.getColor(getContext(), R.color.grideperlevy);
@@ -105,6 +113,7 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     public void truncateFields() {
         mEtTitle.setText("");
         mEtImei.setText("");
+        mEtPhone.setText("");
         hideTextInputLayoutsErrors();
     }
 
@@ -135,14 +144,19 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     private void doOnCreateCar() {
         hideTextInputLayoutsErrors();
         String title = mEtTitle.getText().toString();
-        String phone = mEtImei.getText().toString();
+        String imei = mEtImei.getText().toString();
+        String phone = mEtPhone.getText().toString();
         boolean isFieldFalid = true;
         if (title.isEmpty()) {
             mIlCar.setError(getString(R.string.input_car_title));
             isFieldFalid = false;
         }
-        if (phone.isEmpty()) {
+        if (imei.isEmpty()) {
             mIlImei.setError(getString(R.string.input_imei));
+            isFieldFalid = false;
+        }
+        if (phone.isEmpty() || phone.length() != PhoneNumberTextWatcher.PHONE_NUMBER_LENGTH) {
+            mIlPhone.setError(getString(R.string.input_phone));
             isFieldFalid = false;
         }
         if (isFieldFalid)
@@ -152,7 +166,8 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     private Car getCar() {
         Car car = new Car();
         car.setTitle(mEtTitle.getText().toString());
-        car.setTrackerNumber(mEtImei.getText().toString());
+        car.setTrackerImei(mEtImei.getText().toString());
+        car.setTrackerPhone(mEtPhone.getText().toString());
         int beaconType = mAdapter.getItem(mSpnBeaconType.getSelectedItemPosition()).getId();
         car.setTrackerType(beaconType);
         return car;
@@ -161,5 +176,6 @@ public class CreateCarFragment extends BaseFragment<FmtCreateCarCtrl> {
     private void hideTextInputLayoutsErrors() {
         mIlCar.setError(null);
         mIlImei.setError(null);
+        mIlPhone.setError(null);
     }
 }
