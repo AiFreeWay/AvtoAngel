@@ -1,13 +1,22 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -32,6 +41,7 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.LocationListenerGoogleApiClient;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.RecordsActivity;
 import upplic.com.angelavto.presentation.views.fragments.MapFragement;
@@ -43,25 +53,42 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     private static final int CITY = 1;
     private static final int STREET_HOUSE = 0;
 
-    @Inject @Named(ActivityModule.GET_CAR_DETAIL)
+    @Inject
+    @Named(ActivityModule.GET_CAR_DETAIL)
     Interactor1<Car, Integer> mGetCarDetal;
-    @Inject @Named(ActivityModule.SET_STATUS)
+    @Inject
+    @Named(ActivityModule.SET_STATUS)
     Interactor1<Status, Status> mSetStatus;
 
     private Polyline mRoute;
     private Subscription mInterval;
     private Marker mMarker;
     private Geocoder mGeocoder;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mMyCurrentLocation;
+    private LocationListenerGoogleApiClient mGetCurrentLocationListener;
 
     public FmtMapCtrl(MapFragement view) {
         super(view);
         mRootView.getActivityComponent()
                 .inject(this);
         mGeocoder = new Geocoder(mRootView.getContext());
+        mGetCurrentLocationListener = new LocationListenerGoogleApiClient(() -> {
+            if (ActivityCompat.checkSelfPermission(mRootView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mRootView.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            } else
+                mMyCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);});
+        if (mGoogleApiClient == null)
+            mGoogleApiClient = new GoogleApiClient.Builder(mRootView.getContext())
+                    .addConnectionCallbacks(mGetCurrentLocationListener)
+                    .addOnConnectionFailedListener(mGetCurrentLocationListener)
+                    .addApi(LocationServices.API)
+                    .build();
     }
 
     @Override
     public void start() {
+        connectGoogleApiClient();
         mInterval = Observable.interval(3, TimeUnit.SECONDS)
                 .flatMap(aLong -> mGetCarDetal.execute(mRootView.getCar().getId()))
                 .distinct()
@@ -69,8 +96,10 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(car -> {
                             if (!(car.getLat() == 0 || car.getLon() == 0)) {
-                                drawRoute(car);}},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtMapCtrl: start error "+e.toString()));
+                                drawRoute(car);
+                            }
+                        },
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtMapCtrl: start error " + e.toString()));
     }
 
     public void restart() {
@@ -84,6 +113,16 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     public void stop() {
         if (mInterval != null)
             mInterval.unsubscribe();
+    }
+
+    public void connectGoogleApiClient() {
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
+    }
+
+    public void disconnectGoogleApiClient() {
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.disconnect();
     }
 
     public void changeRecord() {
@@ -102,7 +141,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                     Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
                     mRootView.initRecordButton();})
                 .subscribe(aVoid -> {},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error " + e.toString()));
     }
 
     public void openRecordActivity() {
@@ -129,6 +168,8 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
         else
             update(car);
         setLocation();
+        connectGoogleApiClient();
+        setDistance();
     }
 
     private void createRote(Car car) {
@@ -158,10 +199,30 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
         try {
             List<Address> addresses = mGeocoder.getFromLocation(mMarker.getPosition().latitude, mMarker.getPosition().longitude, 3);
             Address address = addresses.get(ONLY_ADDRESS);
-            location = address.getAddressLine(AREA)+", "+address.getAddressLine(CITY)+", "+address.getAddressLine(STREET_HOUSE);
+            location = address.getAddressLine(AREA) + ", " + address.getAddressLine(CITY) + ", " + address.getAddressLine(STREET_HOUSE);
         } catch (IOException e) {
 
         }
         mRootView.setLocation(location);
+    }
+
+    private void setDistance() {
+        String distance = null;
+        try {
+            if (mMyCurrentLocation != null) {
+                float[] distanseArray = new float[1];
+                Location.distanceBetween(mMyCurrentLocation.getLatitude(), mMyCurrentLocation.getLongitude(), mMarker.getPosition().latitude, mMarker.getPosition().longitude, distanseArray);
+                float distanseInMetters = distanseArray[0];
+                if (distanseInMetters > 1000) {
+                    float distanseInKilometters = distanseInMetters/1000;
+                    distance = "Расстояние "+String.format("%.2f", distanseInKilometters)+" км.";
+                } else
+                    distance = "Расстояние "+String.format("%.2f", distanseInMetters)+" м.";
+            }
+
+        } catch (Exception e) {
+            Log.d("++++", "setDistance: error "+e.toString());
+        }
+        mRootView.setDistance(distance);
     }
 }

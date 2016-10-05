@@ -75,6 +75,7 @@ public class MapFragement extends BaseFragment<FmtMapCtrl> {
     public void onStop() {
         super.onStop();
         mViewController.stop();
+        mViewController.disconnectGoogleApiClient();
     }
 
     @Override
