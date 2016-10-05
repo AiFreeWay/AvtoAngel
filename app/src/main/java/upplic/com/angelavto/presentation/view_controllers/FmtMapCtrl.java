@@ -217,7 +217,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                     float distanseInKilometters = distanseInMetters/1000;
                     distance = "Расстояние "+String.format("%.2f", distanseInKilometters)+" км.";
                 } else
-                    distance = "Расстояние "+String.format("%.2f", distanseInMetters)+" м.";
+                    distance = "Расстояние "+((int) distanseInMetters)+" м.";
             }
 
         } catch (Exception e) {
