@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:drawableLeft="@drawable/ic_phone_gray"
-        app:fontFamily="sans-serif-light"
+        app:fontFamily="sans-serif"
         app:templateFontSize="21sp"
         app:textFontSize="19sp"
         app:drawablePadding="15dp" />
