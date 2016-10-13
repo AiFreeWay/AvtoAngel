@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 public class PhoneNumberTextWatcher implements TextWatcher {
 
-    public static final int PHONE_NUMBER_LENGTH = 17;
-    public static final String BACKGROUND_TEMPLATE = "+x(xxx) xxx xx xx";
+    public static final int PHONE_NUMBER_LENGTH = 16;
+    public static final String BACKGROUND_TEMPLATE = "x(xxx) xxx xx xx";
 
     private EditText mEditText;
     private TextView mTextView;
@@ -66,7 +66,7 @@ public class PhoneNumberTextWatcher implements TextWatcher {
     private String maskSimbol(int position, char simbol) {
         switch (position) {
             case 0:
-                return "+"+simbol;
+                return ""+simbol;
             case 1:
                 return "("+simbol;
             case 4:
@@ -95,7 +95,7 @@ public class PhoneNumberTextWatcher implements TextWatcher {
     private String getLeftSizeTemplateSpaces(int position) {
         switch (position) {
             case 0:
-                return "\u00A0\u00A0\u00A0\u00A0";
+                return "\u00A0\u00A0";
             case 1:
                 return "\u00A0\u00A0\u00A0\u00A0";
             case 4:
@@ -114,7 +114,7 @@ public class PhoneNumberTextWatcher implements TextWatcher {
     private int determineTemplateSize(int position) {
         switch (position) {
             case 0:
-                return 2;
+                return 1;
             case 1:
                 return 2;
             case 4:

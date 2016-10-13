@@ -5,38 +5,54 @@
     android:background="@drawable/edit_text_background">
 
     <TextView
+        android:id="@+id/v_maskedphone_tv_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="left|top"
+        android:layout_toEndOf="@+id/v_maskedphone_iv_image"
+        android:layout_toRightOf="@+id/v_maskedphone_iv_image"
+        android:background="@android:color/transparent"
+        android:lines="1"
+        android:maxLines="1"
+        android:paddingTop="0dp"
+        android:text="+"
+        android:textColor="@android:color/black"
+        android:textSize="21sp" />
+
+    <TextView
         android:id="@+id/v_maskedphone_tv_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="1"
+        android:layout_centerVertical="true"
+        android:layout_gravity="left|top"
+        android:layout_toEndOf="@+id/v_maskedphone_tv_plus"
+        android:layout_toRightOf="@+id/v_maskedphone_tv_plus"
         android:background="@android:color/transparent"
+        android:lines="1"
         android:maxLines="1"
         android:paddingTop="0dp"
-        android:textSize="21sp"
-        android:layout_gravity="left|top"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/v_maskedphone_iv_image"
-        android:layout_toEndOf="@+id/v_maskedphone_iv_image" />
+        android:textSize="21sp" />
 
     <EditText
         android:id="@+id/v_maskedphone_et_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="left|top"
+        android:layout_toEndOf="@+id/v_maskedphone_tv_plus"
+        android:layout_toRightOf="@+id/v_maskedphone_tv_plus"
+        android:background="@android:color/transparent"
         android:inputType="phone"
         android:lines="1"
-        android:background="@android:color/transparent"
         android:maxLines="1"
-        android:textSize="19sp"
-        android:layout_gravity="left|top"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/v_maskedphone_iv_image"
-        android:layout_toEndOf="@+id/v_maskedphone_iv_image" />
+        android:textSize="19sp" />
 
     <ImageView
         android:id="@+id/v_maskedphone_iv_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
 </RelativeLayout>

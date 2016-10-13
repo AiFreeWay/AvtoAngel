@@ -23,6 +23,7 @@ public class MaskedPhoneEditText extends RelativeLayout {
 
     private EditText mEtNumber;
     private TextView mTvBackground;
+    private TextView mTvPlus;
     private ImageView mIvImage;
     private PhoneNumberTextWatcher mMaskPhoneWatcher;
 
@@ -66,6 +67,7 @@ public class MaskedPhoneEditText extends RelativeLayout {
     private void bindViews() {
         mEtNumber = (EditText) findViewById(R.id.v_maskedphone_et_number);
         mTvBackground = (TextView) findViewById(R.id.v_maskedphone_tv_background);
+        mTvPlus = (TextView) findViewById(R.id.v_maskedphone_tv_plus);
         mIvImage = (ImageView) findViewById(R.id.v_maskedphone_iv_image);
         mMaskPhoneWatcher = new PhoneNumberTextWatcher(mEtNumber, mTvBackground);
         mEtNumber.addTextChangedListener(mMaskPhoneWatcher);
@@ -102,6 +104,7 @@ public class MaskedPhoneEditText extends RelativeLayout {
             Typeface fontStyle = Typeface.create(fontFamily, Typeface.NORMAL);
             mEtNumber.setTypeface(fontStyle);
             mTvBackground.setTypeface(fontStyle);
+            mTvPlus.setTypeface(fontStyle);
         }
 
         float templateSize = attributes.getDimension(R.styleable.MaskedPhoneAttrs_templateFontSize, -1);
