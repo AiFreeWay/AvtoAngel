@@ -2,11 +2,18 @@ package upplic.com.angelavto.presentation.views.activities;
 
 
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.ViewGroup;
+
+import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
 import java.util.List;
 
@@ -16,6 +23,7 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.presentation.models.Alarm;
 import upplic.com.angelavto.presentation.adapters.LoginViewPagerAdapter;
 import upplic.com.angelavto.presentation.receivers.SmsCodeReceiver;
+import upplic.com.angelavto.presentation.utils.DrawerListener;
 import upplic.com.angelavto.presentation.view_controllers.AcLoginCtrl;
 
 
@@ -29,11 +37,14 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
     public static final String ALARM_TAG = "alarm";
     private static final String SMS_RECEIVE_INTENT = "android.provider.Telephony.SMS_RECEIVED";
 
+    @BindView(R.id.ac_login_toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.ac_login_vp_body)
     ViewPager mVpBody;
     @BindView(R.id.ac_login_root)
     ViewGroup mVgRoot;
 
+    private MaterialMenuIconToolbar mMenuDrawer;
     private LoginViewPagerAdapter mAdapter;
     private String mNubmer;
     private Alarm mAlarm;
@@ -47,8 +58,10 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
 
         @Override
         public void onPageSelected(int position) {
-            if (position == INPUT_PHONE_SLIDE_POSITION)
+            if (position == INPUT_PHONE_SLIDE_POSITION) {
+                hideToolbar();
                 disabledViewPageChange();
+            }
         }
 
         @Override
@@ -70,6 +83,8 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         mVpBody.setAdapter(mAdapter);
         mVpBody.addOnPageChangeListener(mPageChangeListener);
         disabledViewPageChange();
+        initToolbar();
+        hideToolbar();
         mViewController.start();
     }
 
@@ -94,6 +109,7 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         enableViewPageChange();
         mViewController.reloadGetCodeFragment();
         mVpBody.setCurrentItem(GET_CODE_SLIDE_POSITION, true);
+        showToolbar();
     }
 
     public void enableViewPageChange() {
@@ -104,11 +120,32 @@ public class LoginActivity extends BaseActivity<AcLoginCtrl> {
         mAdapter.disabledViewPageChange();
     }
 
+    public void showToolbar() {
+        mToolbar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideToolbar() {
+        mToolbar.setVisibility(View.INVISIBLE);
+    }
+
     public String getNubmer() {
         return mNubmer;
     }
 
     public Alarm getAlarm() {
         return mAlarm;
+    }
+
+    private void initToolbar() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("");
+        mToolbar.setNavigationOnClickListener(v -> mVpBody.setCurrentItem(INPUT_PHONE_SLIDE_POSITION, true));
+        mMenuDrawer = new MaterialMenuIconToolbar(this, ContextCompat.getColor(this, R.color.marengo), MaterialMenuDrawable.Stroke.THIN) {
+            @Override
+            public int getToolbarViewId() {
+                return R.id.ac_login_toolbar;
+            }
+        };
+        mMenuDrawer.setState(MaterialMenuDrawable.IconState.ARROW);
     }
 }

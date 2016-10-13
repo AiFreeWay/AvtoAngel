@@ -47,7 +47,8 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
 
     @Override
     public void start() {
-
+        if (Hawk.contains(SMS_COUNT_TAG) && !isSmsDateLimitActs())
+            removeSmsLog();
     }
 
     public void registration() {
@@ -66,12 +67,9 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
             int smsCount = Hawk.get(SMS_COUNT_TAG);
             if (smsCount < MAX_SMS_COUNT)
                 writeSmsToPreferense(++smsCount);
-            else {
-                if (isSmsDateLimitActs()) {
+            else if (isSmsDateLimitActs()) {
                     mRootView.showToast(R.string.sms_limit);
                     return false;
-                } else
-                    removeSmsLog();
             }
         } else
             writeSmsToPreferense(1);

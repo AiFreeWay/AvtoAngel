@@ -118,8 +118,13 @@ public class GetCodeFragment extends BaseFragment<FmtGetCodeCtrl> {
         mBtnGetCode.setOnClickListener(v -> mViewController.registration());
         mVgRoot.setOnTouchListener((view, motionEvent) -> {
             mInputMethodManager.hideSoftInputFromWindow(mEtCode.getWindowToken(), 0);
-            return true;
-        });
+            return true;});
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewController.start();
     }
 
     public void doOnSendCode() {

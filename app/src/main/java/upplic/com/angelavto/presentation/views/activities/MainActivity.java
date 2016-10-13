@@ -33,6 +33,7 @@ import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.receivers.NetworkStateReceiver;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
+import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 
 public class MainActivity extends BaseActivity<AcMainCtrl> {
 
@@ -71,6 +72,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
                 .positiveActionClickListener(v -> {
                     Hawk.remove(LoginActivity.API_KEY_TAG);
                     Hawk.remove(LoginActivity.FIRTS_START);
+                    Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
                     startLoginActivity();});
         mViewController = new AcMainCtrl(this);
         mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));

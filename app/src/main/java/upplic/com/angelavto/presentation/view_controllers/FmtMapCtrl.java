@@ -32,6 +32,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -41,6 +42,7 @@ import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.LocationAdressManager;
 import upplic.com.angelavto.presentation.utils.LocationListenerGoogleApiClient;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.RecordsActivity;
@@ -63,21 +65,27 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     private Polyline mRoute;
     private Subscription mInterval;
     private Marker mMarker;
-    private Geocoder mGeocoder;
     private GoogleApiClient mGoogleApiClient;
     private Location mMyCurrentLocation;
     private LocationListenerGoogleApiClient mGetCurrentLocationListener;
+    private LocationAdressManager mLocationAdressManager;
 
     public FmtMapCtrl(MapFragement view) {
         super(view);
         mRootView.getActivityComponent()
                 .inject(this);
-        mGeocoder = new Geocoder(mRootView.getContext());
+
+        mLocationAdressManager = new LocationAdressManager(mRootView.getContext(), addresses -> {
+            Address address = addresses.get(ONLY_ADDRESS);
+            String location = address.getAddressLine(AREA) + ", " + address.getAddressLine(CITY) + ", " + address.getAddressLine(STREET_HOUSE);
+            mRootView.setLocation(location);});
+
         mGetCurrentLocationListener = new LocationListenerGoogleApiClient(() -> {
             if (ActivityCompat.checkSelfPermission(mRootView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mRootView.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             } else
                 mMyCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);});
+
         if (mGoogleApiClient == null)
             mGoogleApiClient = new GoogleApiClient.Builder(mRootView.getContext())
                     .addConnectionCallbacks(mGetCurrentLocationListener)
@@ -141,7 +149,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                     Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
                     mRootView.initRecordButton();})
                 .subscribe(aVoid -> {},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error " + e.toString()));
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtMapCtrl: changeRecord error " + e.toString()));
     }
 
     public void openRecordActivity() {
@@ -195,15 +203,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     }
 
     private void setLocation() {
-        String location = null;
-        try {
-            List<Address> addresses = mGeocoder.getFromLocation(mMarker.getPosition().latitude, mMarker.getPosition().longitude, 3);
-            Address address = addresses.get(ONLY_ADDRESS);
-            location = address.getAddressLine(AREA) + ", " + address.getAddressLine(CITY) + ", " + address.getAddressLine(STREET_HOUSE);
-        } catch (IOException e) {
-
-        }
-        mRootView.setLocation(location);
+        mLocationAdressManager.start(mMarker.getPosition().latitude, mMarker.getPosition().longitude);
     }
 
     private void setDistance() {

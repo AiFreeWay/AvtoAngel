@@ -61,7 +61,7 @@
             android:background="@drawable/edit_text_background"
             android:fontFamily="sans-serif-light"
             android:hint="@string/imei"
-            android:inputType="text"
+            android:inputType="number"
             android:lines="1"
             android:maxLines="1"
             android:padding="20dp"

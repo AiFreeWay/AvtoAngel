@@ -16,6 +16,7 @@ import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 import upplic.com.angelavto.presentation.views.activities.BaseActivity;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
+import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.wrappers.AbstractHundleMemento;
 import upplic.com.angelavto.presentation.wrappers.ActionHundleMemento;
 import upplic.com.angelavto.presentation.wrappers.FragmentHandleMemento;
@@ -34,7 +35,7 @@ public class AppMenuFactory {
 
     private void generateItems() {
         mMenu.add(MenuItems.AVTO.id, new AppMenuItem("Добавить", R.drawable.ic_auto, new FragmentHandleMemento(FragmentsFactory.Fragments.CRAETE_CAR, AbstractHundleMemento.MenuHandlers.FRAGMENT)));
-        mMenu.add(MenuItems.SHOP.id, new AppMenuItem("Купить трекер", R.drawable.ic_shop, new FragmentHandleMemento(FragmentsFactory.Fragments.BEACONS_SHOP, AbstractHundleMemento.MenuHandlers.FRAGMENT)));
+        mMenu.add(MenuItems.SHOP.id, new AppMenuItem("Купить GPS-маяк", R.drawable.ic_shop, new FragmentHandleMemento(FragmentsFactory.Fragments.BEACONS_SHOP, AbstractHundleMemento.MenuHandlers.FRAGMENT)));
         mMenu.add(MenuItems.ABOUT.id, new AppMenuItem("О программе", R.drawable.ic_about, new FragmentHandleMemento(FragmentsFactory.Fragments.ABOUT, AbstractHundleMemento.MenuHandlers.FRAGMENT)));
         mMenu.add(MenuItems.EXIT.id, new AppMenuItem("Выйти", R.drawable.ic_exit, new ActionHundleMemento(() -> getMaterialDialog().show(), AbstractHundleMemento.MenuHandlers.ACTION)));
     }
@@ -51,6 +52,7 @@ public class AppMenuFactory {
                     .positiveActionClickListener(v -> {
                         Hawk.remove(LoginActivity.API_KEY_TAG);
                         Hawk.remove(LoginActivity.FIRTS_START);
+                        Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
                         removeAllFragments();
                         startLoginActivity();
                         mActivity.finish();})
