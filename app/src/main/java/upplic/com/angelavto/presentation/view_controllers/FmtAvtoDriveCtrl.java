@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import upplic.com.angelavto.domain.interactors.AlarmInteractor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
@@ -32,6 +33,8 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
     Interactor1<CarOptions, CarOptions> mUpdateCarDB;
     @Inject @Named(ActivityModule.OFF_ALARM)
     Interactor0<String> mOffAlarm;
+    @Inject @Named(ActivityModule.ALARM)
+    AlarmInteractor mAlarmInteractor;
 
     public FmtAvtoDriveCtrl(AvtoDriveFragment view) {
         super(view);
@@ -41,7 +44,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
 
     @Override
     public void start() {
-
+        checkAlarm();
     }
 
     public void openEditAvtoActivity() {
@@ -93,12 +96,12 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
 
     public void offAlarm() {
         mOffAlarm.execute()
+                .flatMap(result -> mAlarmInteractor.deleteAlarmById(mRootView.getCarOptions().getId()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-                            Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
                             ((AvtoFragment) mRootView.getParentFragment()).setNormalState();
-                            mRootView.initAlarmOffButton();},
+                            mRootView.disableAlarmOffButton();},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: offAlarm error "+e.toString()));
     }
 
@@ -106,5 +109,16 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
         ((MainActivity) mRootView.getParentFragment().getActivity())
                 .getViewController()
                 .updateMenuItem(car);
+    }
+
+    private void checkAlarm() {
+        mAlarmInteractor.getAlarmByCarId(mRootView.getCarOptions().getId())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(alarm -> {
+                    ((AvtoFragment) mRootView.getParentFragment()).setDangerState();
+                    mRootView.setWarningTitle(alarm.getTitle());
+                    mRootView.initAlarmOffButton();},
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: putWarningToHawk error "+e.toString()));
     }
 }

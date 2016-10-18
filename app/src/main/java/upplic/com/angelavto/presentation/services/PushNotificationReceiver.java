@@ -1,6 +1,5 @@
 package upplic.com.angelavto.presentation.services;
 
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,8 +12,20 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.presentation.models.Alarm;
+import upplic.com.angelavto.domain.interactors.AlarmInteractor;
+import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.models.Alarm;
+import upplic.com.angelavto.domain.models.CarOptions;
+import upplic.com.angelavto.presentation.di.components.DaggerServiceComponent;
+import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.di.modules.ServiceModule;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
@@ -26,35 +37,76 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
     private static final String CAR_ID_KEY = "carId";
     private static final String STATUS_KEY = "status";
 
+    @Inject @Named(ServiceModule.GET_CAR_OPTIONS)
+    Interactor0<List<CarOptions>> mGetCarsOptions;
+    @Inject @Named(ServiceModule.ALARM)
+    AlarmInteractor mAlarmInteractor;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         try {
-            showNotification(remoteMessage);
+            checkNotificationAccess(remoteMessage);
         } catch (Exception e) {
             Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "onMessageReceived error: "+e.toString());
         }
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        DaggerServiceComponent.builder()
+                .applicationComponent(getAngelAvtoApplication().getAppComponent())
+                .serviceModule(new ServiceModule())
+                .build()
+                .inject(this);
+    }
+
+    private void checkNotificationAccess(RemoteMessage notiffication) {
+        mGetCarsOptions.execute()
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(carOptionses -> doOnGetCarOptions(carOptionses, notiffication),
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "PushNotificationReceiver: checkNotificationAccess error "+e.toString()));
+    }
+
+    private void doOnGetCarOptions(List<CarOptions> carOptionses, RemoteMessage notiffication) {
+        if (carOptionses.size() == 0)
+            showNotification(notiffication);
+        else {
+            int carId = Integer.parseInt(notiffication.getData().get(CAR_ID_KEY));
+            for (CarOptions carOptions : carOptionses) {
+                if (carOptions.getId() == carId && carOptions.isNotification()) {
+                    showNotification(notiffication);
+                    return;
+                }
+            }
+        }
+    }
 
     private void showNotification(RemoteMessage notiffication) {
+        mAlarmInteractor.insertAlarm(generateAlarm(notiffication))
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(insertId -> {
+                            NotificationCompat.Builder notificationBuilder = generateNotification(notiffication);
+                            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                            notificationManager.notify(UPGRADING_NOFIFICATION, notificationBuilder.build());},
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "PushNotificationReceiver: writeAlarmToDB error "+e.toString()));
+    }
+
+    private NotificationCompat.Builder generateNotification(RemoteMessage notiffication) {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         String title = notiffication.getData().get(TITLE_KEY);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        return new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(getString(R.string.warning))
                 .setContentText(title)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(getActionIntent(notiffication));
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(UPGRADING_NOFIFICATION, notificationBuilder.build());
     }
 
     private PendingIntent getActionIntent(RemoteMessage notiffication) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(LoginActivity.ALARM_TAG, generateAlarm(notiffication));
         return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
     }
 
@@ -69,5 +121,9 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
         else
             alarm.setStatus(Alarm.AlarmTypes.CAR_MOVES);
         return alarm;
+    }
+
+    private AngelAvto getAngelAvtoApplication() {
+        return (AngelAvto) getApplication();
     }
 }

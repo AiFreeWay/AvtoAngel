@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import upplic.com.angelavto.domain.executors.AlarmInteractorImpl;
 import upplic.com.angelavto.domain.executors.CheckAlarm;
 import upplic.com.angelavto.domain.executors.CheckKey;
 import upplic.com.angelavto.domain.executors.CreateCar;
@@ -26,6 +27,7 @@ import upplic.com.angelavto.domain.executors.Registration;
 import upplic.com.angelavto.domain.executors.SetStatus;
 import upplic.com.angelavto.domain.executors.UpdateCar;
 import upplic.com.angelavto.domain.executors.UpdateCarOptions;
+import upplic.com.angelavto.domain.interactors.AlarmInteractor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Alarm;
@@ -69,6 +71,7 @@ public class ActivityModule {
     public static final String CHECK_ALARM = "checkalarm";
     public static final String SEND_GCM_TOKEN = "sendgcmtoken";
     public static final String OFF_ALARM = "offalarm";
+    public static final String ALARM = "alarminteractor";
 
     private FragmentRouter.RouterBilder mRouterBilder;
     private FragmentsFactory mFragmentsFactory;
@@ -221,5 +224,11 @@ public class ActivityModule {
     @Named(OFF_ALARM)
     public Interactor0<String> provideOffAlarm(OffAlarm offAlarm) {
         return offAlarm;
+    }
+
+    @Provides
+    @Named(ALARM)
+    public AlarmInteractor provideAlarmInteractor(AlarmInteractorImpl alarmInteractor) {
+        return alarmInteractor;
     }
 }

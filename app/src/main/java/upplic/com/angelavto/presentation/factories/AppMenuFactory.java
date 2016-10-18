@@ -52,7 +52,6 @@ public class AppMenuFactory {
                     .positiveActionClickListener(v -> {
                         Hawk.remove(LoginActivity.API_KEY_TAG);
                         Hawk.remove(LoginActivity.FIRTS_START);
-                        Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
                         removeAllFragments();
                         startLoginActivity();
                         mActivity.finish();})

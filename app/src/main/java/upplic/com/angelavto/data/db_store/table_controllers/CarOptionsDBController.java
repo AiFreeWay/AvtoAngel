@@ -1,8 +1,5 @@
 package upplic.com.angelavto.data.db_store.table_controllers;
 
-
-import android.util.Log;
-
 import java.util.List;
 
 import io.requery.Persistable;

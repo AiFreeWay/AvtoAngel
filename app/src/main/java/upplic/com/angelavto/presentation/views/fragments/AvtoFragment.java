@@ -6,12 +6,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.orhanobut.hawk.Hawk;
 import com.rey.material.widget.ProgressView;
 
@@ -20,10 +18,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.adapters.ViewPagerTabsAdapter;
-import upplic.com.angelavto.presentation.models.Alarm;
 import upplic.com.angelavto.presentation.view_controllers.FmtAvtoCtrl;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
@@ -31,8 +29,6 @@ import upplic.com.angelavto.presentation.views.activities.MainActivity;
 public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
 
     public static final String CAR_OPTIONS_TAG = "carrr";
-    public static final String ALARM_TAG = "alarmcar";
-    public static final String ALARM_WARNING_TAG = "alarmcar";
 
     @BindView(R.id.fmt_avto_vp_body)
     ViewPager mVpBody;
@@ -45,7 +41,6 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
     private Car mCar;
     private ViewPagerTabsAdapter mAdapter;
     private MainActivity mActivity;
-    private Alarm mAlarm;
 
     @Nullable
     @Override
@@ -61,13 +56,8 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         mViewController = new FmtAvtoCtrl(this);
         mActivity = (MainActivity) getActivity();
         mCarOptions  = (CarOptions) getArguments().getSerializable(CAR_OPTIONS_TAG);
-        mAlarm  = (Alarm) getArguments().getSerializable(ALARM_TAG);
         mAdapter = new ViewPagerTabsAdapter(getChildFragmentManager(), mTlTabs, mVpBody);
         mVpBody.setAdapter(mAdapter);
-        if (mAlarm != null)
-            mViewController.putWarningToHawk();
-        else if (Hawk.contains(ALARM_WARNING_TAG))
-            setDangerState();
         mViewController.start();
     }
 
@@ -111,10 +101,6 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
 
     public Car getCar() {
         return mCar;
-    }
-
-    public Alarm getAlarm() {
-        return mAlarm;
     }
 
     public CarOptions getCarOptions() {

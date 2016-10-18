@@ -26,9 +26,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.presentation.adapters.MultyExListViewAdapter;
 import upplic.com.angelavto.presentation.adapters.view_binders.AppMenuBinder;
-import upplic.com.angelavto.presentation.models.Alarm;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.receivers.NetworkStateReceiver;
 import upplic.com.angelavto.presentation.utils.DrawerListener;
@@ -36,8 +36,6 @@ import upplic.com.angelavto.presentation.view_controllers.AcMainCtrl;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 
 public class MainActivity extends BaseActivity<AcMainCtrl> {
-
-    public static final String ALARM_TAG = "alarmmain";
 
     @BindView(R.id.ac_main_toolbar)
     Toolbar mToolbar;
@@ -53,14 +51,12 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     private Dialog mRestartDialog;
     private InputMethodManager mInputMethodManager;
     private BroadcastReceiver mNetState;
-    private Alarm mAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_main);
         ButterKnife.bind(this);
-        mAlarm = (Alarm) getIntent().getSerializableExtra(ALARM_TAG) ;
         initToolbar();
         mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mRestartDialog = new Dialog(this, R.style.login_dialog)
@@ -72,7 +68,6 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
                 .positiveActionClickListener(v -> {
                     Hawk.remove(LoginActivity.API_KEY_TAG);
                     Hawk.remove(LoginActivity.FIRTS_START);
-                    Hawk.remove(AvtoFragment.ALARM_WARNING_TAG);
                     startLoginActivity();});
         mViewController = new AcMainCtrl(this);
         mAdapter = new MultyExListViewAdapter<AppMenuItem, AppMenuItem>(new AppMenuBinder(mViewController));
@@ -116,7 +111,7 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     @Override
     public void refresh() {
         super.refresh();
-        mViewController.start();
+        mViewController.restart();
     }
 
     @Override
@@ -175,10 +170,6 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         } catch (Exception e) {
 
         }
-    }
-
-    public Alarm getAlarm() {
-        return mAlarm;
     }
 
     private void initToolbar() {

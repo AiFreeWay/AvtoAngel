@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import upplic.com.angelavto.domain.interactors.AlarmInteractor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
@@ -26,6 +27,8 @@ public class AcSelectBeaconCtrl extends ViewController<SelectBeaconActivity> {
 
     @Inject @Named(ActivityModule.DELETE_ALL_CAR_OPTIONS)
     Interactor0<Integer> mDeleteAllCarOptions;
+    @Inject @Named(ActivityModule.ALARM)
+    AlarmInteractor mAlarmInteractor;
     @Inject @Named(ActivityModule.GET_CARS_WITHOUT_SUBJECT)
     Interactor0<List<Car>> mGetCars;
     @Inject
@@ -45,6 +48,7 @@ public class AcSelectBeaconCtrl extends ViewController<SelectBeaconActivity> {
     @Override
     public void start() {
         mDeleteAllCarOptions.execute()
+                .flatMap(aVoid -> mAlarmInteractor.deleteAllAlarms())
                 .flatMap(aVoid -> mGetCars.execute())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

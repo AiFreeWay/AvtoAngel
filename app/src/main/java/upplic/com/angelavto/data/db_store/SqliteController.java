@@ -13,6 +13,7 @@ import io.requery.rx.SingleEntityStore;
 import io.requery.sql.Configuration;
 import io.requery.sql.EntityDataStore;
 import io.requery.sql.TableCreationMode;
+import upplic.com.angelavto.data.db_store.table_controllers.AlarmBDController;
 import upplic.com.angelavto.data.db_store.table_controllers.CarOptionsDBController;
 import upplic.com.angelavto.data.db_store.tables.Schema;
 
@@ -23,12 +24,14 @@ public class SqliteController {
     private SingleEntityStore<Persistable> mDataStore;
     private Context mContext;
     private CarOptionsDBController mCarOptionsDBController;
+    private AlarmBDController mAlarmBDController;
 
     public SqliteController(Context context) {
         mContext = context;
         StrictMode.enableDefaults();
         initStore();
         mCarOptionsDBController = new CarOptionsDBController(mDataStore);
+        mAlarmBDController = new AlarmBDController(mDataStore);
     }
 
     private void initStore() {
@@ -41,5 +44,9 @@ public class SqliteController {
 
     public CarOptionsDBController getCarDBController() {
         return mCarOptionsDBController;
+    }
+
+    public AlarmBDController getAlarmBDController() {
+        return mAlarmBDController;
     }
 }

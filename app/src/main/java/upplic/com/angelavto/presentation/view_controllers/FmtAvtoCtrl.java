@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import upplic.com.angelavto.domain.interactors.AlarmInteractor;
 import upplic.com.angelavto.domain.interactors.Interactor1;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.presentation.app.AngelAvto;
@@ -36,15 +37,6 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
         mRootView.getActivityComponent()
                 .inject(this);
         mFactory = mFactoryBuilder.build(mRootView.getTlTabs());
-    }
-
-    public void putWarningToHawk() {
-        Hawk.putObservable(AvtoFragment.ALARM_WARNING_TAG, true)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(isPut -> mRootView.setDangerState(),
-                        e -> { mRootView.showStopLoad();
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: putWarningToHawk error "+e.toString());});
     }
 
     @Override

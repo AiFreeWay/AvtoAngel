@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "513859065526",
+    "firebase_url": "https://avtoangel-a10d0.firebaseio.com",
+    "project_id": "avtoangel-a10d0",
+    "storage_bucket": "avtoangel-a10d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513859065526:android:65c469ae44c45054",
+        "android_client_info": {
+          "package_name": "upplic.com.angelavto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513859065526-4dq7ii7omkgpobn0i5er12pmjuvmv9gn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "upplic.com.angelavto",
+            "certificate_hash": "1CB7D8630FD9DA2D7ACAFD8728B9D8EC6D124D9C"
+          }
+        },
+        {
+          "client_id": "513859065526-iaharbo038j9bdcrv9rohg3r8d7depvq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLuCG6-ESeqk2rHYgIdc4vPct561rJMp8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513859065526-iaharbo038j9bdcrv9rohg3r8d7depvq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

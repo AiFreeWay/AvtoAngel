@@ -32,8 +32,6 @@ public class AcLoginCtrl extends ViewController<LoginActivity> {
     public void start() {
         if (Hawk.contains(LoginActivity.FIRTS_START)) {
             Intent intent = getStartActivityIntent(MainActivity.class);
-            if (mRootView.getAlarm() != null)
-                intent.putExtra(MainActivity.ALARM_TAG, mRootView.getAlarm());
             mRootView.startActivity(intent);
         } else if (Hawk.contains(LoginActivity.API_KEY_TAG)) {
             Intent intent = getStartActivityIntent(SelectBeaconActivity.class);

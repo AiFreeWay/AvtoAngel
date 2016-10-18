@@ -54,15 +54,14 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         setHasOptionsMenu(true);
         mViewController = new FmtAvtoDriveCtrl(this);
         mParentFragment = (AvtoFragment) getParentFragment();
-        if (mParentFragment.getAlarm() != null)
-            mTvWarning.setText(mParentFragment.getAlarm().getTitle());
         mColorMarron = ContextCompat.getColor(getContext(), R.color.marron);
         mColorGreen = ContextCompat.getColor(getContext(), R.color.green_jungle_krayola);
         mBtnStatus.setOnClickListener(v -> mViewController.changeState());
         mBtnNotification.setOnClickListener(v -> mViewController.changeNotification());
         mBtnUpdate.setOnClickListener(v -> refresh());
         mBtnAlarmOff.setOnClickListener(v -> mViewController.offAlarm());
-        initAlarmOffButton();
+        disableAlarmOffButton();
+        mViewController.start();
     }
 
     @Override
@@ -87,6 +86,10 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.avto_menu, menu);
+    }
+
+    public void setWarningTitle(String title) {
+        mTvWarning.setText(title);
     }
 
     public Car getCar() {
@@ -127,16 +130,16 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
     }
 
     public void initAlarmOffButton() {
-        if (Hawk.contains(AvtoFragment.ALARM_WARNING_TAG)) {
-            mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marron_button));
-            mBtnAlarmOff.setOnClickListener(v -> mViewController.offAlarm());
-            mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-            mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm_white, 0, 0, 0);
-        } else {
-            mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_disabled));
-            mBtnAlarmOff.setOnClickListener(v -> {});
-            mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.silver_gray));
-            mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm, 0, 0, 0);
-        }
+        mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selector_marron_button));
+        mBtnAlarmOff.setOnClickListener(v -> mViewController.offAlarm());
+        mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+        mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm_white, 0, 0, 0);
+    }
+
+    public void disableAlarmOffButton() {
+        mBtnAlarmOff.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_disabled));
+        mBtnAlarmOff.setOnClickListener(v -> {});
+        mBtnAlarmOff.setTextColor(ContextCompat.getColor(getContext(), R.color.silver_gray));
+        mBtnAlarmOff.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alarm, 0, 0, 0);
     }
 }

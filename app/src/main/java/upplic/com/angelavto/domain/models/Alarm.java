@@ -3,50 +3,51 @@ package upplic.com.angelavto.domain.models;
 
 public class Alarm {
 
-    private int id;
-    private double lat;
-    private double lon;
-    private String alarmType;
+    private int carId;
+    private AlarmTypes status;
+    private String title;
 
     public Alarm() {
     }
 
-    public Alarm(int id, double lat, double lon, String alarmType) {
-        this.id = id;
-        this.lat = lat;
-        this.lon = lon;
-        this.alarmType = alarmType;
+    public Alarm(int carId, AlarmTypes status, String title) {
+        this.carId = carId;
+        this.status = status;
+        this.title = title;
     }
 
-    public int getId() {
-        return id;
+    public int getCarId() {
+        return carId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCarId(int carId) {
+        this.carId = carId;
     }
 
-    public double getLat() {
-        return lat;
+    public AlarmTypes getStatus() {
+        return status;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setStatus(AlarmTypes status) {
+        this.status = status;
     }
 
-    public double getLon() {
-        return lon;
+    public String getTitle() {
+        return title;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getAlarmType() {
-        return alarmType;
-    }
+    public enum AlarmTypes {
+        NOT_SIGNAL(0),
+        CAR_MOVES(1);
 
-    public void setAlarmType(String alarmType) {
-        this.alarmType = alarmType;
+        public int id;
+
+        AlarmTypes(int id) {
+            this.id = id;
+        }
     }
 }

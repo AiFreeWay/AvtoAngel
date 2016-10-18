@@ -27,6 +27,7 @@
         <activity
             android:name=".presentation.views.activities.LoginActivity"
             android:configChanges="orientation"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

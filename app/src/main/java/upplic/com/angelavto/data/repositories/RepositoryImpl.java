@@ -13,9 +13,10 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;
-import rx.subjects.ReplaySubject;
 import upplic.com.angelavto.data.db_store.SqliteController;
+import upplic.com.angelavto.data.db_store.table_controllers.AlarmBDController;
 import upplic.com.angelavto.data.db_store.table_controllers.CarOptionsDBController;
+import upplic.com.angelavto.data.mappers.AlarmMapper;
 import upplic.com.angelavto.data.mappers.BeaconsMapper;
 import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mappers.CarOptionsMapper;
@@ -44,11 +45,13 @@ public class RepositoryImpl implements Repository {
     private NetworkController mNetworkController;
     private PublishSubject<List<Car>> mCarSubject;
     private CarOptionsDBController mCarOptionsDBController;
+    private AlarmBDController mAlarmBDController;
 
     @Inject
     public RepositoryImpl(Context context) {
         SqliteController dBStore = new SqliteController(context);
         mCarOptionsDBController = dBStore.getCarDBController();
+        mAlarmBDController = dBStore.getAlarmBDController();
         mNetworkController = new NetworkController();
         mCarSubject = PublishSubject.create();
     }
@@ -62,6 +65,12 @@ public class RepositoryImpl implements Repository {
     @Override
     public void upsertCarOptions(Car car) {
         mCarOptionsDBController.upsertCarOptionsFromNetwork(car);
+    }
+
+    @Override
+    public Observable<Integer> insertAlarm(Alarm alarm) {
+        return mAlarmBDController.insertAlarm(alarm)
+                .flatMap(alarmTableEntity -> Observable.just(alarmTableEntity.getId()));
     }
 
     @Override
@@ -91,8 +100,24 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Observable<Integer> deleteAlarmByCarId(int id) {
+        return mAlarmBDController.deleteAlarmByCarId(id);
+    }
+
+    @Override
+    public Observable<Alarm> getAlarmByCarId(int id) {
+        return mAlarmBDController.getAlarmByCarId(id)
+                .flatMap(alarmTableEntity -> Observable.just(AlarmMapper.mapAlarm(alarmTableEntity)));
+    }
+
+    @Override
     public Observable<Integer> deleteAllCarOptions() {
         return mCarOptionsDBController.deleteAllCarOptions();
+    }
+
+    @Override
+    public Observable<Integer> deleteAllAlarms() {
+        return mAlarmBDController.deleteAllAlarms();
     }
 
     @Override
@@ -100,8 +125,7 @@ public class RepositoryImpl implements Repository {
         return mNetworkController.upsertCar(getToken(), car)
                 .map(upsertCarResponse1 -> {
                     getCarsNetworkEmit().subscribe();
-                    return upsertCarResponse1;
-                })
+                    return upsertCarResponse1;})
                 .flatMap(upsertCarResponse -> Observable.just(CarMapper.mapUpsertCarNetwork(upsertCarResponse)));
     }
 

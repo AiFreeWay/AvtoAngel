@@ -27,9 +27,13 @@ public interface Repository {
     Observable<CarOptions> updateCarOptions(CarOptions carOptions);
     Observable<List<CarOptions>> getCarsOptions();
     Observable<Integer>  deleteAllCarOptions();
+    Observable<Integer>  deleteAllAlarms();
     void upsertCarOptions(Car car);
+    Observable<Integer> insertAlarm(Alarm alarm);
     void updateCarOptionsEditTime(int id);
     void deleteCarOptions(int id);
+    Observable<Integer> deleteAlarmByCarId(int id);
+    Observable<Alarm> getAlarmByCarId(int id);
     void updateCarOptionsFromNetwork(List<Car> cars);
 
     Observable<List<Car>> getCarsNetworkEmit();

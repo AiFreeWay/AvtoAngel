@@ -104,9 +104,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(car -> {
                             if (!(car.getLat() == 0 || car.getLon() == 0)) {
-                                drawRoute(car);
-                            }
-                        },
+                                drawRoute(car);}},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtMapCtrl: start error " + e.toString()));
     }
 

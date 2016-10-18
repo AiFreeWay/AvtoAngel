@@ -12,18 +12,19 @@ import io.requery.meta.Type;
 
 public class Schema implements EntityModel {
 
-    public static final String TABLE_NAME = "avto_angel_base";
+    public static final String DATA_BASE_NAME = "avto_angel_base";
 
     private Map<Class, Type<?>> mTables;
 
     public Schema() {
         mTables = new HashMap<>();
         mTables.put(CarOptionsTableEntity.class, CarOptionsTableEntity.$TYPE);
+        mTables.put(AlarmTableEntity.class, AlarmTableEntity.$TYPE);
     }
 
     @Override
     public String getName() {
-        return TABLE_NAME;
+        return DATA_BASE_NAME;
     }
 
     @Override
