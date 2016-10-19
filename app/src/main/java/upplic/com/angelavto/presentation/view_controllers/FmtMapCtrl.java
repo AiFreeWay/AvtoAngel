@@ -97,7 +97,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     @Override
     public void start() {
         connectGoogleApiClient();
-        mInterval = Observable.interval(3, TimeUnit.SECONDS)
+        mInterval = Observable.interval(10, TimeUnit.SECONDS)
                 .flatMap(aLong -> mGetCarDetal.execute(mRootView.getCar().getId()))
                 .distinct()
                 .subscribeOn(Schedulers.newThread())

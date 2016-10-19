@@ -1,5 +1,7 @@
 package upplic.com.angelavto.domain.executors;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;

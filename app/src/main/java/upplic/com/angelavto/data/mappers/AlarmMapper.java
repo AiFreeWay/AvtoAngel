@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import upplic.com.angelavto.data.db_store.tables.AlarmTableEntity;
+import upplic.com.angelavto.data.models.AlarmData;
 import upplic.com.angelavto.domain.models.Alarm;
 
 public class AlarmMapper {
@@ -25,9 +26,24 @@ public class AlarmMapper {
         return alarm;
     }
 
-    public static List<Alarm> mapAlarms(List<AlarmTableEntity> alarmsFromDB) {
+    public static Alarm mapAlarm(AlarmData alarmNetwork) {
+        Alarm alarm = new Alarm();
+        alarm.setCarId(Integer.parseInt(alarmNetwork.getCarId()));
+        alarm.setTitle(alarmNetwork.getTitle());
+        alarm.setStatus(Alarm.AlarmTypes.values()[Integer.parseInt(alarmNetwork.getStatus())]);
+        return alarm;
+    }
+
+    public static List<Alarm> mapAlarmsFromDB(List<AlarmTableEntity> alarmsFromDB) {
         List<Alarm> alarms = new ArrayList<>();
         for (AlarmTableEntity alarm : alarmsFromDB)
+            alarms.add(mapAlarm(alarm));
+        return alarms;
+    }
+
+    public static List<Alarm> mapAlarmsFromNetwork(List<AlarmData> alarmsFromNet) {
+        List<Alarm> alarms = new ArrayList<>();
+        for (AlarmData alarm : alarmsFromNet)
             alarms.add(mapAlarm(alarm));
         return alarms;
     }

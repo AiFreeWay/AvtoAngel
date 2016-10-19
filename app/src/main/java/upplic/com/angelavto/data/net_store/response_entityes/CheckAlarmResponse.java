@@ -1,25 +1,25 @@
 package upplic.com.angelavto.data.net_store.response_entityes;
 
 
-import upplic.com.angelavto.domain.models.Alarm;
+import upplic.com.angelavto.data.models.AlarmData;
 
 public class CheckAlarmResponse extends BaseResponse {
 
-    private Alarm[] result;
+    private AlarmData[] result;
 
     public CheckAlarmResponse() {
     }
 
-    public CheckAlarmResponse(int id, String jsonrpc, Alarm[] result) {
+    public CheckAlarmResponse(int id, String jsonrpc, AlarmData[] result) {
         super(id, jsonrpc);
         this.result = result;
     }
 
-    public Alarm[] getResult() {
+    public AlarmData[] getResult() {
         return result;
     }
 
-    public void setResult(Alarm[] result) {
+    public void setResult(AlarmData[] result) {
         this.result = result;
     }
 }

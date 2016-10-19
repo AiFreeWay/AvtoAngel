@@ -22,6 +22,7 @@ import upplic.com.angelavto.data.mappers.CarMapper;
 import upplic.com.angelavto.data.mappers.CarOptionsMapper;
 import upplic.com.angelavto.data.mappers.LoginMapper;
 import upplic.com.angelavto.data.mappers.RegistrationMapper;
+import upplic.com.angelavto.data.models.AlarmData;
 import upplic.com.angelavto.data.net_store.NetworkController;
 import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Beacon;
@@ -112,7 +113,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Observable<List<Alarm>> getAlarms() {
-        return Observable.just(AlarmMapper.mapAlarms(mAlarmBDController.getAlarms()));
+        return Observable.just(AlarmMapper.mapAlarmsFromDB(mAlarmBDController.getAlarms()));
     }
 
     @Override
@@ -179,7 +180,8 @@ public class RepositoryImpl implements Repository {
     @Override
     public Observable<List<Alarm>> checkAlarm() {
         return mNetworkController.checkAlarm(getToken())
-                .flatMap(checkAlarmResponse -> Observable.just(Arrays.<Alarm>asList(checkAlarmResponse.getResult())));
+                .flatMap(checkAlarmResponse -> Observable.just(Arrays.<AlarmData>asList(checkAlarmResponse.getResult())))
+                .map(alrmsNetwork -> AlarmMapper.mapAlarmsFromNetwork(alrmsNetwork));
     }
 
     @Override

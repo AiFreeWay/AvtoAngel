@@ -100,10 +100,15 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     public void startCheckAlarmInterval() {
         mInterval = Observable.interval(10, TimeUnit.SECONDS)
                 .flatMap(aLong -> mCheckAlarm.execute())
+                .flatMap(mAlarmInteractor::putAlarms)
                 .distinct()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mAlarmInteractor::putAlarms,
+                .subscribe(alarms -> {
+                    if (alarms > 0)
+                        mRootView.setDangerState();
+                    else
+                        mRootView.setNormalState();},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: startCheckAlarmInterval error " + e.toString()));
     }
 

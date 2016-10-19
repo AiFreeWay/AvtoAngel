@@ -45,21 +45,25 @@ public class AcRecordRouteCtrl extends ViewController<RecordRouteActivity> {
 
     private void createRote(Record record) {
         PolylineOptions route = new PolylineOptions();
-        LatLng lastLatLng = null;
-        for (RoutePoint point : record.getCoords()) {
-            lastLatLng = new LatLng(point.getLat(), point.getLon());
-            route.add(lastLatLng);
-        }
+        LatLng firstLatLng = generateLatLngFromPoint(record.getCoords()[0]);
+        for (RoutePoint point : record.getCoords())
+            route.add(generateLatLngFromPoint(point));
 
         route.color(ContextCompat.getColor(getRootView(), R.color.marron));
         route.width(3);
         mRootView.getMap().addPolyline(route);
-        if (lastLatLng != null) {
-            mRootView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 14));
+        if (firstLatLng != null) {
+            mRootView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng, 14));
             mRootView.getMap().addMarker(new MarkerOptions()
                     .title(getRootView().getString(R.string.enr_route))
-                    .position(lastLatLng)
+                    .position(firstLatLng)
                     .draggable(false));
         }
+    }
+
+    private LatLng generateLatLngFromPoint(RoutePoint point) {
+        if (point != null)
+            return new LatLng(point.getLat(), point.getLon());
+        return null;
     }
 }

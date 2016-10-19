@@ -131,6 +131,14 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
         super.onResumeFragments();
     }
 
+    public void setDangerState() {
+        mToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.marron));
+    }
+
+    public void setNormalState() {
+        mToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+    }
+
     public int getFragmentsBodyResId() {
         return R.id.ac_main_fl_fragments;
     }
