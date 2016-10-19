@@ -10,14 +10,18 @@ import android.view.LayoutInflater;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.domain.interactors.AlarmInteractor;
 import upplic.com.angelavto.domain.interactors.Interactor0;
 
 import upplic.com.angelavto.domain.models.Alarm;
@@ -56,10 +60,15 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     Interactor0<Boolean> mCheckKey;
     @Inject @Named(ActivityModule.SEND_GCM_TOKEN)
     Interactor0<String> mSendGcmToken;
+    @Inject @Named(ActivityModule.CHECK_ALARM)
+    Interactor0<List<Alarm>> mCheckAlarm;
+    @Inject @Named(ActivityModule.ALARM)
+    AlarmInteractor mAlarmInteractor;
 
     private FragmentRouter mRouter;
     private LayoutInflater mLayoutInflater;
     private List<AppMenuItem> mMenu;
+    private Subscription mInterval;
 
     public AcMainCtrl(MainActivity view) {
         super(view);
@@ -86,6 +95,16 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         Hawk.put(LoginActivity.FIRTS_START, true);
         mMenu = mAppMenuFactory.getMenu();
         checkCarsCount();
+    }
+
+    public void startCheckAlarmInterval() {
+        mInterval = Observable.interval(10, TimeUnit.SECONDS)
+                .flatMap(aLong -> mCheckAlarm.execute())
+                .distinct()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mAlarmInteractor::putAlarms,
+                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: startCheckAlarmInterval error " + e.toString()));
     }
 
     public void restart() {
@@ -142,7 +161,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     public void stop() {
-
+        if (mInterval != null)
+            mInterval.unsubscribe();
     }
 
     private void findAndChangeMenuItem(Car car, AppMenuItem menuItem) {

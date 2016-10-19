@@ -58,7 +58,7 @@ public class AcSelectBeaconCtrl extends ViewController<SelectBeaconActivity> {
                         else
                             showStartFragment();},
                         e -> {showStartFragment();
-                            Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl start error: "+e.toString());});
+                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl start error: "+e.toString());});
     }
 
     public void popBack() {

@@ -1,5 +1,7 @@
 package upplic.com.angelavto.data.db_store.table_controllers;
 
+import java.util.List;
+
 import io.requery.Persistable;
 import io.requery.rx.SingleEntityStore;
 import rx.Observable;
@@ -40,6 +42,17 @@ public class AlarmBDController {
 
     public Observable<AlarmTableEntity> insertAlarm(Alarm alarm) {
         return mDataStore.insert(AlarmMapper.mapAlarm(alarm))
+                .toObservable();
+    }
+
+    public List<AlarmTableEntity> getAlarms() {
+        return mDataStore.select(AlarmTableEntity.class)
+                .get()
+                .toList();
+    }
+
+    public Observable<Iterable<AlarmTableEntity>> putAlarms(List<Alarm> alarms) {
+        return mDataStore.insert(AlarmMapper.mapAlarmsToDB(alarms))
                 .toObservable();
     }
 }

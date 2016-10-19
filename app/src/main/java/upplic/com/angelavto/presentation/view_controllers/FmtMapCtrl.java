@@ -219,7 +219,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
             }
 
         } catch (Exception e) {
-            Log.d("++++", "setDistance: error "+e.toString());
+            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "setDistance: error "+e.toString());
         }
         mRootView.setDistance(distance);
     }

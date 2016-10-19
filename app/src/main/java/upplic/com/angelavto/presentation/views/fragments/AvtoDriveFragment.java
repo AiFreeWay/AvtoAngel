@@ -88,8 +88,14 @@ public class AvtoDriveFragment extends BaseFragment<FmtAvtoDriveCtrl> {
         inflater.inflate(R.menu.avto_menu, menu);
     }
 
-    public void setWarningTitle(String title) {
+    public void showWarning(String title) {
+        mTvWarning.setVisibility(View.VISIBLE);
         mTvWarning.setText(title);
+    }
+
+    public void hideWarning() {
+        mTvWarning.setVisibility(View.GONE);
+        mTvWarning.setText("");
     }
 
     public Car getCar() {

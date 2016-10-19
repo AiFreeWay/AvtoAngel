@@ -94,7 +94,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
             .subscribeOn(Schedulers.newThread())
             .subscribe(aBoolean -> startActivity(),
                     e -> { startActivity();
-                        Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGetCodeCtrl endLogin error: "+e.toString());});
+                        Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGetCodeCtrl endLogin error: "+e.toString());});
     }
 
     private void startActivity() {

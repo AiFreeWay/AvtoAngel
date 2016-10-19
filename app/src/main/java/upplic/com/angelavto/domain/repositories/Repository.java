@@ -34,6 +34,8 @@ public interface Repository {
     void deleteCarOptions(int id);
     Observable<Integer> deleteAlarmByCarId(int id);
     Observable<Alarm> getAlarmByCarId(int id);
+    Observable<List<Alarm>> getAlarms();
+    Observable<Integer> putAlarms(List<Alarm> alarms);
     void updateCarOptionsFromNetwork(List<Car> cars);
 
     Observable<List<Car>> getCarsNetworkEmit();

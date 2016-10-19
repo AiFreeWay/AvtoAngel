@@ -111,6 +111,17 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Observable<List<Alarm>> getAlarms() {
+        return Observable.just(AlarmMapper.mapAlarms(mAlarmBDController.getAlarms()));
+    }
+
+    @Override
+    public Observable<Integer> putAlarms(List<Alarm> alarms) {
+        return mAlarmBDController.putAlarms(alarms)
+                .flatMap(alarmTableEntities -> Observable.just(alarms.size()));
+    }
+
+    @Override
     public Observable<Integer> deleteAllCarOptions() {
         return mCarOptionsDBController.deleteAllCarOptions();
     }

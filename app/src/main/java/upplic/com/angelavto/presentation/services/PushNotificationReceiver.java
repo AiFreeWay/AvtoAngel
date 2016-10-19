@@ -47,7 +47,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
         try {
             checkNotificationAccess(remoteMessage);
         } catch (Exception e) {
-            Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "onMessageReceived error: "+e.toString());
+            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "onMessageReceived error: "+e.toString());
         }
     }
 

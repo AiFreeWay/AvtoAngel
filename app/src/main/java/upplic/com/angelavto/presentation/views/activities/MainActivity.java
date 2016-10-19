@@ -80,6 +80,12 @@ public class MainActivity extends BaseActivity<AcMainCtrl> {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        mViewController.startCheckAlarmInterval();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         try {

@@ -1,5 +1,7 @@
 package upplic.com.angelavto.domain.executors;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -37,5 +39,15 @@ public class AlarmInteractorImpl implements AlarmInteractor {
     @Override
     public Observable<Alarm> getAlarmByCarId(int id) {
         return mRepository.getAlarmByCarId(id);
+    }
+
+    @Override
+    public Observable<List<Alarm>> getAlarms() {
+        return mRepository.getAlarms();
+    }
+
+    @Override
+    public Observable<Integer> putAlarms(List<Alarm> alarms) {
+        return mRepository.putAlarms(alarms);
     }
 }
