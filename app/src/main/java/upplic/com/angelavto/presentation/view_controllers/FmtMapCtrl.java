@@ -5,11 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -24,7 +20,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -32,12 +27,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.domain.interactors.Interactor1;
+import upplic.com.angelavto.domain.interactors.CarsInteractor;
+import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Status;
 import upplic.com.angelavto.presentation.app.AngelAvto;
@@ -55,12 +50,11 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     private static final int CITY = 1;
     private static final int STREET_HOUSE = 0;
 
+    @Inject @Named(ActivityModule.CARS)
+    CarsInteractor mCarsInteractor;
     @Inject
-    @Named(ActivityModule.GET_CAR_DETAIL)
-    Interactor1<Car, Integer> mGetCarDetal;
-    @Inject
-    @Named(ActivityModule.SET_STATUS)
-    Interactor1<Status, Status> mSetStatus;
+    @Named(ActivityModule.DRIVE_CAR)
+    DriveCarInteractor mDriveCarInteractor;
 
     private Polyline mRoute;
     private Subscription mInterval;
@@ -97,8 +91,8 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
     @Override
     public void start() {
         connectGoogleApiClient();
-        mInterval = Observable.interval(10, TimeUnit.SECONDS)
-                .flatMap(aLong -> mGetCarDetal.execute(mRootView.getCar().getId()))
+        mInterval = Observable.interval(5, TimeUnit.SECONDS)
+                .flatMap(aLong -> mCarsInteractor.getCarDetail(mRootView.getCar().getId()))
                 .distinct()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -135,7 +129,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
         Car car = mRootView.getCar();
         car.setRecord(!car.isRecord());
         Status status = new Status(car.getId(), car.isStatus(), car.isRecord());
-        mSetStatus.execute(status)
+        mDriveCarInteractor.setStatus(status)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {

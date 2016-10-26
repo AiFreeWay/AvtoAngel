@@ -14,11 +14,9 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.domain.interactors.Interactor1;
+import upplic.com.angelavto.domain.interactors.AuthInteractor;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
-import upplic.com.angelavto.domain.models.RegistrationDomain;
-import upplic.com.angelavto.domain.models.RegistrationResult;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
@@ -34,10 +32,8 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
 
     private final Calendar CALENDAR = new GregorianCalendar();
 
-    @Inject @Named(ActivityModule.REGISTRATION)
-    Interactor1<RegistrationResult, RegistrationDomain> mRegistration;
-    @Inject @Named(ActivityModule.LOGIN)
-    Interactor1<LoginResult, LoginDomain> mLogin;
+    @Inject @Named(ActivityModule.AUTH)
+    AuthInteractor mAuthInteractor;
 
     public FmtGetCodeCtrl(GetCodeFragment view) {
         super(view);
@@ -53,7 +49,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
 
     public void registration() {
         if (writeSmsLog())
-            mRegistration.execute(mRootView.getRegistrationModel())
+            mAuthInteractor.registrationPhone(mRootView.getRegistrationModel())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(registrationResult -> mRootView.doOnSendCode(),
@@ -79,7 +75,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
     public void login() {
         LoginDomain loginDomain = mRootView.getLoginModel();
         if (isValidCode(loginDomain)) {
-            mLogin.execute(loginDomain)
+            mAuthInteractor.auth(loginDomain)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::endLogin,

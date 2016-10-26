@@ -3,26 +3,34 @@ package upplic.com.angelavto.domain.models;
 
 public class UpsertCarResult {
 
-    private static final String UPSERT_SUCCESS_RESULT = "ok";
 
-    private String result;
+    public static final int IMEI_EXISTS_ERROR_TYPE = 1;
+    public static final int BEACON_SIM_NUMBER__EXISTS_ERROR_TYPE = 2;
+
+    private boolean is_success;
+    private int error_type;
 
     public UpsertCarResult() {
     }
 
-    public UpsertCarResult(String result) {
-        this.result = result;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
+    public UpsertCarResult(boolean is_success, int error_type) {
+        this.is_success = is_success;
+        this.error_type = error_type;
     }
 
     public boolean isSuccess() {
-        return result != null && result.equals(UPSERT_SUCCESS_RESULT);
+        return is_success;
+    }
+
+    public void setIsSuccess(boolean is_success) {
+        this.is_success = is_success;
+    }
+
+    public int getErrorType() {
+        return error_type;
+    }
+
+    public void setErrorType(int error_type) {
+        this.error_type = error_type;
     }
 }

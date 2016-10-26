@@ -11,8 +11,7 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.AlarmInteractor;
-import upplic.com.angelavto.domain.interactors.Interactor0;
-import upplic.com.angelavto.domain.interactors.Interactor1;
+import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
@@ -26,12 +25,8 @@ import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 
 public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
 
-    @Inject @Named(ActivityModule.SET_STATUS)
-    Interactor1<Status, Status> mSetStatus;
-    @Inject @Named(ActivityModule.UPDATE_CAR_OPTIONS)
-    Interactor1<CarOptions, CarOptions> mUpdateCarDB;
-    @Inject @Named(ActivityModule.OFF_ALARM)
-    Interactor0<String> mOffAlarm;
+    @Inject @Named(ActivityModule.DRIVE_CAR)
+    DriveCarInteractor mDriveCarInteractor;
     @Inject @Named(ActivityModule.ALARM)
     AlarmInteractor mAlarmInteractor;
 
@@ -59,7 +54,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
         Car car = mRootView.getCar();
         car.setStatus(!car.isStatus());
         Status status = new Status(car.getId(), car.isStatus(), car.isRecord());
-        mSetStatus.execute(status)
+        mDriveCarInteractor.setStatus(status)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
@@ -78,7 +73,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
     public void changeNotification() {
         CarOptions carOptions = mRootView.getCarOptions();
         carOptions.setNotification(!carOptions.isNotification());
-        mUpdateCarDB.execute(carOptions)
+        mDriveCarInteractor.updateCarOptions(carOptions)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
@@ -94,7 +89,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
     }
 
     public void offAlarm() {
-        mOffAlarm.execute()
+        mAlarmInteractor.offAlarm()
                 .flatMap(result -> mAlarmInteractor.deleteAlarmById(mRootView.getCarOptions().getId()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,7 +107,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
     }
 
     private void checkAlarm() {
-        mAlarmInteractor.getAlarms()
+        mAlarmInteractor.getAlarmsFromDB()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(alarms -> {

@@ -12,6 +12,8 @@ public interface AlarmInteractor {
     Observable<Integer> deleteAlarmById(int id);
     Observable<Integer> insertAlarm(Alarm alarm);
     Observable<Alarm> getAlarmByCarId(int id);
-    Observable<List<Alarm>> getAlarms();
+    Observable<List<Alarm>> getAlarmsFromDB();
+    Observable<List<Alarm>> getAlarmsFromNetwork();
     Observable<Integer> putAlarms(List<Alarm> alarms);
+    Observable<String> offAlarm();
 }

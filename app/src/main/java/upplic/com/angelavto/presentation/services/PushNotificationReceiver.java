@@ -20,11 +20,10 @@ import javax.inject.Named;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.AlarmInteractor;
-import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.di.components.DaggerServiceComponent;
-import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.di.modules.ServiceModule;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
@@ -37,8 +36,8 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
     private static final String CAR_ID_KEY = "carId";
     private static final String STATUS_KEY = "status";
 
-    @Inject @Named(ServiceModule.GET_CAR_OPTIONS)
-    Interactor0<List<CarOptions>> mGetCarsOptions;
+    @Inject @Named(ServiceModule.DRIVE_CAR)
+    DriveCarInteractor mDriveCarInteractor;
     @Inject @Named(ServiceModule.ALARM)
     AlarmInteractor mAlarmInteractor;
 
@@ -62,7 +61,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
     }
 
     private void checkNotificationAccess(RemoteMessage notiffication) {
-        mGetCarsOptions.execute()
+        mDriveCarInteractor.getCarsOptions()
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(carOptionses -> doOnGetCarOptions(carOptionses, notiffication),
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "PushNotificationReceiver: checkNotificationAccess error "+e.toString()));

@@ -14,7 +14,7 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
-import upplic.com.angelavto.domain.interactors.Interactor1;
+import upplic.com.angelavto.domain.interactors.MapInteractor;
 import upplic.com.angelavto.domain.models.Record;
 import upplic.com.angelavto.domain.models.RoutePoint;
 import upplic.com.angelavto.presentation.app.AngelAvto;
@@ -24,9 +24,8 @@ import upplic.com.angelavto.presentation.views.activities.RecordRouteActivity;
 
 public class AcRecordRouteCtrl extends ViewController<RecordRouteActivity> {
 
-    @Inject
-    @Named(ActivityModule.GET_RECORD_DETAIL)
-    Interactor1<Record, Integer> mGetRecordDetail;
+    @Inject @Named(ActivityModule.MAP)
+    MapInteractor mMapInteractor;
 
     public AcRecordRouteCtrl(RecordRouteActivity view) {
         super(view);
@@ -36,7 +35,7 @@ public class AcRecordRouteCtrl extends ViewController<RecordRouteActivity> {
 
     @Override
     public void start() {
-        mGetRecordDetail.execute(mRootView.getRecordId())
+        mMapInteractor.getRecordDetail(mRootView.getRecordId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::createRote,

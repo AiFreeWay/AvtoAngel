@@ -2,16 +2,12 @@ package upplic.com.angelavto.presentation.view_controllers;
 
 import android.util.Log;
 
-import com.orhanobut.hawk.Hawk;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import upplic.com.angelavto.domain.interactors.AlarmInteractor;
-import upplic.com.angelavto.domain.interactors.Interactor1;
-import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.interactors.CarsInteractor;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
@@ -25,8 +21,8 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
     private final int AVTO_DRIVE_FRAGMENT = 0;
     private final int MAP_FRAGMENT = 1;
 
-    @Inject @Named(ActivityModule.GET_CAR_DETAIL)
-    Interactor1<Car, Integer> mGetCarDetal;
+    @Inject @Named(ActivityModule.CARS)
+    CarsInteractor mCarsInteractor;
     @Inject
     AvtoViewPagerFactory.Builder mFactoryBuilder;
 
@@ -46,7 +42,7 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
     }
 
     public void initCarDetail() {
-       mGetCarDetal.execute(mRootView.getCarOptions().getId())
+        mCarsInteractor.getCarDetail(mRootView.getCarOptions().getId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(mRootView::showStartLoad)

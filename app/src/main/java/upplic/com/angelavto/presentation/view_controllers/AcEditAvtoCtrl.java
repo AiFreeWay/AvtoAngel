@@ -1,7 +1,6 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
 
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,23 +9,16 @@ import javax.inject.Named;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import upplic.com.angelavto.domain.interactors.Interactor;
-import upplic.com.angelavto.domain.interactors.Interactor1;
+import upplic.com.angelavto.domain.interactors.CarsInteractor;
 import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.domain.models.DeleteCarResult;
-import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
-import upplic.com.angelavto.presentation.views.activities.MainActivity;
-
 
 public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
 
-    @Inject @Named(ActivityModule.UPDATE_CAR)
-    Interactor1<UpsertCarResult, Car> mUpdateCar;
-    @Inject @Named(ActivityModule.DELETE_CAR)
-    Interactor1<DeleteCarResult, Car> mDeleteCar;
+    @Inject @Named(ActivityModule.CARS)
+    CarsInteractor mCarsInteractor;
 
     public AcEditAvtoCtrl(EditAvtoActivity view) {
         super(view);
@@ -40,7 +32,7 @@ public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
     }
 
     public void updateCar(Car car) {
-        mUpdateCar.execute(car)
+        mCarsInteractor.updateCar(car)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnCompleted(() -> {
@@ -51,7 +43,7 @@ public class AcEditAvtoCtrl extends ViewController<EditAvtoActivity> {
     }
 
     public void deleteCar(Car car) {
-        mDeleteCar.execute(car)
+        mCarsInteractor.deleteCar(car)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(deleteCarResult -> backToMainActivity(),

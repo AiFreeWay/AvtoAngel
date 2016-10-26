@@ -1,7 +1,5 @@
 package upplic.com.angelavto.domain.executors;
 
-import android.util.Log;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,12 +42,22 @@ public class AlarmInteractorImpl implements AlarmInteractor {
     }
 
     @Override
-    public Observable<List<Alarm>> getAlarms() {
+    public Observable<List<Alarm>> getAlarmsFromDB() {
         return mRepository.getAlarms();
+    }
+
+    @Override
+    public Observable<List<Alarm>> getAlarmsFromNetwork() {
+        return mRepository.checkAlarm();
     }
 
     @Override
     public Observable<Integer> putAlarms(List<Alarm> alarms) {
         return mRepository.putAlarms(alarms);
+    }
+
+    @Override
+    public Observable<String> offAlarm() {
+        return mRepository.offAlarm();
     }
 }

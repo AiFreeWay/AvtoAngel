@@ -1,11 +1,7 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
-
 import android.content.Intent;
-import android.database.Observable;
 import android.util.Log;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,24 +9,26 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.AlarmInteractor;
-import upplic.com.angelavto.domain.interactors.Interactor0;
-import upplic.com.angelavto.domain.models.Car;
+import upplic.com.angelavto.domain.interactors.CarsInteractor;
+import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
+
 import upplic.com.angelavto.presentation.app.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
-import upplic.com.angelavto.presentation.views.activities.
-        SelectBeaconActivity;
+import upplic.com.angelavto.presentation.views.activities.SelectBeaconActivity;
+
 
 public class AcSelectBeaconCtrl extends ViewController<SelectBeaconActivity> {
 
-    @Inject @Named(ActivityModule.DELETE_ALL_CAR_OPTIONS)
-    Interactor0<Integer> mDeleteAllCarOptions;
+    @Inject @Named(ActivityModule.CARS)
+    CarsInteractor mCarsInteractor;
+    @Inject @Named(ActivityModule.DRIVE_CAR)
+    DriveCarInteractor mDriveCarInteractor;
     @Inject @Named(ActivityModule.ALARM)
     AlarmInteractor mAlarmInteractor;
-    @Inject @Named(ActivityModule.GET_CARS_WITHOUT_SUBJECT)
-    Interactor0<List<Car>> mGetCars;
+
     @Inject
     FragmentRouter.RouterBilder mRouterBilder;
     @Inject
@@ -47,9 +45,9 @@ public class AcSelectBeaconCtrl extends ViewController<SelectBeaconActivity> {
 
     @Override
     public void start() {
-        mDeleteAllCarOptions.execute()
+        mDriveCarInteractor.deleteAllCarOptions()
                 .flatMap(aVoid -> mAlarmInteractor.deleteAllAlarms())
-                .flatMap(aVoid -> mGetCars.execute())
+                .flatMap(aVoid -> mCarsInteractor.getCars())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cars -> {

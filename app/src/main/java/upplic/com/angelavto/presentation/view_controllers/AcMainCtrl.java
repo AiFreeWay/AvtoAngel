@@ -1,6 +1,5 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -22,9 +21,10 @@ import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.AlarmInteractor;
-import upplic.com.angelavto.domain.interactors.Interactor0;
+import upplic.com.angelavto.domain.interactors.AuthInteractor;
+import upplic.com.angelavto.domain.interactors.CarsInteractor;
+import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 
-import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.app.AngelAvto;
@@ -52,16 +52,13 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     FragmentsFactory mFragmentsFactory;
     @Inject
     AppMenuFactory mAppMenuFactory;
-    @Inject @Named(ActivityModule.GET_CARS)
-    Interactor0<List<Car>> mGetCars;
-    @Inject @Named(ActivityModule.GET_CAR_OPTIONS)
-    Interactor0<List<CarOptions>> mGetCarsOptions;
-    @Inject @Named(ActivityModule.CHECK_KEY)
-    Interactor0<Boolean> mCheckKey;
-    @Inject @Named(ActivityModule.SEND_GCM_TOKEN)
-    Interactor0<String> mSendGcmToken;
-    @Inject @Named(ActivityModule.CHECK_ALARM)
-    Interactor0<List<Alarm>> mCheckAlarm;
+
+    @Inject @Named(ActivityModule.CARS)
+    CarsInteractor mCarsInteractor;
+    @Inject @Named(ActivityModule.DRIVE_CAR)
+    DriveCarInteractor mDriveCarInteractor;
+    @Inject @Named(ActivityModule.AUTH)
+    AuthInteractor mAuthInteractor;
     @Inject @Named(ActivityModule.ALARM)
     AlarmInteractor mAlarmInteractor;
 
@@ -80,14 +77,14 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     @Override
     public void start() {
-        mCheckKey.execute()
+        mAuthInteractor.checkKey()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                             if (!result)
                                 mRootView.showInvalidKeyDialog();},
                         e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
-        mSendGcmToken.execute()
+        mAuthInteractor.registerPushToken()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aVoid -> {}, e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
@@ -99,7 +96,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     public void startCheckAlarmInterval() {
         mInterval = Observable.interval(10, TimeUnit.SECONDS)
-                .flatMap(aLong -> mCheckAlarm.execute())
+                .flatMap(aLong -> mAlarmInteractor.getAlarmsFromNetwork())
                 .flatMap(mAlarmInteractor::putAlarms)
                 .distinct()
                 .subscribeOn(Schedulers.newThread())
@@ -113,7 +110,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     public void restart() {
-        mCheckKey.execute()
+        mAuthInteractor.checkKey()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
@@ -205,7 +202,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
 
     private void checkCarsCount() {
-        mGetCars.execute()
+        mCarsInteractor.getCarsSubject()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showStartFragment,
@@ -220,7 +217,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
     }
 
     private void showStartFragment(List<Car> cars) {
-        mGetCarsOptions.execute()
+        mDriveCarInteractor.getCarsOptions()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(carOptionses -> {
