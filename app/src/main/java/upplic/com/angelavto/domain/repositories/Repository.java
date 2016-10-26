@@ -3,7 +3,6 @@ package upplic.com.angelavto.domain.repositories;
 import java.util.List;
 
 import rx.Observable;
-import upplic.com.angelavto.data.db_store.tables.CarOptionsTableEntity;
 import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Beacon;
 import upplic.com.angelavto.domain.models.Car;

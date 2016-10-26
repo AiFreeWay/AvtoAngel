@@ -25,7 +25,8 @@ import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.di.components.DaggerServiceComponent;
 import upplic.com.angelavto.presentation.di.modules.ServiceModule;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
 
@@ -46,7 +47,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
         try {
             checkNotificationAccess(remoteMessage);
         } catch (Exception e) {
-            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "onMessageReceived error: "+e.toString());
+            Logger.logError(e);
         }
     }
 
@@ -64,7 +65,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
         mDriveCarInteractor.getCarsOptions()
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(carOptionses -> doOnGetCarOptions(carOptionses, notiffication),
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "PushNotificationReceiver: checkNotificationAccess error "+e.toString()));
+                        e -> Log.e(AngelAvto.UNIVERSAL_LOG_TAG, "PushNotificationReceiver: checkNotificationAccess error "+e.toString()));
     }
 
     private void doOnGetCarOptions(List<CarOptions> carOptionses, RemoteMessage notiffication) {
@@ -88,7 +89,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
                             NotificationCompat.Builder notificationBuilder = generateNotification(notiffication);
                             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                             notificationManager.notify(UPGRADING_NOFIFICATION, notificationBuilder.build());},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "PushNotificationReceiver: writeAlarmToDB error "+e.toString()));
+                        e -> Log.e(AngelAvto.UNIVERSAL_LOG_TAG, "PushNotificationReceiver: writeAlarmToDB error "+e.toString()));
     }
 
     private NotificationCompat.Builder generateNotification(RemoteMessage notiffication) {

@@ -1,4 +1,4 @@
-package upplic.com.angelavto.presentation.app;
+package upplic.com.angelavto;
 
 
 import android.app.Application;
@@ -17,7 +17,7 @@ import upplic.com.angelavto.presentation.di.modules.ApplicationModule;
 
 public class AngelAvto extends Application {
 
-    public static final String UNIVERSAL_ERROR_TAG = "++++";
+    public static final String UNIVERSAL_LOG_TAG = "++++";
 
     private ApplicationComponent mAppComponent;
 

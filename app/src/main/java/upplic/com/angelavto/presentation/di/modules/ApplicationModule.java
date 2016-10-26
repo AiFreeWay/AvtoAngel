@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import upplic.com.angelavto.data.repositories.RepositoryImpl;
 import upplic.com.angelavto.domain.repositories.Repository;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 
 @Module
 public class ApplicationModule {

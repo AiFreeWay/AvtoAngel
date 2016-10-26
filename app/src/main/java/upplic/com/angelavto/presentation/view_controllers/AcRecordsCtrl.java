@@ -14,8 +14,9 @@ import rx.schedulers.Schedulers;
 
 import upplic.com.angelavto.domain.interactors.MapInteractor;
 import upplic.com.angelavto.domain.models.Record;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.RecordRouteActivity;
 import upplic.com.angelavto.presentation.views.activities.RecordsActivity;
 
@@ -40,11 +41,13 @@ public class AcRecordsCtrl extends ViewController<RecordsActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(mRootView::showStartLoad)
-                .subscribe(records -> {mRootView.loadData(records);
+                .subscribe(records -> {
+                    mRootView.loadData(records);
                             if (records.size() == 0)
                                 mRootView.showEmptyRecords();
                             mRootView.showSuccesLoad();},
-                        e -> { Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcRecordsCtrl: start error "+e.toString());
+                        e -> {
+                            Logger.logError(e);
                             mRootView.showDeniedLoad();});
     }
 

@@ -136,9 +136,10 @@ public class RepositoryImpl implements Repository {
     public Observable<UpsertCarResult> upsertCarNetwork(Car car) {
         return mNetworkController.upsertCar(getToken(), car)
                 .map(upsertCarResponse1 -> {
-                    getCarsNetworkEmit().subscribe();
+                    if (upsertCarResponse1.getResult().isSuccess())
+                        getCarsNetworkEmit().subscribe();
                     return upsertCarResponse1;})
-                .flatMap(upsertCarResponse -> Observable.just(CarMapper.mapUpsertCarNetwork(upsertCarResponse)));
+                .flatMap(upsertCarResponse -> Observable.just(upsertCarResponse.getResult()));
     }
 
     @Override

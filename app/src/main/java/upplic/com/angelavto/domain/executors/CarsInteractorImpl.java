@@ -1,6 +1,5 @@
 package upplic.com.angelavto.domain.executors;
 
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,6 +11,7 @@ import upplic.com.angelavto.domain.models.DeleteCarResult;
 import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.domain.repositories.Repository;
 
+
 public class CarsInteractorImpl implements CarsInteractor {
 
     private Repository mRepository;
@@ -22,7 +22,7 @@ public class CarsInteractorImpl implements CarsInteractor {
     }
 
     @Override
-    public Observable<UpsertCarResult> createCar(Car data) {
+    public Observable<UpsertCarResult> upsertCar(Car data) {
         return checkExistsCarTitle(data)
                 .flatMap(isExists -> {
                     if (isExists)

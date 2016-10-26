@@ -17,8 +17,9 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.AuthInteractor;
 import upplic.com.angelavto.domain.models.LoginDomain;
 import upplic.com.angelavto.domain.models.LoginResult;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 import upplic.com.angelavto.presentation.views.activities.SelectBeaconActivity;
 import upplic.com.angelavto.presentation.views.fragments.GetCodeFragment;
@@ -55,7 +56,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
                     .subscribe(registrationResult -> mRootView.doOnSendCode(),
                         e -> { mRootView.showToast(R.string.cannot_send_code);
                             decrementSmsCount();
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGetCodeCtrl: registration error "+e.toString());});
+                            Logger.logError(e);});
     }
 
     public boolean writeSmsLog() {
@@ -80,7 +81,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::endLogin,
                             e -> {mRootView.showToast(R.string.error_autorization);
-                                Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGetCodeCtrl: login error " + e.toString());});
+                                Logger.logError(e);});
         } else
             mRootView.showToast(R.string.code_must_be_correct);
     }
@@ -90,7 +91,7 @@ public class FmtGetCodeCtrl extends ViewController<GetCodeFragment> {
             .subscribeOn(Schedulers.newThread())
             .subscribe(aBoolean -> startActivity(),
                     e -> { startActivity();
-                        Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtGetCodeCtrl endLogin error: "+e.toString());});
+                        Logger.logError(e);});
     }
 
     private void startActivity() {

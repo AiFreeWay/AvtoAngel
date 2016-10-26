@@ -1,7 +1,7 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
 
-public abstract class ViewController<V> {
+public class ViewController<V> {
 
     protected V mRootView;
 
@@ -13,5 +13,7 @@ public abstract class ViewController<V> {
         return mRootView;
     }
 
-    public abstract void start();
+    public void start() {
+
+    };
 }

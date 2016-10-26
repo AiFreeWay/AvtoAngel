@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.fragments.GetCodeFragment;
 
 import com.orhanobut.hawk.Hawk;
@@ -47,7 +48,7 @@ public class AcLoginCtrl extends ViewController<LoginActivity> {
             GetCodeFragment getCodeFragment = (GetCodeFragment) mFactory.getFragments().get(GET_CODE_FRAGMENT_INDEX);
             getCodeFragment.setCode(code);
         } catch (Exception e) {
-            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcLoginCtrl: setCode error "+e.toString());
+            Logger.logError(e);
         }
     }
 

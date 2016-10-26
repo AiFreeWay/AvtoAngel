@@ -68,4 +68,6 @@
     <string name="about_application">Приложение поможет уберечь ваш автомобиль от угона, благодаря отслеживанию его местоположения через GPS маяк.</string>
     <string name="sms_limit">Превышен лимит отправки смс. 5 в день</string>
     <string name="empty_recods">Нет записей в журнале</string>
+    <string name="imei_exists">Маяк с таким imei уже существует в базе</string>
+    <string name="phone_exists">К такому номеру sim карты уже привязан маяк</string>
 </resources>

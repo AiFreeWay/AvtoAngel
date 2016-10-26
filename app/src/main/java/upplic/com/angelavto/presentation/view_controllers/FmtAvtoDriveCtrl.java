@@ -16,8 +16,9 @@ import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.domain.models.Status;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
@@ -67,7 +68,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                     notifyMenuItem(car);
                     mRootView.initStatusButton();})
                 .subscribe(aVoid -> {},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeState error "+e.toString()));
+                        Logger::logError);
     }
 
     public void changeNotification() {
@@ -85,7 +86,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                     Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
                     mRootView.initNotificationButton();})
                 .subscribe(aVoid -> {},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: changeNotification error "+e.toString()));
+                        Logger::logError);
     }
 
     public void offAlarm() {
@@ -97,7 +98,7 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                             ((AvtoFragment) mRootView.getParentFragment()).setNormalState();
                             mRootView.hideWarning();
                             mRootView.disableAlarmOffButton();},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoDriveCtrl: offAlarm error "+e.toString()));
+                        Logger::logError);
     }
 
     private void notifyMenuItem(Car car) {
@@ -118,6 +119,6 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                                 mRootView.showWarning(alarm.getTitle());
                                 mRootView.initAlarmOffButton();
                                 break;}}}},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: putWarningToHawk error "+e.toString()));
+                        Logger::logError);
     }
 }

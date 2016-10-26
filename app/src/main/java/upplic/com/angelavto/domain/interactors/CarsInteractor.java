@@ -10,7 +10,7 @@ import upplic.com.angelavto.domain.models.UpsertCarResult;
 
 public interface CarsInteractor {
 
-    Observable<UpsertCarResult> createCar(Car data);
+    Observable<UpsertCarResult> upsertCar(Car data);
     Observable<DeleteCarResult> deleteCar(Car data);
     Observable<List<Car>> getCarsSubject();
     Observable<List<Car>> getCars();

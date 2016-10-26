@@ -27,13 +27,14 @@ import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.mappers.CarMapper;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
 import upplic.com.angelavto.presentation.factories.AppMenuFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
@@ -83,11 +84,11 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .subscribe(result -> {
                             if (!result)
                                 mRootView.showInvalidKeyDialog();},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
+                        Logger::logError);
         mAuthInteractor.registerPushToken()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aVoid -> {}, e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
+                .subscribe(aVoid -> {}, Logger::logError);
 
         Hawk.put(LoginActivity.FIRTS_START, true);
         mMenu = mAppMenuFactory.getMenu();
@@ -106,7 +107,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                         mRootView.setDangerState();
                     else
                         mRootView.setNormalState();},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: startCheckAlarmInterval error " + e.toString()));
+                        Logger::logError);
     }
 
     public void restart() {
@@ -116,7 +117,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .subscribe(result -> {
                             if (!result)
                                 mRootView.showInvalidKeyDialog();},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl: start error "+e.toString()));
+                        Logger::logError);
         checkCarsCount();
     }
 
@@ -207,7 +208,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showStartFragment,
                         e -> {showStartFragment(null);
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: checkCarsCount error "+e.toString());});
+                            Logger.logError(e);});
     }
 
     private List<AppMenuItem> joinCarsAndMenuItems(List<AppMenuItem> menues, List<Car> cars, List<CarOptions> carOptionses) {
@@ -229,7 +230,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                                 mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));},
                         e -> { mRootView.loadData(mMenu);
                             mRouter.show(mFragmentsFactory.getFragment(FragmentsFactory.Fragments.CRAETE_CAR));
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcMainCtrl: showStartFragment error "+e.toString());});
+                            Logger.logError(e);});
     }
 
 

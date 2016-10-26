@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Record;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.view_controllers.AcRecordsCtrl;
 
 public class RecordBinder implements AbstractBinder<Record> {
@@ -45,7 +46,7 @@ public class RecordBinder implements AbstractBinder<Record> {
             formatter.applyPattern("dd-MM-yyyy в HH:mm");
             mTvTitle.setText(formatter.format(date));
         } catch (ParseException e) {
-
+            Logger.logError(e);
         }
         view.setOnClickListener(v -> mViewController.openRecordReoute(data));
         return view;

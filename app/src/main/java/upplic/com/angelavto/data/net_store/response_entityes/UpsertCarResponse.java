@@ -1,23 +1,25 @@
 package upplic.com.angelavto.data.net_store.response_entityes;
 
 
+import upplic.com.angelavto.domain.models.UpsertCarResult;
+
 public class UpsertCarResponse extends BaseResponse {
 
-    private String result;
+    private UpsertCarResult result;
 
     public UpsertCarResponse() {
     }
 
-    public UpsertCarResponse(int id, String result, String jsonrpc) {
+    public UpsertCarResponse(int id, UpsertCarResult result, String jsonrpc) {
         super(id ,jsonrpc);
         this.result = result;
     }
 
-    public String getResult() {
+    public UpsertCarResult getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(UpsertCarResult result) {
         this.result = result;
     }
 }

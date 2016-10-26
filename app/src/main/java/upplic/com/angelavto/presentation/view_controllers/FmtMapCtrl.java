@@ -35,10 +35,11 @@ import upplic.com.angelavto.domain.interactors.CarsInteractor;
 import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.Status;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.utils.LocationAdressManager;
 import upplic.com.angelavto.presentation.utils.LocationListenerGoogleApiClient;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.EditAvtoActivity;
 import upplic.com.angelavto.presentation.views.activities.RecordsActivity;
 import upplic.com.angelavto.presentation.views.fragments.MapFragement;
@@ -99,7 +100,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                 .subscribe(car -> {
                             if (!(car.getLat() == 0 || car.getLon() == 0)) {
                                 drawRoute(car);}},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtMapCtrl: start error " + e.toString()));
+                        Logger::logError);
     }
 
     public void restart() {
@@ -141,7 +142,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
                     Toast.makeText(getRootView().getContext(), message, Toast.LENGTH_SHORT).show();
                     mRootView.initRecordButton();})
                 .subscribe(aVoid -> {},
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtMapCtrl: changeRecord error " + e.toString()));
+                        Logger::logError);
     }
 
     public void openRecordActivity() {
@@ -213,7 +214,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
             }
 
         } catch (Exception e) {
-            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "setDistance: error "+e.toString());
+            Logger.logError(e);
         }
         mRootView.setDistance(distance);
     }

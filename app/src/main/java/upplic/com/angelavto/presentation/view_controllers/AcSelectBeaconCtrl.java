@@ -12,10 +12,11 @@ import upplic.com.angelavto.domain.interactors.AlarmInteractor;
 import upplic.com.angelavto.domain.interactors.CarsInteractor;
 import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.FragmentsFactory;
 import upplic.com.angelavto.presentation.utils.FragmentRouter;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 import upplic.com.angelavto.presentation.views.activities.SelectBeaconActivity;
 
@@ -55,8 +56,9 @@ public class AcSelectBeaconCtrl extends ViewController<SelectBeaconActivity> {
                             startMainActivity();
                         else
                             showStartFragment();},
-                        e -> {showStartFragment();
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcSelectBeaconCtrl start error: "+e.toString());});
+                        e -> {
+                            showStartFragment();
+                            Logger.logError(e);});
     }
 
     public void popBack() {

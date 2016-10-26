@@ -11,8 +11,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.BeaconsInteractor;
 import upplic.com.angelavto.domain.models.Beacon;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.fragments.BeaconsShopFragment;
 
 
@@ -38,7 +39,8 @@ public class FmtBeaconsShopCtrl extends ViewController<BeaconsShopFragment> {
                 .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(products -> {mRootView.loadData(products);
                             mRootView.showSuccesLoad();},
-                        e -> { Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtBeaconsShopCtrl: start error "+e.toString());
+                        e -> {
+                            Logger.logError(e);
                             mRootView.showDeniedLoad();});
     }
 

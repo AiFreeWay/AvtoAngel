@@ -8,9 +8,10 @@ import javax.inject.Named;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.domain.interactors.CarsInteractor;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.factories.AvtoViewPagerFactory;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.fragments.AvtoDriveFragment;
 import upplic.com.angelavto.presentation.views.fragments.AvtoFragment;
 import upplic.com.angelavto.presentation.views.fragments.MapFragement;
@@ -50,7 +51,7 @@ public class FmtAvtoCtrl extends ViewController<AvtoFragment> {
                             mRootView.showStopLoad();
                             notifyFragments();},
                         e -> { mRootView.showStopLoad();
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtAvtoCtrl: initCarDetail error "+e.toString());});
+                            Logger.logError(e);});
     }
 
     private void notifyFragments() {

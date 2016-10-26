@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.components.ActivityComponent;
 import upplic.com.angelavto.presentation.di.components.DaggerActivityComponent;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;

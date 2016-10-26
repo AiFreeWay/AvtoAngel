@@ -1,7 +1,6 @@
 package upplic.com.angelavto.presentation.view_controllers;
 
 
-import android.util.Log;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -13,8 +12,9 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.BeaconsInteractor;
 import upplic.com.angelavto.domain.interactors.CarsInteractor;
 import upplic.com.angelavto.domain.models.Car;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.domain.models.UpsertCarResult;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.fragments.CreateCarFragment;
 
 public class FmtCreateCarCtrl extends ViewController<CreateCarFragment> {
@@ -39,22 +39,35 @@ public class FmtCreateCarCtrl extends ViewController<CreateCarFragment> {
                 .subscribe(products -> {mRootView.loadData(products);
                             mRootView.showSuccesLoad();},
                         e -> { mRootView.showDeniedLoad();
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtCreateCarCtrl: start error "+e.toString());});
+                            Logger.logError(e);});
     }
 
     public void addCar(Car car) {
-        mCarsInteractor.createCar(car)
+        mCarsInteractor.upsertCar(car)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(mRootView::showStartLoad)
                 .subscribe(upsertCarResult -> {
                             mRootView.showSuccesLoad();
+                            String message;
                             if (upsertCarResult.isSuccess()) {
                                 mRootView.truncateFields();
-                                Toast.makeText(mRootView.getContext(), R.string.create_car_success, Toast.LENGTH_SHORT).show();
+                                message = mRootView.getString(R.string.create_car_success);
                             } else
-                                Toast.makeText(mRootView.getContext(), R.string.car_exists, Toast.LENGTH_SHORT).show();},
+                                message = generateErrorMessageFromUpsertCarErrorType(upsertCarResult.getErrorType());
+                            Toast.makeText(mRootView.getContext(), message, Toast.LENGTH_SHORT).show();},
                         e -> { mRootView.showDeniedLoad();
-                            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "FmtCreateCarCtrl: addCar error "+e.toString());});
+                            Logger.logError(e);});
+    }
+
+    private String generateErrorMessageFromUpsertCarErrorType(int errorType) {
+        String message = null;
+        if (errorType == UpsertCarResult.CAR_TITLE_EXISTS_ERROR_TYPE)
+            message = mRootView.getString(R.string.car_exists);
+        else if (errorType == UpsertCarResult.IMEI_EXISTS_ERROR_TYPE)
+            message = mRootView.getString(R.string.imei_exists);
+        else if (errorType == UpsertCarResult.BEACON_SIM_NUMBER_EXISTS_ERROR_TYPE)
+            message = mRootView.getString(R.string.phone_exists);
+        return message;
     }
 }

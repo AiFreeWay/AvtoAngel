@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 
 public class FragmentRouter {
 
@@ -29,7 +29,7 @@ public class FragmentRouter {
                 transaction.addToBackStack(BACK_STACK_TAG);
                 transaction.commitAllowingStateLoss();
             } catch (Exception e) {
-                Log.d(AngelAvto.UNIVERSAL_ERROR_TAG, "FragmentRouter show error: "+e.toString());
+                Logger.logError(e);
             }
         }
     }

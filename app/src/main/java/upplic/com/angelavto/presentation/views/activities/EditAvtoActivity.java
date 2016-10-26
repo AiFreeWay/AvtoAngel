@@ -90,6 +90,14 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
                 .negativeActionClickListener(v -> mMessageDialog.dismiss());
     }
 
+    public Car getCar() {
+        return mCar;
+    }
+
+    public void setCar(Car mCar) {
+        this.mCar = mCar;
+    }
+
     private void initToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
@@ -108,8 +116,7 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         mMessageDialog.positiveActionTextColor(mColorMarron);
         mMessageDialog.positiveActionClickListener(v -> {
             mViewController.deleteCar(mCar);
-            mMessageDialog.dismiss();
-        });
+            mMessageDialog.dismiss();});
         mMessageDialog.show();
     }
 
@@ -119,18 +126,25 @@ public class EditAvtoActivity extends BaseActivity<AcEditAvtoCtrl> {
         mMessageDialog.positiveActionClickListener(v -> {
             if (isFieldsCorrect()) {
                 hideTextInputLayoutsErrors();
-                mViewController.updateCar(updateCarFromFields());
+                mViewController.updateCar(generateCarFromFields());
             } else
                 Toast.makeText(this, R.string.need_fill_fields, Toast.LENGTH_SHORT).show();
             mMessageDialog.dismiss();});
         mMessageDialog.show();
     }
 
-    private Car updateCarFromFields() {
-        mCar.setTitle(mEtCarTitle.getText().toString());
-        mCar.setTrackerImei(mEtImei.getText().toString());
-        mCar.setTrackerPhone(mEtPhone.getText().toString());
-        return mCar;
+    private Car generateCarFromFields() {
+        Car car = new Car();
+        car.setId(mCar.getId());
+        car.setTitle(mEtCarTitle.getText().toString());
+        car.setTrackerImei(mEtImei.getText().toString());
+        car.setTrackerPhone(mEtPhone.getText().toString());
+        car.setTrackerType(mCar.getTrackerType());
+        car.setLat(mCar.getLat());
+        car.setLon(mCar.getLon());
+        car.setStatus(mCar.isStatus());
+        car.setRecord(mCar.isRecord());
+        return car;
     }
 
     private boolean isFieldsCorrect() {

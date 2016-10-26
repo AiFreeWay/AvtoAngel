@@ -8,7 +8,8 @@ import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
+import upplic.com.angelavto.presentation.utils.Logger;
 
 
 public class SmsCodeReceiver extends BroadcastReceiver {
@@ -32,7 +33,7 @@ public class SmsCodeReceiver extends BroadcastReceiver {
             if (currentMessage.getDisplayOriginatingAddress().equals(APPLICATION_SMS_PROVIDER))
                 code = currentMessage.getDisplayMessageBody();
         } catch (Exception e) {
-            Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "SmsCodeReceiver: getCodeFromIntent error "+e.toString());
+            Logger.logError(e);
         }
         return code;
     }

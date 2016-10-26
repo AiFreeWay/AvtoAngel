@@ -17,8 +17,9 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.MapInteractor;
 import upplic.com.angelavto.domain.models.Record;
 import upplic.com.angelavto.domain.models.RoutePoint;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.RecordRouteActivity;
 
 
@@ -39,7 +40,7 @@ public class AcRecordRouteCtrl extends ViewController<RecordRouteActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::createRote,
-                        e -> Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "AcRecordRouteCtrl: start error "+e.toString()));
+                        Logger::logError);
     }
 
     private void createRote(Record record) {

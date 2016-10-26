@@ -22,10 +22,6 @@ public class CarMapper {
         return new UpsertCarRequest(key, car);
     }
 
-    public static UpsertCarResult mapUpsertCarNetwork(UpsertCarResponse upsertCarResponse) {
-        return new UpsertCarResult(upsertCarResponse.getResult());
-    }
-
     public static Car mapCarDetailFromNetwork(GetCarDetailResponse getCarDetailResponse) {
         return getCarDetailResponse.getResult();
     }

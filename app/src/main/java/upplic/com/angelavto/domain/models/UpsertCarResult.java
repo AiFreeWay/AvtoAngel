@@ -4,8 +4,9 @@ package upplic.com.angelavto.domain.models;
 public class UpsertCarResult {
 
 
+    public static final int CAR_TITLE_EXISTS_ERROR_TYPE = 0;
     public static final int IMEI_EXISTS_ERROR_TYPE = 1;
-    public static final int BEACON_SIM_NUMBER__EXISTS_ERROR_TYPE = 2;
+    public static final int BEACON_SIM_NUMBER_EXISTS_ERROR_TYPE = 2;
 
     private boolean is_success;
     private int error_type;

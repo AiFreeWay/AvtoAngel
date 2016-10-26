@@ -11,7 +11,7 @@ import java.util.List;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import upplic.com.angelavto.presentation.app.AngelAvto;
+import upplic.com.angelavto.AngelAvto;
 
 
 public class LocationAdressManager {
@@ -36,7 +36,7 @@ public class LocationAdressManager {
                                 mIsFree = true;},
                             e -> {
                                 mIsFree = true;
-                                Log.e(AngelAvto.UNIVERSAL_ERROR_TAG, "LocationAdressManager start: error " + e.toString());});
+                                Logger.logError(e);});
     }
 
     private Observable<List<Address>> getLocationAdresses(double lat, double lon) {
