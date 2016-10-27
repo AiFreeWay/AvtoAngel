@@ -182,7 +182,7 @@ public class RepositoryImpl implements Repository {
     public Observable<List<Alarm>> checkAlarm() {
         return mNetworkController.checkAlarm(getToken())
                 .flatMap(checkAlarmResponse -> Observable.just(Arrays.<AlarmData>asList(checkAlarmResponse.getResult())))
-                .map(alrmsNetwork -> AlarmMapper.mapAlarmsFromNetwork(alrmsNetwork));
+                .map(AlarmMapper::mapAlarmsFromNetwork);
     }
 
     @Override

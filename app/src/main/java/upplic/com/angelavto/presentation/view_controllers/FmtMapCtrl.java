@@ -180,7 +180,7 @@ public class FmtMapCtrl extends ViewController<MapFragement> {
         route.color(ContextCompat.getColor(getRootView().getContext(), R.color.marron));
         route.width(3);
         mRoute = mRootView.getMap().addPolyline(route);
-        mRootView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 14));
+        mRootView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 17));
         mMarker = mRootView.getMap().addMarker(new MarkerOptions()
                 .title(car.getTitle())
                 .position(currentPosition)
