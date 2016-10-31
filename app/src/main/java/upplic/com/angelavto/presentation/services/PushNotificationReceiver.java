@@ -17,6 +17,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rx.Observable;
+import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.interactors.AlarmInteractor;
@@ -26,6 +29,7 @@ import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.di.components.DaggerServiceComponent;
 import upplic.com.angelavto.presentation.di.modules.ServiceModule;
 import upplic.com.angelavto.AngelAvto;
+import upplic.com.angelavto.presentation.models.AlarmMonade;
 import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
@@ -64,22 +68,24 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
     private void checkNotificationAccess(RemoteMessage notiffication) {
         mDriveCarInteractor.getCarsOptions()
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(carOptionses -> doOnGetCarOptions(carOptionses, notiffication),
+                .flatMap(carOptionses -> doOnGetCarOptions(carOptionses, notiffication))
+                .zipWith(mAlarmInteractor.getAlarmsFromNetwork(), AlarmMonade::new)
+                .subscribe(alarmMonade -> {
+                            for (Alarm alarm : alarmMonade.getAlarms()) {
+                                if (alarm.getCarId() == alarmMonade.getCarId()) {
+                                    showNotification(notiffication);
+                                    break;
+                                }
+                            }},
                         e -> Log.e(AngelAvto.UNIVERSAL_LOG_TAG, "PushNotificationReceiver: checkNotificationAccess error "+e.toString()));
     }
 
-    private void doOnGetCarOptions(List<CarOptions> carOptionses, RemoteMessage notiffication) {
-        if (carOptionses.size() == 0)
-            showNotification(notiffication);
-        else {
-            int carId = Integer.parseInt(notiffication.getData().get(CAR_ID_KEY));
-            for (CarOptions carOptions : carOptionses) {
-                if (carOptions.getId() == carId && carOptions.isNotification()) {
-                    showNotification(notiffication);
-                    return;
-                }
-            }
-        }
+    private Observable<Integer> doOnGetCarOptions(List<CarOptions> carOptionses, RemoteMessage notiffication) {
+        int carId = Integer.parseInt(notiffication.getData().get(CAR_ID_KEY));
+        for (CarOptions carOptions : carOptionses)
+            if (carOptions.getId() == carId && carOptions.isNotification())
+                return Observable.just(carOptions.getId());
+        return Observable.just(-1);
     }
 
     private void showNotification(RemoteMessage notiffication) {
