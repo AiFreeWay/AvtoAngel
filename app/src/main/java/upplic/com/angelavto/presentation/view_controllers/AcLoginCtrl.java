@@ -3,6 +3,7 @@ package upplic.com.angelavto.presentation.view_controllers;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.utils.Logger;
@@ -40,7 +41,8 @@ public class AcLoginCtrl extends ViewController<LoginActivity> {
         } else if (Hawk.contains(LoginActivity.API_KEY_TAG)) {
             Intent intent = getStartActivityIntent(SelectBeaconActivity.class);
             mRootView.startActivity(intent);
-        }
+        } else
+            Toast.makeText(mRootView, "Введите свой номер телефона", Toast.LENGTH_SHORT).show();
     }
 
     public void setCode(String code) {

@@ -103,9 +103,16 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(alarms -> {
-                    if (alarms > 0)
+                    if (alarms > 0) {
                         mRootView.setDangerState();
-                    else
+                        try {
+                            Fragment currentFragment = mRouter.getCurrentFragment();
+                            if (currentFragment instanceof AvtoFragment)
+                                ((AvtoFragment) currentFragment).recheckAlarm();
+                        } catch (Exception e) {
+                            Logger.logError(e);
+                        }
+                    } else
                         mRootView.setNormalState();},
                         Logger::logError);
     }
@@ -118,6 +125,8 @@ public class AcMainCtrl extends ViewController<MainActivity> {
                             if (!result)
                                 mRootView.showInvalidKeyDialog();},
                         Logger::logError);
+        stop();
+        startCheckAlarmInterval();
         checkCarsCount();
     }
 

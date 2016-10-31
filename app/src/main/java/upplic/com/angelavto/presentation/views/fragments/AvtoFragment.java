@@ -22,6 +22,7 @@ import upplic.com.angelavto.domain.models.Alarm;
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
 import upplic.com.angelavto.presentation.adapters.ViewPagerTabsAdapter;
+import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.view_controllers.FmtAvtoCtrl;
 import upplic.com.angelavto.presentation.views.activities.MainActivity;
 
@@ -113,5 +114,13 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
 
     public void showStopLoad() {
         mPvProgress.stop();
+    }
+
+    public void recheckAlarm() {
+        try {
+            ((AvtoDriveFragment) mAdapter.getItem(0)).mViewController.checkAlarm();
+        } catch (Exception e) {
+            Logger.logError(e);
+        }
     }
 }

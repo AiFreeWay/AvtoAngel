@@ -101,24 +101,24 @@ public class FmtAvtoDriveCtrl extends ViewController<AvtoDriveFragment> {
                         Logger::logError);
     }
 
-    private void notifyMenuItem(Car car) {
-        ((MainActivity) mRootView.getParentFragment().getActivity())
-                .getViewController()
-                .updateMenuItem(car);
-    }
-
-    private void checkAlarm() {
+    public void checkAlarm() {
         mAlarmInteractor.getAlarmsFromDB()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(alarms -> {
-                    if (alarms.size()>0) {
-                        ((AvtoFragment) mRootView.getParentFragment()).setDangerState();
-                        for (Alarm alarm : alarms) {
-                            if (alarm.getCarId() == mRootView.getCarOptions().getId()) {
-                                mRootView.showWarning(alarm.getTitle());
-                                mRootView.initAlarmOffButton();
-                                break;}}}},
+                            if (alarms.size()>0) {
+                                ((AvtoFragment) mRootView.getParentFragment()).setDangerState();
+                                for (Alarm alarm : alarms) {
+                                    if (alarm.getCarId() == mRootView.getCarOptions().getId()) {
+                                        mRootView.showWarning(alarm.getTitle());
+                                        mRootView.initAlarmOffButton();
+                                        break;}}}},
                         Logger::logError);
+    }
+
+    private void notifyMenuItem(Car car) {
+        ((MainActivity) mRootView.getParentFragment().getActivity())
+                .getViewController()
+                .updateMenuItem(car);
     }
 }

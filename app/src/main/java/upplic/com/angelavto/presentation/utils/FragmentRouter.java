@@ -45,6 +45,10 @@ public class FragmentRouter {
         mViewId = id;
     }
 
+    public Fragment getCurrentFragment() {
+        return mFragmentManager.findFragmentById(mViewId);
+    }
+
     private boolean isFragmentShowNow(Fragment fragment) {
         Fragment lastFragment = mFragmentManager.findFragmentById(mViewId);
         if (lastFragment == null)

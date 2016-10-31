@@ -65,7 +65,6 @@ public class AcRecordRouteCtrl extends ViewController<RecordRouteActivity> {
         mMapInteractor.getRecordDetail(mRootView.getRecordId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-                .map(this::sortRoutePointByTime)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::createRote,
                         Logger::logError);
@@ -95,10 +94,5 @@ public class AcRecordRouteCtrl extends ViewController<RecordRouteActivity> {
         if (point != null)
             return new LatLng(point.getLat(), point.getLon());
         return null;
-    }
-
-    private Record sortRoutePointByTime(Record record) {
-        Arrays.<RoutePoint>sort(record.getCoords(), mRouteComparator);
-        return record;
     }
 }

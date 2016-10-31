@@ -41,6 +41,7 @@ android {
     packagingOptions {
         exclude 'LICENSE.TXT'
     }
+    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jni/'] } }
 }
 
 dependencies {
@@ -51,7 +52,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile 'com.android.support:support-annotations:23.4.0'
-    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.1') {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
         exclude group: 'javax.inject'
     }
 
