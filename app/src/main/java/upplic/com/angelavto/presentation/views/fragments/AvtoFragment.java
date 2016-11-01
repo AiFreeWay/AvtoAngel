@@ -120,7 +120,7 @@ public class AvtoFragment extends BaseFragment<FmtAvtoCtrl> {
         try {
             ((AvtoDriveFragment) mAdapter.getItem(0)).mViewController.checkAlarm();
         } catch (Exception e) {
-            Logger.logError(e);
+
         }
     }
 }

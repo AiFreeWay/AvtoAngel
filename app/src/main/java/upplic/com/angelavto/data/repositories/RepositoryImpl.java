@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import retrofit2.Call;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 import upplic.com.angelavto.data.db_store.SqliteController;

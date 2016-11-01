@@ -9,28 +9,24 @@ import android.support.v4.app.NotificationCompat;
 
 import java.io.IOException;
 
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import upplic.com.angelavto.R;
+import upplic.com.angelavto.data.net_store.StandAloneNetworkController;
 
 
 public class ServerPingerService extends IntentService {
 
     private static final String NAME = ServerPingerService.class.getCanonicalName();
-    private static final String SERVER_URI = "http://188.120.233.126/";
     private static final int NOTIFICATION_ID = 1;
-    private static final int DELAY_MILISECONDS = 120000;
+    private static final int LONG_DELAY_MILISECONDS = 60000;
+    private static final int SHORT_DELAY_MILISECONDS = 8000;
 
-    private final OkHttpClient HTTP_CLIENT = new OkHttpClient();
-    private final Request PING_REQUEST;
     private final Uri NOTIFICATION_SOUND = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+    private StandAloneNetworkController mNetworkController;
 
     public ServerPingerService() {
         super(NAME);
-        PING_REQUEST = new Request.Builder()
-                .url(SERVER_URI)
-                .build();
+        mNetworkController = new StandAloneNetworkController();
     }
 
     @Override
@@ -47,26 +43,26 @@ public class ServerPingerService extends IntentService {
 
     private void startPingSession() {
         new Thread(() -> {
-            try {
-                while (true) {
-                    boolean isServerPinged =  pingServer();
-                    startForeground(NOTIFICATION_ID, getNotification(isServerPinged));
-                    Thread.sleep(DELAY_MILISECONDS);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (true) {
+                boolean isServerPinged = pingServer();
+                startForeground(NOTIFICATION_ID, getNotification(isServerPinged));
+                sleep(LONG_DELAY_MILISECONDS);
             }
         }).start();
     }
 
     private boolean pingServer() {
-        try {
-            Call response = HTTP_CLIENT.newCall(PING_REQUEST);
-            return response.execute().isSuccessful();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        for (int i = 0; i < 6; i++) {
+            try {
+                if (mNetworkController.ping().execute().isSuccessful())
+                    return true;
+                else
+                    sleep(SHORT_DELAY_MILISECONDS);
+            } catch(IOException e) {
+                sleep(SHORT_DELAY_MILISECONDS);
+            }
         }
+        return false;
     }
 
     private Notification getNotification(boolean connectionState) {
@@ -75,15 +71,24 @@ public class ServerPingerService extends IntentService {
                     .setContentText("Подключено")
                     .build();
         return getNotificationTemplate()
-                    .setContentText("Проблемы с подключением")
-                    .setSound(NOTIFICATION_SOUND)
-                    .build();
+                .setContentText("Проблемы с подключением")
+                .setSound(NOTIFICATION_SOUND)
+                .build();
     }
 
     private NotificationCompat.Builder getNotificationTemplate() {
         return new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.alarm_icon)
                 .setContentTitle("Состояние подключения к системе")
                 .setAutoCancel(true);
     }
+
+    private void sleep(int delay) {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

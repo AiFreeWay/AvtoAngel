@@ -4,6 +4,7 @@ import dagger.Component;
 import upplic.com.angelavto.presentation.di.modules.ServiceModule;
 import upplic.com.angelavto.presentation.di.scopes.PerService;
 import upplic.com.angelavto.presentation.services.PushNotificationReceiver;
+import upplic.com.angelavto.presentation.services.ServerPingerService;
 
 
 @PerService

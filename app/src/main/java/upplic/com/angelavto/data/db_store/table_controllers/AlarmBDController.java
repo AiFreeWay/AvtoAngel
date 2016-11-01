@@ -41,7 +41,7 @@ public class AlarmBDController {
     }
 
     public Observable<AlarmTableEntity> insertAlarm(Alarm alarm) {
-        return mDataStore.insert(AlarmMapper.mapAlarm(alarm))
+        return mDataStore.upsert(AlarmMapper.mapAlarm(alarm))
                 .toObservable();
     }
 
@@ -52,7 +52,7 @@ public class AlarmBDController {
     }
 
     public Observable<Iterable<AlarmTableEntity>> putAlarms(List<Alarm> alarms) {
-        return mDataStore.insert(AlarmMapper.mapAlarmsToDB(alarms))
+        return mDataStore.upsert(AlarmMapper.mapAlarmsToDB(alarms))
                 .toObservable();
     }
 }

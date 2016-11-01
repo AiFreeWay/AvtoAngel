@@ -1,6 +1,7 @@
 package upplic.com.angelavto.data.net_store;
 
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -13,6 +14,7 @@ import upplic.com.angelavto.data.net_store.requests_entityes.GetCarDetailRequest
 import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordDetailRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.GetRecordsRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.OffAlarmRequest;
+import upplic.com.angelavto.data.net_store.requests_entityes.PingRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.SendGcmTokenRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.SetStatusRequest;
 import upplic.com.angelavto.data.net_store.requests_entityes.UpsertCarRequest;

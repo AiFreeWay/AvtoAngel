@@ -1,10 +1,10 @@
 package upplic.com.angelavto.domain.interactors;
 
-
 import java.util.List;
 
 import rx.Observable;
 import upplic.com.angelavto.domain.models.Alarm;
+
 
 public interface AlarmInteractor {
 

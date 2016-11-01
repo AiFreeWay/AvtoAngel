@@ -3,7 +3,6 @@ package upplic.com.angelavto.presentation.view_controllers;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.orhanobut.hawk.Hawk;
@@ -27,7 +26,6 @@ import upplic.com.angelavto.domain.interactors.DriveCarInteractor;
 
 import upplic.com.angelavto.domain.models.Car;
 import upplic.com.angelavto.domain.models.CarOptions;
-import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.di.modules.ActivityModule;
 import upplic.com.angelavto.presentation.mappers.CarMapper;
 import upplic.com.angelavto.presentation.models.AppMenuItem;
@@ -99,7 +97,6 @@ public class AcMainCtrl extends ViewController<MainActivity> {
         mInterval = Observable.interval(10, TimeUnit.SECONDS)
                 .flatMap(aLong -> mAlarmInteractor.getAlarmsFromNetwork())
                 .flatMap(mAlarmInteractor::putAlarms)
-                .distinct()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(alarms -> {
