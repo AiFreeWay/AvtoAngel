@@ -1,6 +1,5 @@
 package upplic.com.angelavto.presentation.views.activities;
 
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +13,10 @@ import com.google.android.gms.maps.MapView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +24,11 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Record;
 import upplic.com.angelavto.presentation.view_controllers.AcRecordRouteCtrl;
 
+
 public class RecordRouteActivity extends BaseActivity<AcRecordRouteCtrl> {
 
     public static final String RECORD_TAG = "record";
+    private final Calendar CALENDAR = new GregorianCalendar();
 
     @BindView(R.id.ac_records_route_toolbar)
     Toolbar mToolbar;
@@ -46,9 +50,11 @@ public class RecordRouteActivity extends BaseActivity<AcRecordRouteCtrl> {
         mMvMap.getMapAsync(this::startMap);
         initToolbar();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
         try {
             Date date = formatter.parse(mRecord.getTimeStart());
-            formatter.applyPattern("dd-mm-yyyy в HH:mm");
+            formatter.applyPattern("dd-MM-yyyy в HH:mm");
+            formatter.setTimeZone(CALENDAR.getTimeZone());
             getSupportActionBar().setTitle(formatter.format(date));
         } catch (ParseException e) {
 

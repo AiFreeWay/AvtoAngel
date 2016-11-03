@@ -1,8 +1,5 @@
 package upplic.com.angelavto.presentation.adapters.view_binders;
 
-
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
@@ -21,6 +18,7 @@ import upplic.com.angelavto.R;
 import upplic.com.angelavto.domain.models.Record;
 import upplic.com.angelavto.presentation.utils.Logger;
 import upplic.com.angelavto.presentation.view_controllers.AcRecordsCtrl;
+
 
 public class RecordBinder implements AbstractBinder<Record> {
 

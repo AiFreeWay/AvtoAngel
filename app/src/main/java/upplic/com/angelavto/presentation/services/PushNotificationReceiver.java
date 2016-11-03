@@ -31,12 +31,12 @@ import upplic.com.angelavto.presentation.di.modules.ServiceModule;
 import upplic.com.angelavto.AngelAvto;
 import upplic.com.angelavto.presentation.models.AlarmMonade;
 import upplic.com.angelavto.presentation.utils.Logger;
+import upplic.com.angelavto.presentation.utils.NotificationBuffer;
 import upplic.com.angelavto.presentation.views.activities.LoginActivity;
 
 
 public class PushNotificationReceiver extends FirebaseMessagingService {
 
-    private static final int UPGRADING_NOFIFICATION = 0;
     private static final String TITLE_KEY = "title";
     private static final String CAR_ID_KEY = "carId";
     private static final String STATUS_KEY = "status";
@@ -45,6 +45,8 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
     DriveCarInteractor mDriveCarInteractor;
     @Inject @Named(ServiceModule.ALARM)
     AlarmInteractor mAlarmInteractor;
+
+    private NotificationBuffer mNotificationBuffer;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -58,6 +60,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
     @Override
     public void onCreate() {
         super.onCreate();
+        mNotificationBuffer = new NotificationBuffer(getApplicationContext());
         DaggerServiceComponent.builder()
                 .applicationComponent(getAngelAvtoApplication().getAppComponent())
                 .serviceModule(new ServiceModule())
@@ -93,8 +96,7 @@ public class PushNotificationReceiver extends FirebaseMessagingService {
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(insertId -> {
                             NotificationCompat.Builder notificationBuilder = generateNotification(notiffication);
-                            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                            notificationManager.notify(UPGRADING_NOFIFICATION, notificationBuilder.build());},
+                            mNotificationBuffer.push(notificationBuilder.build());},
                         e -> Log.e(AngelAvto.UNIVERSAL_LOG_TAG, "PushNotificationReceiver: writeAlarmToDB error "+e.toString()));
     }
 
