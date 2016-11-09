@@ -48,7 +48,7 @@ public class NetworkController {
 
     public static final String API_EXTENSIONS = "api/v1/";
 
-    private final String BASE_URL = "http://188.120.233.126/";
+    private final String BASE_URL = "http://62.109.8.84/";
     private final BeaconsRequest BEACONS_REQUEST = new BeaconsRequest();
 
     private ApiController mApiController;
