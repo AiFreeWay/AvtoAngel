@@ -95,6 +95,7 @@ public class AcMainCtrl extends ViewController<MainActivity> {
 
     public void startCheckAlarmInterval() {
         mInterval = Observable.interval(10, TimeUnit.SECONDS)
+                .startWith((long) 1)
                 .flatMap(aLong -> mAlarmInteractor.getAlarmsFromNetwork())
                 .flatMap(mAlarmInteractor::putAlarms)
                 .subscribeOn(Schedulers.newThread())
